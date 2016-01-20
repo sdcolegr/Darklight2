@@ -30,11 +30,25 @@ public class darklight2 extends Game {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
+		// floor grid
+		g.setColor(new Color(10, 10, 10));
+		for (int i = 0; i < 18; i++) {
+			if (i % 2 == 0) {
+				for (int j = 0; j < 32; j += 2) {
+					g.fillRect(xBoundL + (64 * j) + xOffset, yBoundU + (64 * i) + yOffset, 64, 64);
+				}
+			} else {
+				for (int j = 1; j < 32; j += 2) {
+					g.fillRect(xBoundL + (64 * j) + xOffset, yBoundU + (64 * i) + yOffset, 64, 64);
+				}
+			}
+		}
+		
 		// offset borders
 		g.setColor(Color.RED);
-		g.drawRect(0, 0, xOffsetBorder, HEIGHT);					// left
+		g.drawRect(0, 0, xOffsetBorder, HEIGHT);			// left
 		g.drawRect(WIDTH - xOffsetBorder, 0, xOffsetBorder, HEIGHT);	// right
-		g.drawRect(0, 0, WIDTH, yOffsetBorder);					// top
+		g.drawRect(0, 0, WIDTH, yOffsetBorder);				// top
 		g.drawRect(0, HEIGHT - yOffsetBorder, WIDTH, yOffsetBorder);	// bottom
 		
 		// map boundaries
