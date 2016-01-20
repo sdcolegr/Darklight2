@@ -32,9 +32,9 @@ public class darklight2 extends Game {
 		
 		// floor grid
 		g.setColor(new Color(10, 10, 10));
-		for (int i = 0; i < (4*HEIGHT)/64; i++) {
+		for (int i = 0; i < (2*HEIGHT)/64; i++) {
 			if (i % 2 == 0) {
-				for (int j = 0; j < (4*WIDTH)/64; j += 2) {
+				for (int j = 0; j < (2*WIDTH)/64; j += 2) {
 					g.fillRect(xBoundL + (64 * j) + xOffset, yBoundU + (64 * i) + yOffset, 64, 64);
 				}
 			} else {
