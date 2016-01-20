@@ -10,32 +10,82 @@ import arcadia.Sound;
 
 public class darklight2 extends Game {
 	
-	float playerX = WIDTH/2 - 25;
-	float playerY = HEIGHT/2 - 25;
+	int xBoundL = 0 - WIDTH/2;
+	int xBoundR = WIDTH + (WIDTH/2);
+	int yBoundU = 0 - (HEIGHT/2);
+	int yBoundD = HEIGHT + (HEIGHT/2);
+	int xOffsetBorder = WIDTH/4;
+	int yOffsetBorder = HEIGHT/4;
+	int xOffset = 0;
+	int yOffset = 0;
+	int playerX = WIDTH/2;
+	int playerY = HEIGHT/2;
 	int playerSpeed = 10;
 	int cooldown = 0;
 
 	@Override
 	public void tick(Graphics2D g, Input p1, Input p2, Sound s) {
 		
+		// background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
+		// offset borders
+		g.setColor(Color.RED);
+		g.drawRect(0, 0, xOffsetBorder, HEIGHT);					// left
+		g.drawRect(WIDTH - xOffsetBorder, 0, xOffsetBorder, HEIGHT);	// right
+		g.drawRect(0, 0, WIDTH, yOffsetBorder);					// top
+		g.drawRect(0, HEIGHT - yOffsetBorder, WIDTH, yOffsetBorder);	// bottom
+		
+		// map boundaries
+		g.setColor(Color.YELLOW);
+		g.drawRect(xBoundL + xOffset, yBoundU + yOffset, WIDTH*2, HEIGHT*2);
+		
+		// static objects
+		g.setColor(Color.PINK);
+		g.fillRect(200 + xOffset, 200 + yOffset, 20, 20);
+		g.fillRect(800 + xOffset, 50 + yOffset, 20, 20);
+		g.fillRect(50 + xOffset, 300 + yOffset, 20, 20);
+		g.fillRect(500 + xOffset, 450 + yOffset, 20, 20);
+		g.fillRect(100 + xOffset, 250 + yOffset, 20, 20);
+		g.fillRect(650 + xOffset, 100 + yOffset, 20, 20);
+		
+		// player
 		g.setColor(Color.GREEN);
-		g.fillRect((int)playerX, (int)playerY, 50, 50);
+		g.fillRect(playerX - 25, playerY - 25, 50, 50);
 		
 		// player movement
-		if(p1.pressed(Button.U) && playerY >= 0) {
-			playerY -= playerSpeed;
+		// left
+		if (p1.pressed(Button.L) && playerX > xBoundL + xOffset) {
+			if (playerX > xOffsetBorder) {
+				playerX -= playerSpeed;
+			} else {
+				xOffset += playerSpeed;
+			}
 		}
-		if (p1.pressed(Button.D) && playerY <= HEIGHT - 50) {
-			playerY += playerSpeed;
+		// right
+		if (p1.pressed(Button.R) && playerX < xBoundR + xOffset) {
+			if (playerX < WIDTH - xOffsetBorder) {
+				playerX += playerSpeed;
+			} else {
+				xOffset -= playerSpeed;
+			}
 		}
-		if (p1.pressed(Button.R) && playerX <= WIDTH - 50) {
-			playerX += playerSpeed;
+		// up
+		if (p1.pressed(Button.U) && playerY > yBoundU + yOffset) {
+			if(playerY > yOffsetBorder) {
+				playerY -= playerSpeed;
+			} else {
+				yOffset += playerSpeed;
+			}
 		}
-		if (p1.pressed(Button.L) && playerX >= 0) {
-			playerX -= playerSpeed;
+		// down
+		if (p1.pressed(Button.D) && playerY < yBoundD + yOffset) {
+			if (playerY < HEIGHT - yOffsetBorder) {
+				playerY += playerSpeed;
+			} else {
+				yOffset -= playerSpeed;
+			}
 		}
 		
 		// random speed increasing bullshit
