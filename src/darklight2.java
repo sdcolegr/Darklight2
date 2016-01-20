@@ -38,7 +38,7 @@ public class darklight2 extends Game {
 					g.fillRect(xBoundL + (64 * j) + xOffset, yBoundU + (64 * i) + yOffset, 64, 64);
 				}
 			} else {
-				for (int j = 1; j < 32; j += 2) {
+				for (int j = 1; j < (2*WIDTH)/64; j += 2) {
 					g.fillRect(xBoundL + (64 * j) + xOffset, yBoundU + (64 * i) + yOffset, 64, 64);
 				}
 			}
