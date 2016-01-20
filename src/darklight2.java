@@ -10,16 +10,17 @@ import arcadia.Sound;
 
 public class darklight2 extends Game {
 	
-	int xBoundL = 0 - WIDTH/2;
-	int xBoundR = WIDTH + (WIDTH/2);
-	int yBoundU = 0 - (HEIGHT/2);
-	int yBoundD = HEIGHT + (HEIGHT/2);
+	int xBoundL = 0 - WIDTH;
+	int xBoundR = WIDTH*2;
+	int yBoundU = 0 - HEIGHT;
+	int yBoundD = HEIGHT*2;
 	int xOffsetBorder = WIDTH/4;
 	int yOffsetBorder = HEIGHT/4;
 	int xOffset = 0;
 	int yOffset = 0;
 	int playerX = WIDTH/2;
 	int playerY = HEIGHT/2;
+	int playerSize = 64;
 	int playerSpeed = 10;
 	int cooldown = 0;
 
@@ -32,13 +33,13 @@ public class darklight2 extends Game {
 		
 		// floor grid
 		g.setColor(new Color(10, 10, 10));
-		for (int i = 0; i < (2*HEIGHT)/64; i++) {
+		for (int i = 0; i < (HEIGHT*3)/64; i++) {
 			if (i % 2 == 0) {
-				for (int j = 0; j < (2*WIDTH)/64; j += 2) {
+				for (int j = 0; j < (WIDTH*3)/64; j += 2) {
 					g.fillRect(xBoundL + (64 * j) + xOffset, yBoundU + (64 * i) + yOffset, 64, 64);
 				}
 			} else {
-				for (int j = 1; j < (2*WIDTH)/64; j += 2) {
+				for (int j = 1; j < (WIDTH*3)/64; j += 2) {
 					g.fillRect(xBoundL + (64 * j) + xOffset, yBoundU + (64 * i) + yOffset, 64, 64);
 				}
 			}
@@ -46,14 +47,14 @@ public class darklight2 extends Game {
 		
 		// offset borders
 		g.setColor(Color.RED);
-		g.drawRect(0, 0, xOffsetBorder, HEIGHT);			// left
+		g.drawRect(0, 0, xOffsetBorder, HEIGHT);						// left
 		g.drawRect(WIDTH - xOffsetBorder, 0, xOffsetBorder, HEIGHT);	// right
-		g.drawRect(0, 0, WIDTH, yOffsetBorder);				// top
+		g.drawRect(0, 0, WIDTH, yOffsetBorder);							// top
 		g.drawRect(0, HEIGHT - yOffsetBorder, WIDTH, yOffsetBorder);	// bottom
 		
 		// map boundaries
 		g.setColor(Color.YELLOW);
-		g.drawRect(xBoundL + xOffset, yBoundU + yOffset, WIDTH*2, HEIGHT*2);
+		g.drawRect(xBoundL + xOffset, yBoundU + yOffset, WIDTH*3, HEIGHT*3);
 		
 		// static objects
 		g.setColor(Color.PINK);
@@ -66,43 +67,43 @@ public class darklight2 extends Game {
 		
 		// player
 		g.setColor(Color.GREEN);
-		g.fillRect(playerX - 25, playerY - 25, 50, 50);
+		g.fillRect(playerX - (playerSize/2), playerY - (playerSize/2), playerSize, playerSize);
 		
 		// player movement
 		// left
-		if (p1.pressed(Button.L) && playerX > xBoundL + xOffset) {
-			if (playerX > xOffsetBorder) {
+		if (p1.pressed(Button.L) && playerX > xBoundL + xOffset + (playerSize/2)) {
+			if (playerX > xOffsetBorder + 32) {
 				playerX -= playerSpeed;
 			} else {
 				xOffset += playerSpeed;
 			}
 		}
 		// right
-		if (p1.pressed(Button.R) && playerX < xBoundR + xOffset) {
-			if (playerX < WIDTH - xOffsetBorder) {
+		if (p1.pressed(Button.R) && playerX < xBoundR + xOffset - (playerSize/2)) {
+			if (playerX < WIDTH - xOffsetBorder - 32) {
 				playerX += playerSpeed;
 			} else {
 				xOffset -= playerSpeed;
 			}
 		}
 		// up
-		if (p1.pressed(Button.U) && playerY > yBoundU + yOffset) {
-			if(playerY > yOffsetBorder) {
+		if (p1.pressed(Button.U) && playerY > yBoundU + yOffset + (playerSize/2)) {
+			if(playerY > yOffsetBorder + 32) {
 				playerY -= playerSpeed;
 			} else {
 				yOffset += playerSpeed;
 			}
 		}
 		// down
-		if (p1.pressed(Button.D) && playerY < yBoundD + yOffset) {
-			if (playerY < HEIGHT - yOffsetBorder) {
+		if (p1.pressed(Button.D) && playerY < yBoundD + yOffset - (playerSize/2)) {
+			if (playerY < HEIGHT - yOffsetBorder - 32) {
 				playerY += playerSpeed;
 			} else {
 				yOffset -= playerSpeed;
 			}
 		}
 		
-		// random speed increasing bullshit
+		// speed increasing
 		if (p1.pressed(Button.C) && cooldown == 0) {
 			playerSpeed *= 2;
 			cooldown = 60;
