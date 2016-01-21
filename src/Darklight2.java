@@ -12,6 +12,7 @@ public class Darklight2 extends Game {
 	
 	Arena arena = new Arena();
 	Player player = new Player(0, WIDTH/2, HEIGHT/2, 64, 10, 8);
+	Enemy enemy = new Enemy(0, 200, 200, 64, 10, 4);
 	
 	int cooldown = 0;
 
@@ -30,6 +31,10 @@ public class Darklight2 extends Game {
 		// player
 		player.draw(g);
 		player.movement(p1, arena);
+				
+		// enemy
+		enemy.draw(g, arena);
+		enemy.trackPlayer(arena, player);
 		
 		// speed increasing
 		if (p1.pressed(Button.C) && cooldown == 0) {
