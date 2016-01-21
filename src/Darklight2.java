@@ -8,7 +8,7 @@ import arcadia.Game;
 import arcadia.Input;
 import arcadia.Sound;
 
-public class darklight2 extends Game {
+public class Darklight2 extends Game {
 	
 	int xBoundL = 0 - WIDTH;
 	int xBoundR = WIDTH*2;
@@ -132,6 +132,6 @@ public class darklight2 extends Game {
 	}
 
 	public static void main(String[] args) {
-		Arcadia.display(new Arcadia(new darklight2()));
+		Arcadia.display(new Arcadia(new Darklight2()));
 	}
 }
