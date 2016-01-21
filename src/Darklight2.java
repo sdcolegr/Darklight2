@@ -66,7 +66,8 @@ public class Darklight2 extends Game {
 		
 		// player
 		g.setColor(Color.GREEN);
-		g.fillRect(player.getX() - (player.getSize()/2), player.getY() - (player.getSize()/2), player.getSize(), player.getSize());
+		g.fillRect(player.getX() - (player.getSize()/2), player.getY() - (player.getSize()/2),
+			player.getSize(), player.getSize());
 		
 		// player movement
 		// left
