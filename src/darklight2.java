@@ -21,7 +21,7 @@ public class darklight2 extends Game {
 	int playerX = WIDTH/2;
 	int playerY = HEIGHT/2;
 	int playerSize = 64;
-	int playerSpeed = 10;
+	int playerSpeed = 8;
 	int cooldown = 0;
 
 	@Override
