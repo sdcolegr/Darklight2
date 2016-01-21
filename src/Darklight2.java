@@ -18,10 +18,9 @@ public class Darklight2 extends Game {
 	int yOffsetBorder = HEIGHT/4;
 	int xOffset = 0;
 	int yOffset = 0;
-	int playerX = WIDTH/2;
-	int playerY = HEIGHT/2;
-	int playerSize = 64;
-	int playerSpeed = 8;
+	
+	Actor player = new Actor(0, WIDTH/2, HEIGHT/2, 64, 10, 8);
+	
 	int cooldown = 0;
 
 	@Override
@@ -67,52 +66,52 @@ public class Darklight2 extends Game {
 		
 		// player
 		g.setColor(Color.GREEN);
-		g.fillRect(playerX - (playerSize/2), playerY - (playerSize/2), playerSize, playerSize);
+		g.fillRect(player.getX() - (player.getSize()/2), player.getY() - (player.getSize()/2), player.getSize(), player.getSize());
 		
 		// player movement
 		// left
-		if (p1.pressed(Button.L) && playerX > xBoundL + xOffset + (playerSize/2)) {
-			if (playerX > xOffsetBorder + 32) {
-				playerX -= playerSpeed;
+		if (p1.pressed(Button.L) && player.getX() > xBoundL + xOffset + (player.getSize()/2)) {
+			if (player.getX() > xOffsetBorder + (player.getSize()/2)) {
+				player.setX(player.getX() - player.getSpeed());
 			} else {
-				xOffset += playerSpeed;
+				xOffset += player.getSpeed();
 			}
 		}
 		// right
-		if (p1.pressed(Button.R) && playerX < xBoundR + xOffset - (playerSize/2)) {
-			if (playerX < WIDTH - xOffsetBorder - 32) {
-				playerX += playerSpeed;
+		if (p1.pressed(Button.R) && player.getX() < xBoundR + xOffset - (player.getSize()/2)) {
+			if (player.getX() < WIDTH - xOffsetBorder - (player.getSize()/2)) {
+				player.setX(player.getX() + player.getSpeed());
 			} else {
-				xOffset -= playerSpeed;
+				xOffset -= player.getSpeed();
 			}
 		}
 		// up
-		if (p1.pressed(Button.U) && playerY > yBoundU + yOffset + (playerSize/2)) {
-			if(playerY > yOffsetBorder + 32) {
-				playerY -= playerSpeed;
+		if (p1.pressed(Button.U) && player.getY() > yBoundU + yOffset + (player.getSize()/2)) {
+			if(player.getY() > yOffsetBorder + (player.getSize()/2)) {
+				player.setY(player.getY() - player.getSpeed());;
 			} else {
-				yOffset += playerSpeed;
+				yOffset += player.getSpeed();
 			}
 		}
 		// down
-		if (p1.pressed(Button.D) && playerY < yBoundD + yOffset - (playerSize/2)) {
-			if (playerY < HEIGHT - yOffsetBorder - 32) {
-				playerY += playerSpeed;
+		if (p1.pressed(Button.D) && player.getY() < yBoundD + yOffset - (player.getSize()/2)) {
+			if (player.getY() < HEIGHT - yOffsetBorder - (player.getSize()/2)) {
+				player.setY(player.getY() + player.getSpeed());
 			} else {
-				yOffset -= playerSpeed;
+				yOffset -= player.getSpeed();
 			}
 		}
 		
 		// speed increasing
 		if (p1.pressed(Button.C) && cooldown == 0) {
-			playerSpeed *= 2;
+			player.setSpeed(player.getSpeed() * 2);
 			cooldown = 60;
 		}
 		if (cooldown > 0) {
 			cooldown -= 1;
 			
 			if (cooldown == 0) {
-				playerSpeed /= 2;
+				player.setSpeed(player.getSpeed() / 2);;
 			}
 		}
 		
