@@ -28,7 +28,7 @@ public class Darklight2 extends Game {
 		
 		// background
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.fillRect(0 + xOffset, 0 + yOffset, WIDTH, HEIGHT);
 		
 		// floor grid
 		g.setColor(new Color(10, 10, 10));
