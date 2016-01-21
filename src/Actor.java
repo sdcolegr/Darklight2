@@ -26,7 +26,7 @@ public class Actor {
 	}
 	
 	public String toString() {
-		String string = "<id: " + id + ", (x: " + x + ", y: " + y
+		String string = "<id: " + id + ", Coords(" + x + ", " + y
 				+ "), size: " + size + ", health: " + health + ", speed: " + speed + ">";
 		return string;
 	}
