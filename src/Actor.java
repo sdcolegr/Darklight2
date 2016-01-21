@@ -7,6 +7,15 @@ public class Actor {
 	protected int health;
 	protected int speed;
 	
+	public Actor(int id, int x, int y, int size, int health, int speed) {
+		this.id = id;
+		this.x = x;
+		this.y = y;
+		this.size = size;
+		this.health = health;
+		this.speed = speed;
+	}
+	
 	// getters
 	public int getID() { return id; }
 	public int getX() { return x; }
