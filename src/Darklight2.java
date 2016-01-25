@@ -76,6 +76,7 @@ public class Darklight2 extends Game {
 	}
 
 	public static void main(String[] args) {
+		TextureLoader.load();
 		Arcadia.display(new Arcadia(new Darklight2()));
 	}
 }
