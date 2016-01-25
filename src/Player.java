@@ -13,6 +13,8 @@ public class Player extends Actor {
 	public void draw(Graphics2D g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(x - (size/2), y - (size/2), size, size);
+		//show character, will definitely have to be changed.
+		//g.drawImage(TextureLoader.character, x - (size/2), y - (size/2), null);
 	}
 	
 	public void movement(Input p1, Arena arena) {
