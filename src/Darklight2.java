@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.util.HashMap;
 
 import arcadia.Arcadia;
 import arcadia.Button;
@@ -12,7 +13,7 @@ public class Darklight2 extends Game {
 	
 	Arena arena = new Arena();
 	Player player = new Player(0, WIDTH/2, HEIGHT/2, 64, 10, 8);
-	Enemy enemy = new Enemy(0, 200, 200, 64, 10, 4);
+	Wave wave = new Wave();
 	
 	int cooldown = 0;
 
@@ -31,11 +32,10 @@ public class Darklight2 extends Game {
 		// player
 		player.draw(g);
 		player.movement(p1, arena);
-				
-		// enemy
-		enemy.draw(g, arena);
-		enemy.trackPlayer(arena, player);
-		
+
+		wave.newWave();
+		wave.maintain(g, arena, player);
+
 		// speed increasing
 		if (p1.pressed(Button.C) && cooldown == 0) {
 			player.speed *= 2;
@@ -51,7 +51,7 @@ public class Darklight2 extends Game {
 		
 		g.dispose();
 	}
-
+	
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub

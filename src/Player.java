@@ -10,7 +10,6 @@ public class Player extends Actor {
 		super(id, x, y, size, health, speed);
 	}
 	
-	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(Color.GREEN);
 		g.fillRect(x - (size/2), y - (size/2), size, size);

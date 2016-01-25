@@ -18,8 +18,6 @@ public class Actor {
 		this.speed = speed;
 	}
 	
-	public void draw(Graphics2D g) {}
-	
 	public boolean isColliding(Actor a) {
 		// TODO collision code
 		return false;
