@@ -104,7 +104,7 @@ public class Darklight2 extends Game {
 				}
 			}
 			
-				player.weapon = "Short Sword";
+			player.weapon = "Short Sword";
 
 			attack(g, p1);
 
