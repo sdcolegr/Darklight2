@@ -18,7 +18,7 @@ public class Actor {
 		this.speed = speed;
 	}
 	
-public boolean isColliding(Actor a, Arena arena) {
+	public boolean isColliding(Actor a, Arena arena) {
 		
 		if (id == 0) {
 			if (x + (size/2) > a.x - (a.size/2) + arena.xOffset && 
