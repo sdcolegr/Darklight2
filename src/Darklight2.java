@@ -102,7 +102,27 @@ public class Darklight2 extends Game {
 					player.speed /= 2;
 				}
 			}
-	
+			
+				player.weapon = "Short Sword";
+
+		attack(g, p1);
+
+		for (int i = 1; i <= wave.enemyCount; i++) {
+
+			if(p1.pressed(Button.A) && player.direction == 1){
+
+				if( (wave.enemies.get(i).x <= player.x + 96 & wave.enemies.get(i).x >= player.x + 32) & 
+						(wave.enemies.get(i).y <= player.y + 32 & wave.enemies.get(i).y >= player.y - 32)){
+					
+					g.setColor(Color.GREEN);
+					g.drawOval(wave.enemies.get(i).x, wave.enemies.get(i).y, 10, 10);
+					System.out.println("HIT " + i);
+				}
+
+			}
+		}
+
+			
 			g.dispose();
 		}
 		
@@ -131,6 +151,64 @@ public class Darklight2 extends Game {
 
 	private boolean justPressed(Input p1, Button source) {
 		return p1.pressed(source) && !keyState.containsKey(source);
+	}
+	
+	public void attack(Graphics2D g, Input p1){
+		//up atk
+		if(p1.pressed(Button.A) && player.direction == 0){
+			g.setColor(Color.cyan);
+			if(player.weapon.equals("Greatsword") ){
+				g.drawRect(player.x-96, player.y-96, gSword.width, gSword.length);
+			}
+			if(player.weapon.equals("Short Sword")){
+				g.drawRect(player.x-48, player.y-96, sSword.width, sSword.length);
+			}
+			if(player.weapon.equals("Spear")){
+				g.drawRect(player.x, player.y-160, spear.width, spear.length);
+			}
+		}
+
+		//right atk
+		if(p1.pressed(Button.A) && player.direction == 1){
+			g.setColor(Color.cyan);
+			if(player.weapon.equals("Greatsword") ){
+				g.drawRect(player.x, player.y-96, gSword.length, gSword.width);
+			}
+			if(player.weapon.equals("Short Sword")){
+				g.drawRect(player.x+32, player.y-48, sSword.length, sSword.width);
+			}
+			if(player.weapon.equals("Spear")){
+				g.drawRect(player.x+32, player.y, spear.length, spear.width);
+			}
+		}
+
+		//down atk
+		if(p1.pressed(Button.A) && player.direction == 2){
+			g.setColor(Color.cyan);
+			if(player.weapon.equals("Greatsword") ){
+				g.drawRect(player.x-96, player.y, gSword.width, gSword.length);
+			}
+			if(player.weapon.equals("Short Sword")){
+				g.drawRect(player.x-48, player.y+32, sSword.width, sSword.length);
+			}
+			if(player.weapon.equals("Spear")){
+				g.drawRect(player.x, player.y+32, spear.width, spear.length);
+			}
+		}
+
+		//left atk
+		if(p1.pressed(Button.A) && player.direction == 3){
+			g.setColor(Color.cyan);
+			if(player.weapon.equals("Greatsword") ){
+				g.drawRect(player.x-96, player.y-96, gSword.length, gSword.width);
+			}
+			if(player.weapon.equals("Short Sword")){
+				g.drawRect(player.x-96, player.y-48, sSword.length, sSword.width);
+			}
+			if(player.weapon.equals("Spear")){
+				g.drawRect(player.x-160, player.y, spear.length, spear.width);
+			}
+		}
 	}
 	
 	@Override
