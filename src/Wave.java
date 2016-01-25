@@ -29,8 +29,8 @@ public class Wave {
 		for (int id : enemies.keySet()) {
 			enemies.get(id).draw(g, arena);
 			enemies.get(id).trackPlayer(arena, player);
-			if(player.isColliding(enemies.get(id), arena)) {
-				System.out.println("hit" + id);
+			if (player.isColliding(enemies.get(id), arena)) {
+				System.out.println("hit " + id);
 			}
 		}
 		if (enemies.size() == 0) {

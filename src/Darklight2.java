@@ -20,6 +20,10 @@ public class Darklight2 extends Game {
 	Player player = new Player(0, WIDTH/2, HEIGHT/2, 64, 10, 8);
 	Wave wave = new Wave();
 	
+	Weapon sSword = new Weapon("Short Sword");
+	Weapon gSword = new Weapon("Greatsword");
+	Weapon spear = new Weapon("Spear");
+	
 	int cooldown = 0;
 
 	@Override

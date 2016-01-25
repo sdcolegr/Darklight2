@@ -10,12 +10,11 @@ public class TextureLoader {
 
 	public static void load() {
 
-		try {
-			character = ImageIO.read(new File("Resources/Wick.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			character = ImageIO.read(new File("Resources/Wick.png"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 	}
 }
