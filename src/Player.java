@@ -5,6 +5,14 @@ import arcadia.Button;
 import arcadia.Input;
 
 public class Player extends Actor {
+	
+	String weapon;
+	
+	// 0 up
+	// 1 right
+	// 2 down
+	// 3 left
+	int direction;
 
 	public Player(int id, int x, int y, int size, int health, int speed) {
 		super(id, x, y, size, health, speed);
