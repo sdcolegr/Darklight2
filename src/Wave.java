@@ -33,7 +33,6 @@ public class Wave {
 				System.out.println("hit" + id);
 			}
 		}
-		}
 		if (enemies.size() == 0) {
 			waveStart = true;
 		}
