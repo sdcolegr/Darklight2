@@ -18,8 +18,27 @@ public class Actor {
 		this.speed = speed;
 	}
 	
-	public boolean isColliding(Actor a) {
-		// TODO collision code
+public boolean isColliding(Actor a, Arena arena) {
+		
+		if (id == 0) {
+			if (x + (size/2) > a.x - (a.size/2) + arena.xOffset && 
+					x - (size/2) < a.x + (a.size/2) + arena.xOffset) {
+
+				if (y + (size/2) > a.y - (a.size/2) + arena.yOffset && 
+						y - (size/2) < a.y + (a.size/2) + arena.yOffset) {
+					return true;
+				}
+			}
+		} else {
+			if (x + arena.xOffset + (size/2) > a.x - (a.size/2) + arena.xOffset && 
+					x + arena.xOffset - (size/2) < a.x + (a.size/2) + arena.xOffset) {
+
+				if (y + arena.yOffsetBorder + (size/2) > a.y - (a.size/2) + arena.yOffset && 
+						y + arena.yOffset - (size/2) < a.y + (a.size/2) + arena.yOffset) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 	
