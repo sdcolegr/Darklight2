@@ -106,24 +106,23 @@ public class Darklight2 extends Game {
 			
 				player.weapon = "Short Sword";
 
-		attack(g, p1);
+			attack(g, p1);
 
-		for (int i = 1; i <= wave.enemyCount; i++) {
-
-			if(p1.pressed(Button.A) && player.direction == 1){
-
-				if( (wave.enemies.get(i).x <= player.x + 96 & wave.enemies.get(i).x >= player.x + 32) & 
-						(wave.enemies.get(i).y <= player.y + 32 & wave.enemies.get(i).y >= player.y - 32)){
-					
-					g.setColor(Color.GREEN);
-					g.drawOval(wave.enemies.get(i).x, wave.enemies.get(i).y, 10, 10);
-					System.out.println("HIT " + i);
+			for (int i = 1; i <= wave.enemyCount; i++) {
+	
+				if(p1.pressed(Button.A) && player.direction == 1){
+	
+					if( (wave.enemies.get(i).x <= player.x + 96 & wave.enemies.get(i).x >= player.x + 32) & 
+							(wave.enemies.get(i).y <= player.y + 32 & wave.enemies.get(i).y >= player.y - 32)){
+						
+						g.setColor(Color.GREEN);
+						g.drawOval(wave.enemies.get(i).x, wave.enemies.get(i).y, 10, 10);
+						System.out.println("HIT " + i);
+					}
+	
 				}
-
 			}
-		}
 
-			
 			g.dispose();
 		}
 		
