@@ -49,6 +49,18 @@ public class Darklight2 extends Game {
 			}
 		}
 		
+		// Collision
+		if( player.isColliding(enemy, arena)) {
+			player.health = player.health - 1;
+			
+			if (player.health == 0) {
+				System.out.println("gameover");
+			}
+//			for (int i = 1; i < 2; i++){
+//				System.out.println("hit " + i);
+//			}
+		}
+
 		g.dispose();
 	}
 	
