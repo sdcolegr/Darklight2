@@ -65,12 +65,11 @@ public class Player extends Actor {
 	public boolean isColliding(Actor a, Arena arena) {
 		
 		if (x + (size/2) > a.x + arena.xOffset - (a.size/2) && 
-			x - (size/2) < a.x + arena.xOffset + (a.size/2)) {
+			x - (size/2) < a.x + arena.xOffset + (a.size/2) &&
+			y + (size/2) > a.y + arena.yOffset - (a.size/2) &&
+			y - (size/2) < a.y + arena.yOffset + (a.size/2)) {
 
-			if (y + (size/2) > a.y + arena.yOffset - (a.size/2) && 
-				y - (size/2) < a.y + arena.yOffset + (a.size/2)) {
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}
