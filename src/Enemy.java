@@ -32,12 +32,11 @@ public class Enemy extends Actor {
 	public boolean isColliding(Actor a, Arena arena) {
 		
 		if (x + arena.xOffset + (size/2) > a.x + arena.xOffset - (a.size/2) && 
-			x + arena.xOffset - (size/2) < a.x + arena.xOffset + (a.size/2)) {
-
-			if (y + arena.yOffset + (size/2) > a.y + arena.yOffset - (a.size/2) && 
-				y + arena.yOffset - (size/2) < a.y + arena.yOffset + (a.size/2)) {
-				return true;
-			}
+			x + arena.xOffset - (size/2) < a.x + arena.xOffset + (a.size/2)	&& 
+			y + arena.yOffset + (size/2) > a.y + arena.yOffset - (a.size/2) &&
+			y + arena.yOffset - (size/2) < a.y + arena.yOffset + (a.size/2)) {
+			
+			return true;
 		}
 		return false;
 	}
