@@ -55,8 +55,7 @@ public class Enemy extends Actor {
 				y -= speed;
 			}
 			cooldown ++;
-		}
-		else {
+		} else {
 			cooldown ++;
 			if (cooldown == 90) {
 				cooldown = 0;
