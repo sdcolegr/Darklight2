@@ -21,31 +21,24 @@ public class Weapon {
 	public Weapon(String name){
 		this.name = name;
 		
-		if(name.equals("Short Sword")){
+		if (name.equals("Short Sword")){
 			//damage = ;
 			//speed = ;
 			atType = 0;
 			length = 64;
 			width = 96;
-		}
-		else if(name.equals("Spear")){
+		} else if (name.equals("Spear")){
 			//damage = ;
 			//speed = ;
 			atType = 1;
 			length = 128;
 			width = 16;
-		}
-		else if(name.equals("Greatsword")){
+		} else if (name.equals("Greatsword")){
 			//damage = ;
 			//speed = ;
 			atType = 2;
 			length = 96;
 			width = 192;
 		}
-	}
-	
-	
-	
-	
-	
+	}	
 }

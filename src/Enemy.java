@@ -38,20 +38,20 @@ public class Enemy extends Actor {
 		} else if (cooldown < 30) {
 
 			if (cooldown == 0) {
-				randomX = (int)(Math.random() * 2);
-				randomY = (int)(Math.random() * 2);
+				randomX = (int)(Math.random() * 3);
+				randomY = (int)(Math.random() * 3);
 			}
 			
-			if (randomX == 1 && x + arena.xOffset < arena.xBoundR) {
+			if (randomX == 1 && x + (size/2) < arena.xBoundR) {
 				x += speed;
 			} 
-			if (randomX == 2 && x + arena.xOffset > arena.xBoundL) {
+			if (randomX == 2 && x - (size/2) > arena.xBoundL) {
 				x -= speed;
 			}
-			if (randomY == 1 && y + arena.yOffset < arena.yBoundD) {
+			if (randomY == 1 && y + (size/2) < arena.yBoundD) {
 				y += speed;
 			} 
-			if (randomY == 2 && y + arena.yOffset > arena.yBoundU) {
+			if (randomY == 2 && y - (size/2) > arena.yBoundU) {
 				y -= speed;
 			}
 			cooldown ++;
