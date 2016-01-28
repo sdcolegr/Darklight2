@@ -38,8 +38,8 @@ public class Enemy extends Actor {
 		} else if (cooldown < 30) {
 
 			if (cooldown == 0) {
-				randomX = (int)(Math.random() * 2);
-				randomY = (int)(Math.random() * 2);
+				randomX = (int)(Math.random() * 3);
+				randomY = (int)(Math.random() * 3);
 			}
 			
 			if (randomX == 1 && x + arena.xOffset < arena.xBoundR) {
