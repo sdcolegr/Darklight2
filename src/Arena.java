@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.HashSet;
 
 public class Arena {
 	
@@ -11,6 +12,7 @@ public class Arena {
 	protected int yOffsetBorder = Darklight2.HEIGHT/4;
 	protected int xOffset = 0;
 	protected int yOffset = 0;
+	protected HashSet<Tile> tiles = new HashSet<Tile>();
 	
 	public void draw(Graphics2D g) {
 		
@@ -19,19 +21,20 @@ public class Arena {
 		g.fillRect(0, 0, Darklight2.WIDTH, Darklight2.HEIGHT);
 		
 		// floor grid
-		g.setColor(new Color(10, 10, 10));
-		for (int i = 0; i < (Darklight2.HEIGHT*3)/64; i++) {
-			if (i % 2 == 0) {
-				for (int j = 0; j < (Darklight2.WIDTH*3)/64; j += 2) {
-					g.fillRect(xBoundL + (64 * j) + xOffset, yBoundU + (64 * i) + yOffset, 64, 64);
-				}
-			} else {
-				for (int j = 1; j < (Darklight2.WIDTH*3)/64; j += 2) {
-					g.fillRect(xBoundL + (64 * j) + xOffset, yBoundU + (64 * i) + yOffset, 64, 64);
+		if (tiles.size() == 0) {
+			for (int i = 0; i < (Darklight2.HEIGHT*3)/64; i++) {
+				for (int j = 0; j < (Darklight2.WIDTH*3)/64; j++) {
+					Tile tile = new Tile(xBoundL + j * 64, yBoundU + i * 64);
+					tile.draw(g, xOffset, yOffset);
+					tiles.add(tile);
 				}
 			}
+		} else {
+			for (Tile tile : tiles) {
+				tile.draw(g, xOffset, yOffset);
+			}
 		}
-		
+
 		// static objects
 		g.setColor(Color.PINK);
 		g.fillRect(200 + xOffset, 200 + yOffset, 20, 20);
