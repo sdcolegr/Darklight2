@@ -6,7 +6,7 @@ import arcadia.Input;
 
 public class Player extends Actor {
 	
-	String weapon;
+	Weapon weapon;
 	
 	// 0 up
 	// 1 right
