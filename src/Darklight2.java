@@ -92,6 +92,7 @@ public class Darklight2 extends Game {
 			player.draw(g);
 			player.movement(p1, arena);
 	
+			// wave
 			wave.newWave();
 			wave.maintain(g, arena, player);
 	
@@ -143,7 +144,7 @@ public class Darklight2 extends Game {
 	}
 	
 	public void attack(Graphics2D g, Input p1) {
-		// up atk
+		// up attack
 		if (p1.pressed(Button.A) && player.direction == 0) {
 			g.setColor(Color.cyan);
 			if (player.weapon.name.equals("Greatsword")) {
@@ -152,16 +153,16 @@ public class Darklight2 extends Game {
 			}
 			if (player.weapon.name.equals("Short Sword")) {
 
-				for (int i = 1; i <= wave.enemyCount; i++) {
-					if ((wave.enemies.get(i).x + arena.xOffset - 32 <= player.x + 48 & wave.enemies
-							.get(i).x + arena.xOffset + 32 >= player.x - 48)
-							& (wave.enemies.get(i).y + arena.yOffset - 32 <= player.y - 33 & wave.enemies
-									.get(i).y + arena.yOffset + 32 >= player.y - 96)) {
+				for (Enemy enemy : wave.enemies) {
+					if (enemy.x + arena.xOffset - 32 <= player.x + 48 &&
+						enemy.x + arena.xOffset + 32 >= player.x - 48 &&
+						enemy.y + arena.yOffset - 32 <= player.y - 33 &&
+						enemy.y + arena.yOffset + 32 >= player.y - 96) {
 
 						g.setColor(Color.pink);
-						g.drawOval(wave.enemies.get(i).x + arena.xOffset,
-								wave.enemies.get(i).y + arena.yOffset, 10, 10);
-						System.out.println("YOU ALSO HIT " + i);
+						g.drawOval(enemy.x + arena.xOffset, enemy.y + arena.yOffset, 10, 10);
+						System.out.println("YOU ALSO HIT " + enemy.id);
+						enemy.health -= player.weapon.damage;
 					}
 				}
 
@@ -173,7 +174,7 @@ public class Darklight2 extends Game {
 			}
 		}
 
-		// right atk
+		// right attack
 		if (p1.pressed(Button.A) && player.direction == 1) {
 			g.setColor(Color.cyan);
 			if (player.weapon.name.equals("Greatsword")) {
@@ -181,17 +182,16 @@ public class Darklight2 extends Game {
 			}
 			if (player.weapon.name.equals("Short Sword")) {
 
-				for (int i = 1; i <= wave.enemyCount; i++) {
-
-					if ((wave.enemies.get(i).x + arena.xOffset - 32 <= player.x + 96 & wave.enemies
-							.get(i).x + arena.xOffset + 32 >= player.x + 36)
-							& (wave.enemies.get(i).y + arena.yOffset - 32 <= player.y + 32 & wave.enemies
-									.get(i).y + arena.yOffset + 32 >= player.y - 32)) {
+				for (Enemy enemy : wave.enemies) {
+					if (enemy.x + arena.xOffset - 32 <= player.x + 96 &&
+						enemy.x + arena.xOffset + 32 >= player.x + 36 &&
+						enemy.y + arena.yOffset - 32 <= player.y + 32 &&
+						enemy.y + arena.yOffset + 32 >= player.y - 32) {
 
 						g.setColor(Color.BLUE);
-						g.drawOval(wave.enemies.get(i).x + arena.xOffset,
-								wave.enemies.get(i).y + arena.yOffset, 10, 10);
-						System.out.println("YOU HIT " + i);
+						g.drawOval(enemy.x + arena.xOffset, enemy.y + arena.yOffset, 10, 10);
+						System.out.println("YOU HIT " + enemy.id);
+						enemy.health -= player.weapon.damage;
 					}
 				}
 
@@ -203,7 +203,7 @@ public class Darklight2 extends Game {
 			}
 		}
 
-		// down atk
+		// down attack
 		if (p1.pressed(Button.A) && player.direction == 2) {
 			g.setColor(Color.cyan);
 			if (player.weapon.name.equals("Greatsword")) {
@@ -211,18 +211,18 @@ public class Darklight2 extends Game {
 			}
 			if (player.weapon.name.equals("Short Sword")) {
 
-				for (int i = 1; i <= wave.enemyCount; i++) {
-					if ((wave.enemies.get(i).x + arena.xOffset + 32 >= player.x - 48 & wave.enemies
-							.get(i).x + arena.xOffset - 32 <= player.x + 48)
-							& (wave.enemies.get(i).y + arena.yOffset + 32 >= player.y + 36 & wave.enemies
-									.get(i).y + arena.yOffset - 32 <= player.y + 96)) {
+				for (Enemy enemy : wave.enemies) {
+					if (enemy.x + arena.xOffset + 32 >= player.x - 48 &&
+						enemy.x + arena.xOffset - 32 <= player.x + 48 &&
+						enemy.y + arena.yOffset + 32 >= player.y + 36 &&
+						enemy.y + arena.yOffset - 32 <= player.y + 96) {
 
 						g.setColor(Color.YELLOW);
-						g.drawOval(wave.enemies.get(i).x + arena.xOffset,
-								wave.enemies.get(i).y + arena.yOffset, 10, 10);
+						g.drawOval(enemy.x + arena.xOffset, enemy.y + arena.yOffset, 10, 10);
 						System.out
 								.println("YOU ALSO HIT THE ONE OTHER DIRECTION BRO "
-										+ i);
+										+ enemy.id);
+						enemy.health -= player.weapon.damage;
 					}
 				}
 
@@ -234,7 +234,7 @@ public class Darklight2 extends Game {
 			}
 		}
 
-		// left atk
+		// left attack
 		if (p1.pressed(Button.A) && player.direction == 3) {
 			g.setColor(Color.cyan);
 			if (player.weapon.name.equals("Greatsword")) {
@@ -242,17 +242,17 @@ public class Darklight2 extends Game {
 						gSword.width);
 			}
 			if (player.weapon.name.equals("Short Sword")) {
-				for (int i = 1; i <= wave.enemyCount; i++) {
-
-					if ((wave.enemies.get(i).x + arena.xOffset + 32 >= player.x - 96 & wave.enemies
-							.get(i).x + arena.xOffset - 32 <= player.x - 36)
-							& (wave.enemies.get(i).y + arena.yOffset + 32 >= player.y - 32 & wave.enemies
-									.get(i).y + arena.yOffset - 32 <= player.y + 32)) {
+				
+				for (Enemy enemy : wave.enemies) {
+					if (enemy.x + arena.xOffset + 32 >= player.x - 96 &&
+						enemy.x + arena.xOffset - 32 <= player.x - 36 &&
+						enemy.y + arena.yOffset + 32 >= player.y - 32 &&
+						enemy.y + arena.yOffset - 32 <= player.y + 32) {
 
 						g.setColor(Color.GREEN);
-						g.drawOval(wave.enemies.get(i).x + arena.xOffset,
-								wave.enemies.get(i).y + arena.yOffset, 10, 10);
-						System.out.println("YOU HIT THE OTHER GUY " + i);
+						g.drawOval(enemy.x + arena.xOffset, enemy.y + arena.yOffset, 10, 10);
+						System.out.println("YOU HIT THE OTHER GUY " + enemy.id);
+						enemy.health -= player.weapon.damage;
 					}
 				}
 

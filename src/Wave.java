@@ -1,12 +1,12 @@
 import java.awt.Graphics2D;
-import java.util.HashMap;
+import java.util.HashSet;
 
 public class Wave {
 	
 	int wave = 0;
 	int enemyCount = 20;
 	boolean waveStart = true;
-	HashMap<Integer, Enemy> enemies = new HashMap<Integer, Enemy>();
+	HashSet<Enemy> enemies = new HashSet<Enemy>();
 	
 	public void newWave() {
 		
@@ -18,7 +18,7 @@ public class Wave {
 
 				Enemy enemy = new Enemy(i, (int)((Math.random() * Darklight2.WIDTH * 3) - Darklight2.WIDTH),
 						(int)((Math.random() * Darklight2.HEIGHT * 3) - Darklight2.HEIGHT), 64, 10, 4);
-				enemies.put(i, enemy);
+				enemies.add(enemy);
 			}
 			waveStart = false;
 		}
@@ -26,11 +26,14 @@ public class Wave {
 	
 	public void maintain(Graphics2D g, Arena arena, Player player) {
 		
-		for (int id : enemies.keySet()) {
-			enemies.get(id).draw(g, arena);
-			enemies.get(id).trackPlayer(arena, player);
-			if (player.isColliding(enemies.get(id), arena)) {
-				System.out.println("hit " + id);
+		for (Enemy enemy : enemies) {
+			enemy.draw(g, arena);
+			enemy.trackPlayer(arena, player);
+			if (player.isColliding(enemy, arena)) {
+				System.out.println("hit " + enemy.id);
+			}
+			if (enemy.health <= 0) {
+				enemies.remove(enemy);
 			}
 		}
 		if (enemies.size() == 0) {

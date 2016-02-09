@@ -15,8 +15,8 @@ public class Arena {
 			this.x = x;
 			this.y = y;
 			
-			double rand;
-			if ((rand = Math.random()*5) < 1) {
+			double rand = Math.random()*5;
+			if (rand < 1) {
 				color = new Color(25, 25, 25);
 			} else if (rand < 2) {
 				color = new Color(20, 20, 20);
@@ -65,15 +65,6 @@ public class Arena {
 				tile.draw(g, xOffset, yOffset);
 			}
 		}
-
-		// static objects
-		g.setColor(Color.PINK);
-		g.fillRect(200 + xOffset, 200 + yOffset, 20, 20);
-		g.fillRect(800 + xOffset, 50 + yOffset, 20, 20);
-		g.fillRect(50 + xOffset, 300 + yOffset, 20, 20);
-		g.fillRect(500 + xOffset, 450 + yOffset, 20, 20);
-		g.fillRect(100 + xOffset, 250 + yOffset, 20, 20);
-		g.fillRect(650 + xOffset, 100 + yOffset, 20, 20);
 		
 		// map boundaries
 		g.setColor(Color.YELLOW);

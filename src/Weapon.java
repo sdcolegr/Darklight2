@@ -22,19 +22,19 @@ public class Weapon {
 		this.name = name;
 		
 		if (name.equals("Short Sword")){
-			//damage = ;
+			damage = 2;
 			//speed = ;
 			atType = 0;
 			length = 64;
 			width = 96;
 		} else if (name.equals("Spear")){
-			//damage = ;
+			damage = 5;
 			//speed = ;
 			atType = 1;
 			length = 128;
 			width = 16;
 		} else if (name.equals("Greatsword")){
-			//damage = ;
+			damage = 50;
 			//speed = ;
 			atType = 2;
 			length = 96;
