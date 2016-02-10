@@ -18,8 +18,13 @@ public class Enemy extends Actor {
 	}
 
 	public void draw(Graphics2D g, Arena arena) {
+		// square
 		g.setColor(Color.RED);
 		g.fillRect(x + arena.xOffset - (size/2), y + arena.yOffset - (size/2), size, size);
+		
+		// hitbox
+		g.setColor(Color.ORANGE);
+		g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
 	}
 
 	public void trackPlayer(Arena arena, Player player, HashSet<Enemy> enemies) {
@@ -31,7 +36,8 @@ public class Enemy extends Actor {
 				if (((y - size/2 + arena.yOffset < enemy.y + enemy.size/2 + arena.yOffset &&
 					y + size/2 + arena.yOffset > enemy.y - enemy.size/2 + arena.yOffset) ||
 					y + arena.yOffset == enemy.y + arena.yOffset) &&
-					x - size/2 + arena.xOffset == enemy.x + enemy.size/2 + arena.xOffset) {
+					(x - size/2 + arena.xOffset <= enemy.x + size/2 + arena.xOffset &&
+					x - size/2 + arena.xOffset > enemy.x + arena.xOffset)) {
 					left = false;
 				}
 
@@ -39,7 +45,8 @@ public class Enemy extends Actor {
 				if (((y - size/2 + arena.yOffset < enemy.y + enemy.size/2 + arena.yOffset &&
 					y + size/2 + arena.yOffset > enemy.y - enemy.size/2 + arena.yOffset) ||
 					y + arena.yOffset == enemy.y + arena.yOffset) &&
-					x + size/2 + arena.xOffset == enemy.x - enemy.size/2 + arena.xOffset) {
+					(x + size/2 + arena.xOffset >= enemy.x - size/2 + arena.xOffset &&
+					x + size/2 + arena.xOffset < enemy.x + arena.xOffset)) {
 					right = false;
 				}
 
@@ -47,7 +54,8 @@ public class Enemy extends Actor {
 				if (((x - size/2 + arena.xOffset < enemy.x + enemy.size/2 + arena.xOffset &&
 					x + size/2 + arena.xOffset > enemy.x - enemy.size/2 + arena.xOffset) ||
 					x + arena.xOffset == enemy.x + arena.xOffset) &&
-					y + arena.yOffset - size/2 == enemy.y + enemy.size/2 + arena.yOffset) {
+					(y - size/2 + arena.yOffset <= enemy.y + size/2 + arena.yOffset &&
+					y - size/2 + arena.yOffset > enemy.y + arena.yOffset)) {
 					up = false;
 				}
 
@@ -56,16 +64,17 @@ public class Enemy extends Actor {
 				if (((x - size/2 + arena.xOffset < enemy.x + enemy.size/2 + arena.xOffset &&
 					x + size/2 + arena.xOffset > enemy.x - enemy.size/2 + arena.xOffset) ||
 					x + arena.xOffset == enemy.x + arena.xOffset) &&
-					y + size/2 + arena.yOffset == enemy.y - enemy.size/2 + arena.yOffset) {
+					(y + size/2 + arena.yOffset >= enemy.y - size/2 + arena.yOffset &&
+					y + size/2 + arena.yOffset < enemy.y + arena.yOffset)) {
 					down = false;
 				}
 			}
 		}
 
 		if ((x + arena.xOffset + (size / 2) + 256 > player.x &&
-				x + arena.xOffset - (size / 2) - 256 < player.x &&
-				y + arena.yOffset + (size / 2) + 256 > player.y &&
-				y + arena.yOffset - (size / 2) - 256 < player.y) || hasSpotted) {
+			x + arena.xOffset - (size / 2) - 256 < player.x &&
+			y + arena.yOffset + (size / 2) + 256 > player.y &&
+			y + arena.yOffset - (size / 2) - 256 < player.y) || hasSpotted) {
 
 			hasSpotted = true;
 
