@@ -19,8 +19,14 @@ public class Player extends Actor {
 	}
 	
 	public void draw(Graphics2D g) {
-		g.setColor(Color.GREEN);
+		// square
+		g.setColor(new Color(0, 180, 0));
 		g.fillRect(x - (size/2), y - (size/2), size, size);
+		
+		// hitbox
+		g.setColor(Color.GREEN);
+		g.drawRect(x - size/2, y - size/2, size, size);
+		
 		//show character, will definitely have to be changed.
 		//g.drawImage(TextureLoader.character, x - (size/2), y - (size/2), null);
 	}

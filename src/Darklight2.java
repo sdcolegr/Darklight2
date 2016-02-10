@@ -24,7 +24,7 @@ public class Darklight2 extends Game {
 	Weapon gSword = new Weapon("Greatsword");
 	Weapon spear = new Weapon("Spear");
 	
-	int cooldown = 0;
+	int wait = 0;
 
 	@Override
 	public void tick(Graphics2D g, Input p1, Input p2, Sound s) {
@@ -44,6 +44,8 @@ public class Darklight2 extends Game {
 			// selection
 			g.setColor(Color.RED);
 			if (button == 0) {
+				
+				// PLAY
 				g.fillRect(WIDTH/2 - 160, 240, 320, 90);
 				if (justPressed(p1, Button.U) || justPressed(p1, Button.D)) {
 					button = 1;
@@ -54,6 +56,8 @@ public class Darklight2 extends Game {
 					gameState = 1;
 				}
 			} else {
+				
+				// EXIT
 				g.fillRect(WIDTH/2 - 160, 340, 320, 90);
 				if (justPressed(p1, Button.U) || justPressed(p1, Button.D)) {
 					button = 0;
@@ -91,29 +95,29 @@ public class Darklight2 extends Game {
 			// player
 			player.draw(g);
 			player.movement(p1, arena);
+			player.weapon = sSword;
+			attack(g, p1);
+			if (player.health <= 0) {
+				gameState = 2;
+			}
 	
 			// wave
 			wave.newWave();
 			wave.maintain(g, arena, player);
-	
-			// speed increasing
-			if (p1.pressed(Button.C) && cooldown == 0) {
-				player.speed *= 2;
-				cooldown = 60;
-			}
-			if (cooldown > 0) {
-				cooldown -= 1;
-				
-				if (cooldown == 0) {
-					player.speed /= 2;
-				}
-			}
-			
-			player.weapon = sSword;
-
-			attack(g, p1);
 
 			g.dispose();
+		}
+		
+		// Game Over
+		if (gameState == 2) {
+			g.setColor(Color.RED);
+			g.setFont(new Font("Arial", Font.BOLD, 150));
+			centerText("GAME OVER", g, WIDTH/2, HEIGHT/2);
+			wait++;
+			if (wait == 60) {
+				gameState = 0;
+				reset();
+			}
 		}
 		
 		updateKeyState(p1);
@@ -267,7 +271,10 @@ public class Darklight2 extends Game {
 	
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
+		arena = new Arena();
+		player = new Player(0, WIDTH/2, HEIGHT/2, 64, 10, 8);
+		wave = new Wave();
+		wait = 0;
 	}
 
 	@Override

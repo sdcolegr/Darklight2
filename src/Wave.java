@@ -29,12 +29,19 @@ public class Wave {
 		for (Enemy enemy : enemies) {
 			enemy.draw(g, arena);
 			enemy.trackPlayer(arena, player, enemies);
-			if (player.isColliding(enemy, arena)) {
-				System.out.println("hit " + enemy.id);
+			
+			// enemy attacking
+			if (player.isColliding(enemy, arena) && enemy.attackCooldown == 0) {
+				player.health -= enemy.strength;
+				System.out.println("Enemy " + enemy.id + " hit the player. Player health is " + player.health);
+				enemy.attackCooldown = 30;
+			} else if (enemy.attackCooldown > 0) {
+				enemy.attackCooldown--;
 			}
-			if (enemy.health <= 0) {
-				enemies.remove(enemy);
-			}
+			
+//			if (enemy.health <= 0) {
+//				enemies.remove(enemy);
+//			}
 		}
 		if (enemies.size() == 0) {
 			waveStart = true;

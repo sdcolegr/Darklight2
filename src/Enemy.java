@@ -4,9 +4,11 @@ import java.util.HashSet;
 
 public class Enemy extends Actor {
 
-	int cooldown = 0;
+	int moveCooldown = 0;
+	int attackCooldown = 0;
 	int randomX = 0;
 	int randomY = 0;
+	int strength = 0;
 	boolean hasSpotted = false;
 	boolean left = true;
 	boolean right = true;
@@ -15,15 +17,16 @@ public class Enemy extends Actor {
 
 	public Enemy(int id, int x, int y, int size, int health, int speed) {
 		super(id, x, y, size, health, speed);
+		strength = 1;
 	}
 
 	public void draw(Graphics2D g, Arena arena) {
 		// square
-		g.setColor(Color.RED);
+		g.setColor(new Color(180, 0, 0));
 		g.fillRect(x + arena.xOffset - (size/2), y + arena.yOffset - (size/2), size, size);
 		
 		// hitbox
-		g.setColor(Color.ORANGE);
+		g.setColor(Color.RED);
 		g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
 	}
 
@@ -90,9 +93,9 @@ public class Enemy extends Actor {
 			if (y + arena.yOffset < player.y && down) {
 				y += speed;
 			}
-		} else if (cooldown < 30) {
+		} else if (moveCooldown < 30) {
 
-			if (cooldown == 0) {
+			if (moveCooldown == 0) {
 				randomX = (int)(Math.random() * 3);
 				randomY = (int)(Math.random() * 3);
 			}
@@ -109,11 +112,11 @@ public class Enemy extends Actor {
 			if (randomY == 1 && y + (size/2) < arena.yBoundD && down) {
 				y += speed;
 			} 
-			cooldown ++;
+			moveCooldown ++;
 		} else {
-			cooldown ++;
-			if (cooldown == 90) {
-				cooldown = 0;
+			moveCooldown ++;
+			if (moveCooldown == 90) {
+				moveCooldown = 0;
 			}
 		}
 
@@ -122,7 +125,7 @@ public class Enemy extends Actor {
 		up = true;
 		down = true;
 	}
-
+	
 	@Override
 	public boolean isColliding(Actor a, Arena arena) {
 
