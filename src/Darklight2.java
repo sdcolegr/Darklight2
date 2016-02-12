@@ -104,6 +104,12 @@ public class Darklight2 extends Game {
 			// wave
 			wave.newWave();
 			wave.maintain(g, arena, player);
+			
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Arial", Font.BOLD, 50));
+			centerText("Wave " + wave.wave, g, WIDTH/2, 50);
+			g.setFont(new Font("Arial", Font.PLAIN, 15));
+			centerText("Remaining enemies: " + wave.enemies.size(), g, WIDTH/2, 65);
 
 			g.dispose();
 		}

@@ -26,6 +26,8 @@ public class Wave {
 	
 	public void maintain(Graphics2D g, Arena arena, Player player) {
 		
+		Enemy temp = null;
+		
 		for (Enemy enemy : enemies) {
 			enemy.draw(g, arena);
 			enemy.trackPlayer(arena, player, enemies);
@@ -39,10 +41,12 @@ public class Wave {
 				enemy.attackCooldown--;
 			}
 			
-//			if (enemy.health <= 0) {
-//				enemies.remove(enemy);
-//			}
+			if (enemy.health <= 0) {
+				temp = enemy;
+			}
 		}
+		enemies.remove(temp);
+		
 		if (enemies.size() == 0) {
 			waveStart = true;
 		}
