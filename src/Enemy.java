@@ -15,7 +15,7 @@ public class Enemy extends Actor {
 	boolean up = true;
 	boolean down = true;
 
-	public Enemy(int id, int x, int y, int size, int health, int speed) {
+	public Enemy(int id, float x, float y, int size, int health, int speed) {
 		super(id, x, y, size, health, speed);
 		strength = 1;
 	}
@@ -23,11 +23,11 @@ public class Enemy extends Actor {
 	public void draw(Graphics2D g, Arena arena) {
 		// square
 		g.setColor(new Color(180, 0, 0));
-		g.fillRect(x + arena.xOffset - (size/2), y + arena.yOffset - (size/2), size, size);
+		g.fillRect((int)(x + arena.xOffset - (size/2)), (int)(y + arena.yOffset - (size/2)), size, size);
 		
 		// hitbox
 		g.setColor(Color.RED);
-		g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
+		g.drawRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 	}
 
 	public void trackPlayer(Arena arena, Player player, HashSet<Enemy> enemies) {

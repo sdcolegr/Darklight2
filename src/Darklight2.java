@@ -152,7 +152,7 @@ public class Darklight2 extends Game {
 		if (p1.pressed(Button.A) && player.direction == 0) {
 			g.setColor(Color.cyan);
 			if (player.weapon.name.equals("Greatsword")) {
-				g.drawRect(player.x - 96, player.y - 96, gSword.width,
+				g.drawRect((int)(player.x - 96), (int)(player.y - 96), gSword.width,
 						gSword.length);
 			}
 			if (player.weapon.name.equals("Short Sword")) {
@@ -164,17 +164,17 @@ public class Darklight2 extends Game {
 						enemy.y + arena.yOffset + 32 >= player.y - 96) {
 
 						g.setColor(Color.pink);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y + arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out.println("YOU ALSO HIT " + enemy.id);
 						enemy.health -= player.weapon.damage;
 					}
 				}
 
-				g.drawRect(player.x - 48, player.y - 96, sSword.width,
+				g.drawRect((int)(player.x - 48), (int)(player.y - 96), sSword.width,
 						sSword.length);
 			}
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect(player.x, player.y - 160, spear.width, spear.length);
+				g.drawRect((int)player.x, (int)(player.y - 160), spear.width, spear.length);
 			}
 		}
 
@@ -182,7 +182,7 @@ public class Darklight2 extends Game {
 		if (p1.pressed(Button.A) && player.direction == 1) {
 			g.setColor(Color.cyan);
 			if (player.weapon.name.equals("Greatsword")) {
-				g.drawRect(player.x, player.y - 96, gSword.length, gSword.width);
+				g.drawRect((int)player.x, (int)(player.y - 96), gSword.length, gSword.width);
 			}
 			if (player.weapon.name.equals("Short Sword")) {
 
@@ -193,17 +193,17 @@ public class Darklight2 extends Game {
 						enemy.y + arena.yOffset + 32 >= player.y - 32) {
 
 						g.setColor(Color.BLUE);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y + arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out.println("YOU HIT " + enemy.id);
 						enemy.health -= player.weapon.damage;
 					}
 				}
 
-				g.drawRect(player.x + 32, player.y - 48, sSword.length,
+				g.drawRect((int)(player.x + 32), (int)(player.y - 48), sSword.length,
 						sSword.width);
 			}
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect(player.x + 32, player.y, spear.length, spear.width);
+				g.drawRect((int)(player.x + 32), (int)player.y, spear.length, spear.width);
 			}
 		}
 
@@ -211,7 +211,7 @@ public class Darklight2 extends Game {
 		if (p1.pressed(Button.A) && player.direction == 2) {
 			g.setColor(Color.cyan);
 			if (player.weapon.name.equals("Greatsword")) {
-				g.drawRect(player.x - 96, player.y, gSword.width, gSword.length);
+				g.drawRect((int)(player.x - 96), (int)player.y, gSword.width, gSword.length);
 			}
 			if (player.weapon.name.equals("Short Sword")) {
 
@@ -222,7 +222,7 @@ public class Darklight2 extends Game {
 						enemy.y + arena.yOffset - 32 <= player.y + 96) {
 
 						g.setColor(Color.YELLOW);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y + arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out
 								.println("YOU ALSO HIT THE ONE OTHER DIRECTION BRO "
 										+ enemy.id);
@@ -230,11 +230,11 @@ public class Darklight2 extends Game {
 					}
 				}
 
-				g.drawRect(player.x - 48, player.y + 32, sSword.width,
+				g.drawRect((int)(player.x - 48), (int)(player.y + 32), sSword.width,
 						sSword.length);
 			}
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect(player.x, player.y + 32, spear.width, spear.length);
+				g.drawRect((int)player.x, (int)(player.y + 32), spear.width, spear.length);
 			}
 		}
 
@@ -242,7 +242,7 @@ public class Darklight2 extends Game {
 		if (p1.pressed(Button.A) && player.direction == 3) {
 			g.setColor(Color.cyan);
 			if (player.weapon.name.equals("Greatsword")) {
-				g.drawRect(player.x - 96, player.y - 96, gSword.length,
+				g.drawRect((int)(player.x - 96), (int)(player.y - 96), gSword.length,
 						gSword.width);
 			}
 			if (player.weapon.name.equals("Short Sword")) {
@@ -254,17 +254,17 @@ public class Darklight2 extends Game {
 						enemy.y + arena.yOffset - 32 <= player.y + 32) {
 
 						g.setColor(Color.GREEN);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y + arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out.println("YOU HIT THE OTHER GUY " + enemy.id);
 						enemy.health -= player.weapon.damage;
 					}
 				}
 
-				g.drawRect(player.x - 96, player.y - 48, sSword.length,
+				g.drawRect((int)(player.x - 96), (int)(player.y - 48), sSword.length,
 						sSword.width);
 			}
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect(player.x - 160, player.y, spear.length, spear.width);
+				g.drawRect((int)(player.x - 160), (int)player.y, spear.length, spear.width);
 			}
 		}
 	}
