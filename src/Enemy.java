@@ -1,6 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Enemy extends Actor {
 
@@ -30,10 +30,10 @@ public class Enemy extends Actor {
 		g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
 	}
 
-	public void trackPlayer(Arena arena, Player player, HashSet<Enemy> enemies) {
+	public void trackPlayer(Arena arena, Player player, ConcurrentHashMap<Integer, Enemy> enemies) {
 
 		// Enemy Collision
-		for(Enemy enemy : enemies) {
+		for(Enemy enemy : enemies.values()) {
 			if (id != enemy.id) {
 				// Check for left collision
 				if (((y - size/2 + arena.yOffset < enemy.y + enemy.size/2 + arena.yOffset &&
