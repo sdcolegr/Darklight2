@@ -162,7 +162,7 @@ public class Darklight2 extends Game {
 			
 			if (player.weapon.name.equals("Greatsword")) {
 				
-				for (Enemy enemy : wave.enemies) {
+				for (Enemy enemy : wave.enemies.values()) {
 					if (enemy.x + arena.xOffset + 32 >= player.x - 32
 							&& enemy.x + arena.xOffset - 32 <= player.x + 32
 							&& enemy.y + arena.yOffset + 32 >= player.y - 96
@@ -185,7 +185,7 @@ public class Darklight2 extends Game {
 			
 			if (player.weapon.name.equals("Short Sword")) {
 
-				for (Enemy enemy : wave.enemies) {
+				for (Enemy enemy : wave.enemies.values()) {
 					if (enemy.x + arena.xOffset - 32 <= player.x + 48
 							&& enemy.x + arena.xOffset + 32 >= player.x - 48
 							&& enemy.y + arena.yOffset - 32 <= player.y - 33
@@ -215,7 +215,7 @@ public class Darklight2 extends Game {
 			
 			if (player.weapon.name.equals("Greatsword")) {
 
-				for (Enemy enemy : wave.enemies) {
+				for (Enemy enemy : wave.enemies.values()) {
 					if (enemy.x + arena.xOffset + 32 >= player.x + 32
 							&& enemy.x + arena.xOffset - 32 <= player.x + 96
 							&& enemy.y + arena.yOffset + 32 >= player.y - 32
@@ -233,7 +233,7 @@ public class Darklight2 extends Game {
 			
 			if (player.weapon.name.equals("Short Sword")) {
 
-				for (Enemy enemy : wave.enemies) {
+				for (Enemy enemy : wave.enemies.values()) {
 					if (enemy.x + arena.xOffset - 32 <= player.x + 96
 							&& enemy.x + arena.xOffset + 32 >= player.x + 36
 							&& enemy.y + arena.yOffset - 32 <= player.y + 32
@@ -262,7 +262,7 @@ public class Darklight2 extends Game {
 			g.setColor(Color.cyan);
 			
 			if (player.weapon.name.equals("Greatsword")) {
-				for (Enemy enemy : wave.enemies) {
+				for (Enemy enemy : wave.enemies.values()) {
 					if (enemy.x + arena.xOffset - 32 <= player.x + 32
 							&& enemy.x + arena.xOffset + 32 >= player.x - 32
 							&& enemy.y + arena.yOffset - 32 <= player.y + 96
@@ -281,7 +281,7 @@ public class Darklight2 extends Game {
 			
 			if (player.weapon.name.equals("Short Sword")) {
 
-				for (Enemy enemy : wave.enemies) {
+				for (Enemy enemy : wave.enemies.values()) {
 					if (enemy.x + arena.xOffset + 32 >= player.x - 48
 							&& enemy.x + arena.xOffset - 32 <= player.x + 48
 							&& enemy.y + arena.yOffset + 32 >= player.y + 36
@@ -314,7 +314,7 @@ public class Darklight2 extends Game {
 			
 			if (player.weapon.name.equals("Greatsword")) {
 
-				for (Enemy enemy : wave.enemies) {
+				for (Enemy enemy : wave.enemies.values()) {
 					if (enemy.x + arena.xOffset - 32 <= player.x - 32
 							&& enemy.x + arena.xOffset + 32 >= player.x - 96
 							&& enemy.y + arena.yOffset - 32 <= player.y + 32
@@ -334,7 +334,7 @@ public class Darklight2 extends Game {
 			
 			if (player.weapon.name.equals("Short Sword")) {
 
-				for (Enemy enemy : wave.enemies) {
+				for (Enemy enemy : wave.enemies.values()) {
 					if (enemy.x + arena.xOffset + 32 >= player.x - 96
 							&& enemy.x + arena.xOffset - 32 <= player.x - 36
 							&& enemy.y + arena.yOffset + 32 >= player.y - 32
