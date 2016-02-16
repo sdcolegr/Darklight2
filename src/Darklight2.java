@@ -174,6 +174,7 @@ public class Darklight2 extends Game {
 						g.drawOval(enemy.x + arena.xOffset, enemy.y
 								+ arena.yOffset, 10, 10);
 						System.out.println("gSword is badass");
+						enemy.health -= player.weapon.damage;
 
 					}
 
@@ -225,6 +226,7 @@ public class Darklight2 extends Game {
 						g.drawOval(enemy.x + arena.xOffset, enemy.y
 								+ arena.yOffset, 10, 10);
 						System.out.println("gSword is badass 2");
+						enemy.health -= player.weapon.damage;
 					}
 				}
 
@@ -272,6 +274,7 @@ public class Darklight2 extends Game {
 						g.drawOval(enemy.x + arena.xOffset, enemy.y
 								+ arena.yOffset, 10, 10);
 						System.out.println("gSword is badass");
+						enemy.health -= player.weapon.damage;
 					}
 
 				}
@@ -324,6 +327,7 @@ public class Darklight2 extends Game {
 						g.drawOval(enemy.x + arena.xOffset, enemy.y
 								+ arena.yOffset, 10, 10);
 						System.out.println("gSword is badass 2");
+						enemy.health -= player.weapon.damage;
 					}
 
 				}
