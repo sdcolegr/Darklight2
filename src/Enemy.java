@@ -41,8 +41,8 @@ public class Enemy extends Actor {
 		}
 		
 		// player safety radius correction
-		while (this.x > player.x - 256 && this.x < player.x + 256 &&
-				this.y > player.y - 256 && this.y < player.y + 256) {
+		while (this.x > player.x - 256 - arena.xOffset && this.x < player.x + 256 - arena.xOffset &&
+				this.y > player.y - 256 - arena.yOffset && this.y < player.y + 256 - arena.yOffset) {
 			this.x = (int)(Math.random() * Darklight2.WIDTH * 3) - Darklight2.WIDTH;
 			this.y = (int)(Math.random() * Darklight2.HEIGHT * 3) - Darklight2.HEIGHT;
 		}
