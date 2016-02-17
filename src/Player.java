@@ -14,8 +14,11 @@ public class Player extends Actor {
 	// 3 left
 	int direction;
 
-	public Player(int id, int x, int y, int size, int health, int speed) {
-		super(id, x, y, size, health, speed);
+	public Player(int id, int x, int y) {
+		super(id, x, y);
+		size = 64;
+		health = 20;
+		speed = 8;
 	}
 	
 	public void draw(Graphics2D g) {

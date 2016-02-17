@@ -4,33 +4,97 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Enemy extends Actor {
 
+	int type = 0;
+	int strength = 0;
 	int moveCooldown = 0;
 	int attackCooldown = 0;
 	int randomX = 0;
 	int randomY = 0;
-	int strength = 0;
-	boolean hasSpotted = false;
+	boolean spottedPlayer = false;
 	boolean left = true;
 	boolean right = true;
 	boolean up = true;
 	boolean down = true;
 
-	public Enemy(int id, int x, int y, int size, int health, int speed) {
-		super(id, x, y, size, health, speed);
-		strength = 1;
+	public Enemy(int id, int x, int y, Player player, Arena arena) {
+		super(id, x, y);
+		
+		type = (int)(Math.random()*100);
+		if (type < 60) {
+			// regular
+			size = 64;
+			health = 10;
+			speed = 4;
+			strength = 2;
+		} else if (type < 85) {
+			// small
+			size = 32;
+			health = 5;
+			speed = 6;
+			strength = 1;
+		} else {
+			// large
+			size = 128;
+			health = 20;
+			speed = 2;
+			strength = 8;
+		}
+		
+		// player safety radius correction
+		while (this.x > player.x - 256 && this.x < player.x + 256 &&
+				this.y > player.y - 256 && this.y < player.y + 256) {
+			this.x = (int)(Math.random() * Darklight2.WIDTH * 3) - Darklight2.WIDTH;
+			this.y = (int)(Math.random() * Darklight2.HEIGHT * 3) - Darklight2.HEIGHT;
+		}
+		
+		// bounding
+		if (this.x - size/2 < arena.xBoundL) {
+			this.x += size/2;
+		}
+		if (this.x + size/2 > arena.xBoundR) {
+			this.x -= size/2;
+		}
+		if (this.y - size/2 < arena.yBoundU) {
+			this.y += size/2;
+		}
+		if (this.y + size/2 > arena.yBoundD) {
+			this.y -= size/2;
+		}
 	}
 
 	public void draw(Graphics2D g, Arena arena) {
-		// square
-		g.setColor(new Color(180, 0, 0));
-		g.fillRect(x + arena.xOffset - (size/2), y + arena.yOffset - (size/2), size, size);
 		
-		// hitbox
-		g.setColor(Color.RED);
-		g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
+		if (type < 60) {
+			// regular
+			// square
+			g.setColor(new Color(230, 149, 0));
+			g.fillRect(x + arena.xOffset - (size/2), y + arena.yOffset - (size/2), size, size);
+			
+			// hitbox
+			g.setColor(Color.ORANGE);
+			g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
+		} else if (type < 85) {
+			// small
+			// square
+			g.setColor(new Color(227, 227, 0));
+			g.fillRect(x + arena.xOffset - (size/2), y + arena.yOffset - (size/2), size, size);
+			
+			// hitbox
+			g.setColor(Color.YELLOW);
+			g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
+		} else {
+			// large
+			// square
+			g.setColor(new Color(180, 0, 0));
+			g.fillRect(x + arena.xOffset - (size/2), y + arena.yOffset - (size/2), size, size);
+			
+			// hitbox
+			g.setColor(Color.RED);
+			g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
+		}
 	}
 
-	public void trackPlayer(Arena arena, Player player, ConcurrentHashMap<Integer, Enemy> enemies) {
+	public void movement(Arena arena, Player player, ConcurrentHashMap<Integer, Enemy> enemies) {
 
 		// Enemy Collision
 		for(Enemy enemy : enemies.values()) {
@@ -77,9 +141,9 @@ public class Enemy extends Actor {
 		if ((x + arena.xOffset + (size / 2) + 256 > player.x &&
 			x + arena.xOffset - (size / 2) - 256 < player.x &&
 			y + arena.yOffset + (size / 2) + 256 > player.y &&
-			y + arena.yOffset - (size / 2) - 256 < player.y) || hasSpotted) {
+			y + arena.yOffset - (size / 2) - 256 < player.y) || spottedPlayer) {
 
-			hasSpotted = true;
+			spottedPlayer = true;
 
 			if (x + arena.xOffset > player.x && left) {
 				x -= speed;
@@ -124,6 +188,23 @@ public class Enemy extends Actor {
 		right = true;
 		up = true;
 		down = true;
+	}
+	
+	public void attack(Player player, Arena arena) {
+		// enemy attacking
+		if (player.isColliding(this, arena) && attackCooldown == 0) {
+			player.health -= strength;
+			System.out.println("Enemy " + id + " hit the player. Player health is " + player.health);
+			if  (type < 60) {
+				attackCooldown = 30;
+			} else if (type < 85) {
+				attackCooldown = 45;
+			} else {
+				attackCooldown = 60;
+			}
+		} else if (attackCooldown > 0) {
+			attackCooldown--;
+		}
 	}
 	
 	@Override

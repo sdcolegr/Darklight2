@@ -17,7 +17,7 @@ public class Darklight2 extends Game {
 	int button = 0;
 	
 	Arena arena = new Arena();
-	Player player = new Player(0, WIDTH/2, HEIGHT/2, 64, 10, 8);
+	Player player = new Player(0, WIDTH/2, HEIGHT/2);
 	Wave wave = new Wave();
 	
 	Weapon sSword = new Weapon("Short Sword");
@@ -102,7 +102,7 @@ public class Darklight2 extends Game {
 			}
 	
 			// wave
-			wave.newWave();
+			wave.newWave(player, arena);
 			wave.maintain(g, arena, player);
 			
 			g.setColor(Color.WHITE);
@@ -278,7 +278,7 @@ public class Darklight2 extends Game {
 	@Override
 	public void reset() {
 		arena = new Arena();
-		player = new Player(0, WIDTH/2, HEIGHT/2, 64, 10, 8);
+		player = new Player(0, WIDTH/2, HEIGHT/2);
 		wave = new Wave();
 		wait = 0;
 	}

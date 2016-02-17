@@ -7,13 +7,10 @@ public class Actor {
 	protected int health;
 	protected int speed;
 	
-	public Actor(int id, int x, int y, int size, int health, int speed) {
+	public Actor(int id, int x, int y) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		this.size = size;
-		this.health = health;
-		this.speed = speed;
 	}
 	
 	public boolean isColliding(Actor a, Arena arena) { return false; }
