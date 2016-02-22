@@ -10,6 +10,7 @@ public class Enemy extends Actor {
 	int attackCooldown = 0;
 	int randomX = 0;
 	int randomY = 0;
+	float magnitude;
 	boolean spottedPlayer = false;
 	boolean left = true;
 	boolean right = true;
@@ -43,8 +44,8 @@ public class Enemy extends Actor {
 		// player safety radius correction
 		while (this.x > player.x - 256 - arena.xOffset && this.x < player.x + 256 - arena.xOffset &&
 				this.y > player.y - 256 - arena.yOffset && this.y < player.y + 256 - arena.yOffset) {
-			this.x = (int)(Math.random() * Darklight2.WIDTH * 3) - Darklight2.WIDTH;
-			this.y = (int)(Math.random() * Darklight2.HEIGHT * 3) - Darklight2.HEIGHT;
+			this.x = (float)(Math.random() * Darklight2.WIDTH * 3) - Darklight2.WIDTH;
+			this.y = (float)(Math.random() * Darklight2.HEIGHT * 3) - Darklight2.HEIGHT;
 		}
 		
 		// bounding
@@ -137,6 +138,14 @@ public class Enemy extends Actor {
 				}
 			}
 		}
+		
+		magnitude = 0;
+		if ((left || right) && (up || down)) {
+			magnitude += (float)Math.sqrt(speed*speed + speed*speed);
+		} else {
+			magnitude += (float)Math.sqrt(speed*speed);
+		}
+		magnitude = speed / magnitude;
 
 		if ((x + arena.xOffset + (size / 2) + 256 > player.x &&
 			x + arena.xOffset - (size / 2) - 256 < player.x &&
@@ -146,16 +155,16 @@ public class Enemy extends Actor {
 			spottedPlayer = true;
 
 			if (x + arena.xOffset > player.x && left) {
-				x -= speed;
+				x -= speed * magnitude;
 			}
 			if (x + arena.xOffset < player.x && right) {
-				x += speed;
+				x += speed * magnitude;
 			}
 			if (y + arena.yOffset > player.y && up) {
-				y -= speed;
+				y -= speed * magnitude;
 			}
 			if (y + arena.yOffset < player.y && down) {
-				y += speed;
+				y += speed * magnitude;
 			}
 		} else if (moveCooldown < 30) {
 

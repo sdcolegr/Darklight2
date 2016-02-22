@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Wave {
 	
 	int wave = 0;
-	int enemyCount = 100;
+	int enemyCount = 0;
 	boolean waveStart = true;
 	ConcurrentHashMap<Integer, Enemy> enemies = new ConcurrentHashMap<Integer, Enemy>();
 	
@@ -13,6 +13,7 @@ public class Wave {
 		if (waveStart) {
 			
 			wave += 1;
+			enemyCount = wave * 10;
 			
 			for (int i = 1; i <= enemyCount; i++) {
 				
@@ -30,7 +31,7 @@ public class Wave {
 		for (Enemy enemy : enemies.values()) {
 			enemy.draw(g, arena);
 			enemy.movement(arena, player, enemies);
-//			enemy.attack(player, arena);
+			enemy.attack(player, arena);
 			// enemy death
 			if (enemy.health <= 0) {
 				enemies.remove(enemy.id);
