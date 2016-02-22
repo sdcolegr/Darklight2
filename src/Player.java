@@ -13,6 +13,7 @@ public class Player extends Actor {
 	// 2 down
 	// 3 left
 	int direction;
+	float magnitude;
 
 	public Player(int id, int x, int y) {
 		super(id, x, y);
@@ -24,17 +25,26 @@ public class Player extends Actor {
 	public void draw(Graphics2D g) {
 		// square
 		g.setColor(new Color(0, 180, 0));
-		g.fillRect(x - (size/2), y - (size/2), size, size);
+		g.fillRect((int)(x - size/2), (int)(y - size/2), size, size);
 		
 		// hitbox
 		g.setColor(Color.GREEN);
-		g.drawRect(x - size/2, y - size/2, size, size);
+		g.drawRect((int)(x - size/2), (int)(y - size/2), size, size);
 		
 		//show character, will definitely have to be changed.
 		//g.drawImage(TextureLoader.character, x - (size/2), y - (size/2), null);
 	}
 	
 	public void movement(Input p1, Arena arena) {
+		
+		magnitude = 0;
+		if ((p1.pressed(Button.L) || p1.pressed(Button.R)) &&
+			(p1.pressed(Button.U) || p1.pressed(Button.D))) {
+			magnitude += (float)Math.sqrt(speed*speed + speed*speed);
+		} else {
+			magnitude += (float)Math.sqrt(speed*speed);
+		}
+		magnitude = speed / magnitude;
 		
 		// left
 		if (p1.pressed(Button.L) && x - (size/2) > arena.xBoundL + arena.xOffset) {

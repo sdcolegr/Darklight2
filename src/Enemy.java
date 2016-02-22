@@ -68,29 +68,29 @@ public class Enemy extends Actor {
 			// regular
 			// square
 			g.setColor(new Color(230, 149, 0));
-			g.fillRect(x + arena.xOffset - (size/2), y + arena.yOffset - (size/2), size, size);
+			g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 			
 			// hitbox
 			g.setColor(Color.ORANGE);
-			g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
+			g.drawRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 		} else if (type < 85) {
 			// small
 			// square
 			g.setColor(new Color(227, 227, 0));
-			g.fillRect(x + arena.xOffset - (size/2), y + arena.yOffset - (size/2), size, size);
+			g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 			
 			// hitbox
 			g.setColor(Color.YELLOW);
-			g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
+			g.drawRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 		} else {
 			// large
 			// square
 			g.setColor(new Color(180, 0, 0));
-			g.fillRect(x + arena.xOffset - (size/2), y + arena.yOffset - (size/2), size, size);
+			g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 			
 			// hitbox
 			g.setColor(Color.RED);
-			g.drawRect(x - size/2 + arena.xOffset, y - size/2 + arena.yOffset, size, size);
+			g.drawRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 		}
 	}
 

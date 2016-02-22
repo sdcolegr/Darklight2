@@ -1,13 +1,13 @@
 public class Actor {
 
 	protected int id;
-	protected int x;
-	protected int y;
+	protected float x;
+	protected float y;
 	protected int size;
 	protected int health;
 	protected int speed;
 	
-	public Actor(int id, int x, int y) {
+	public Actor(int id, float x, float y) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
