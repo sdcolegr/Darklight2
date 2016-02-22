@@ -50,36 +50,36 @@ public class Player extends Actor {
 		if (p1.pressed(Button.L) && x - (size/2) > arena.xBoundL + arena.xOffset) {
 			direction = 3;
 			if (x > arena.xOffsetBorder + (size/2)) {
-				x -= speed;
+				x -= speed * magnitude;
 			} else {
-				arena.xOffset += speed;
+				arena.xOffset += speed * magnitude;
 			}
 		}
 		// right
 		if (p1.pressed(Button.R) && x + (size/2) < arena.xBoundR + arena.xOffset) {
 			direction = 1;
 			if (x < Darklight2.WIDTH - arena.xOffsetBorder - (size/2)) {
-				x += speed;
+				x += speed * magnitude;
 			} else {
-				arena.xOffset -= speed;
+				arena.xOffset -= speed * magnitude;
 			}
 		}
 		// up
 		if (p1.pressed(Button.U) && y  - (size/2) > arena.yBoundU + arena.yOffset) {
 			direction = 0;
 			if(y > arena.yOffsetBorder + (size/2)) {
-				y -= speed;
+				y -= speed * magnitude;
 			} else {
-				arena.yOffset += speed;
+				arena.yOffset += speed * magnitude;
 			}
 		}
 		// down
 		if (p1.pressed(Button.D) && y  + (size/2) < arena.yBoundD + arena.yOffset) {
 			direction = 2;
 			if (y < Darklight2.HEIGHT - arena.yOffsetBorder - (size/2)) {
-				y += speed;
+				y += speed * magnitude;
 			} else {
-				arena.yOffset -= speed;
+				arena.yOffset -= speed * magnitude;
 			}
 		}
 	}

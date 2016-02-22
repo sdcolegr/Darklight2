@@ -163,16 +163,15 @@ public void attack(Graphics2D g, Input p1) {
 			if (player.weapon.name.equals("Greatsword")) {
 				
 				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32
-							&& enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32
-							&& enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96
-							&& enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33) {
+					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
+						enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
+						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96 &&
+						enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33) {
 						
 						//hitting goes here
 
 						g.setColor(Color.pink);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y
-								+ arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out.println("gSword is badass");
 						enemy.health -= player.weapon.damage;
 
@@ -180,32 +179,31 @@ public void attack(Graphics2D g, Input p1) {
 
 				}
 				
-				g.drawRect(player.x - 96, player.y - 96, gSword.width,
+				g.drawRect((int)(player.x - 96), (int)(player.y - 96), gSword.width,
 						gSword.length);
 			}
 			
 			if (player.weapon.name.equals("Short Sword")) {
 
 				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48
-							&& enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48
-							&& enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33
-							&& enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96) {
+					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48 &&
+						enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48 &&
+						enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33 &&
+						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96) {
 
 						g.setColor(Color.pink);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y
-								+ arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out.println("YOU ALSO HIT " + enemy.id);
 						enemy.health -= player.weapon.damage;
 					}
 				}
 
-				g.drawRect(player.x - 48, player.y - 96, sSword.width,
+				g.drawRect((int)(player.x - 48), (int)(player.y - 96), sSword.width,
 						sSword.length);
 			}
 			
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect(player.x, player.y - 160, spear.width, spear.length);
+				g.drawRect((int)player.x, (int)(player.y - 160), spear.width, spear.length);
 			}
 		}
 
@@ -217,44 +215,42 @@ public void attack(Graphics2D g, Input p1) {
 			if (player.weapon.name.equals("Greatsword")) {
 
 				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + 32
-							&& enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96
-							&& enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32
-							&& enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
+					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + 32 &&
+						enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96 &&
+						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32 &&
+						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
 
 						g.setColor(Color.GREEN);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y
-								+ arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out.println("gSword is badass 2");
 						enemy.health -= player.weapon.damage;
 					}
 				}
 
-				g.drawRect(player.x, player.y - 96, gSword.length, gSword.width);
+				g.drawRect((int)player.x, (int)(player.y - 96), gSword.length, gSword.width);
 			}
 			
 			if (player.weapon.name.equals("Short Sword")) {
 
 				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96
-							&& enemy.x + arena.xOffset + enemy.size/2 >= player.x + 36
-							&& enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32
-							&& enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
+					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96 &&
+						enemy.x + arena.xOffset + enemy.size/2 >= player.x + 36 &&
+						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32 &&
+						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
 
 						g.setColor(Color.BLUE);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y
-								+ arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out.println("YOU HIT " + enemy.id);
 						enemy.health -= player.weapon.damage;
 					}
 				}
 
-				g.drawRect(player.x + 32, player.y - 48, sSword.length,
+				g.drawRect((int)(player.x + 32), (int)(player.y - 48), sSword.length,
 						sSword.width);
 			}
 			
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect(player.x + 32, player.y, spear.length, spear.width);
+				g.drawRect((int)(player.x + 32), (int)player.y, spear.length, spear.width);
 			}
 		}
 
@@ -265,47 +261,43 @@ public void attack(Graphics2D g, Input p1) {
 			
 			if (player.weapon.name.equals("Greatsword")) {
 				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32
-							&& enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32
-							&& enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96
-							&& enemy.y + arena.yOffset + enemy.size/2 >= player.y + 33) {
+					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
+						enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
+						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96 &&
+						enemy.y + arena.yOffset + enemy.size/2 >= player.y + 33) {
 
 						g.setColor(Color.YELLOW);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y
-								+ arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out.println("gSword is badass");
 						enemy.health -= player.weapon.damage;
 					}
 
 				}
 				
-				g.drawRect(player.x - 96, player.y, gSword.width, gSword.length);
+				g.drawRect((int)(player.x - 96), (int)player.y, gSword.width, gSword.length);
 			}
 			
 			if (player.weapon.name.equals("Short Sword")) {
 
 				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48
-							&& enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48
-							&& enemy.y + arena.yOffset + enemy.size/2 >= player.y + 36
-							&& enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96) {
+					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48 &&
+						enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48 &&
+						enemy.y + arena.yOffset + enemy.size/2 >= player.y + 36 &&
+						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96) {
 
 						g.setColor(Color.YELLOW);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y
-								+ arena.yOffset, 10, 10);
-						System.out
-								.println("YOU ALSO HIT THE ONE OTHER DIRECTION BRO "
-										+ enemy.id);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
+						System.out.println("YOU ALSO HIT THE ONE OTHER DIRECTION BRO " + enemy.id);
 						enemy.health -= player.weapon.damage;
 					}
 				}
 
-				g.drawRect(player.x - 48, player.y + 32, sSword.width,
+				g.drawRect((int)(player.x - 48), (int)(player.y + 32), sSword.width,
 						sSword.length);
 			}
 			
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect(player.x, player.y + 32, spear.width, spear.length);
+				g.drawRect((int)player.x, (int)(player.y + 32), spear.width, spear.length);
 			}
 			
 		}
@@ -318,46 +310,44 @@ public void attack(Graphics2D g, Input p1) {
 			if (player.weapon.name.equals("Greatsword")) {
 
 				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x - 32
-							&& enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96
-							&& enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32
-							&& enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
+					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x - 32 &&
+						enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96 &&
+						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32 &&
+						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
 
 						g.setColor(Color.MAGENTA);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y
-								+ arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out.println("gSword is badass 2");
 						enemy.health -= player.weapon.damage;
 					}
 
 				}
 				
-				g.drawRect(player.x - 96, player.y - 96, gSword.length,
+				g.drawRect((int)(player.x - 96), (int)(player.y - 96), gSword.length,
 						gSword.width);
 			}
 			
 			if (player.weapon.name.equals("Short Sword")) {
 
 				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96
-							&& enemy.x + arena.xOffset - enemy.size/2 <= player.x - 36
-							&& enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32
-							&& enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
+					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96 &&
+						enemy.x + arena.xOffset - enemy.size/2 <= player.x - 36 &&
+						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32 &&
+						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
 
 						g.setColor(Color.GREEN);
-						g.drawOval(enemy.x + arena.xOffset, enemy.y
-								+ arena.yOffset, 10, 10);
+						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
 						System.out.println("YOU HIT THE OTHER GUY " + enemy.id);
 						enemy.health -= player.weapon.damage;
 					}
 				}
 
-				g.drawRect(player.x - 96, player.y - 48, sSword.length,
+				g.drawRect((int)(player.x - 96), (int)(player.y - 48), sSword.length,
 						sSword.width);
 			}
 			
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect(player.x - 160, player.y, spear.length, spear.width);
+				g.drawRect((int)(player.x - 160), (int)player.y, spear.length, spear.width);
 			}
 		}
 
