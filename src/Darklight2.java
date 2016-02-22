@@ -20,11 +20,12 @@ public class Darklight2 extends Game {
 	Player player = new Player(0, WIDTH/2, HEIGHT/2);
 	Wave wave = new Wave();
 	
-	Weapon sSword = new Weapon("Short Sword");
-	Weapon gSword = new Weapon("Greatsword");
-	Weapon spear = new Weapon("Spear");
+	Weapon weapon = new Weapon("Short Sword");
+	Weapon groundWeapon = new Weapon("Greatsword");
 	
 	int wait = 0;
+	int xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH) + (int)arena.xOffset);
+	int yCoor = ((int)(Math.random() * HEIGHT * 3) - HEIGHT) + (int)arena.yOffset;
 
 	@Override
 	public void tick(Graphics2D g, Input p1, Input p2, Sound s) {
@@ -95,8 +96,9 @@ public class Darklight2 extends Game {
 			// player
 			player.draw(g);
 			player.movement(p1, arena);
-			player.weapon = sSword;
+			player.weapon = weapon;
 			attack(g, p1);
+			weaponSwap(g, p1, arena);
 			if (player.health <= 0) {
 				gameState = 2;
 			}
@@ -179,8 +181,8 @@ public void attack(Graphics2D g, Input p1) {
 
 				}
 				
-				g.drawRect((int)(player.x - 96), (int)(player.y - 96), gSword.width,
-						gSword.length);
+				g.drawRect((int)(player.x - 96), (int)(player.y - 96), weapon.width,
+						weapon.length);
 			}
 			
 			if (player.weapon.name.equals("Short Sword")) {
@@ -198,12 +200,12 @@ public void attack(Graphics2D g, Input p1) {
 					}
 				}
 
-				g.drawRect((int)(player.x - 48), (int)(player.y - 96), sSword.width,
-						sSword.length);
+				g.drawRect((int)(player.x - 48), (int)(player.y - 96), weapon.width,
+						weapon.length);
 			}
 			
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect((int)player.x, (int)(player.y - 160), spear.width, spear.length);
+				g.drawRect((int)player.x, (int)(player.y - 160), weapon.width, weapon.length);
 			}
 		}
 
@@ -227,7 +229,7 @@ public void attack(Graphics2D g, Input p1) {
 					}
 				}
 
-				g.drawRect((int)player.x, (int)(player.y - 96), gSword.length, gSword.width);
+				g.drawRect((int)player.x, (int)(player.y - 96), weapon.length, weapon.width);
 			}
 			
 			if (player.weapon.name.equals("Short Sword")) {
@@ -245,12 +247,12 @@ public void attack(Graphics2D g, Input p1) {
 					}
 				}
 
-				g.drawRect((int)(player.x + 32), (int)(player.y - 48), sSword.length,
-						sSword.width);
+				g.drawRect((int)(player.x + 32), (int)(player.y - 48), weapon.length,
+						weapon.width);
 			}
 			
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect((int)(player.x + 32), (int)player.y, spear.length, spear.width);
+				g.drawRect((int)(player.x + 32), (int)player.y, weapon.length, weapon.width);
 			}
 		}
 
@@ -274,7 +276,7 @@ public void attack(Graphics2D g, Input p1) {
 
 				}
 				
-				g.drawRect((int)(player.x - 96), (int)player.y, gSword.width, gSword.length);
+				g.drawRect((int)(player.x - 96), (int)player.y, weapon.width, weapon.length);
 			}
 			
 			if (player.weapon.name.equals("Short Sword")) {
@@ -292,12 +294,12 @@ public void attack(Graphics2D g, Input p1) {
 					}
 				}
 
-				g.drawRect((int)(player.x - 48), (int)(player.y + 32), sSword.width,
-						sSword.length);
+				g.drawRect((int)(player.x - 48), (int)(player.y + 32), weapon.width,
+						weapon.length);
 			}
 			
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect((int)player.x, (int)(player.y + 32), spear.width, spear.length);
+				g.drawRect((int)player.x, (int)(player.y + 32), weapon.width, weapon.length);
 			}
 			
 		}
@@ -323,8 +325,8 @@ public void attack(Graphics2D g, Input p1) {
 
 				}
 				
-				g.drawRect((int)(player.x - 96), (int)(player.y - 96), gSword.length,
-						gSword.width);
+				g.drawRect((int)(player.x - 96), (int)(player.y - 96), weapon.length,
+						weapon.width);
 			}
 			
 			if (player.weapon.name.equals("Short Sword")) {
@@ -342,16 +344,37 @@ public void attack(Graphics2D g, Input p1) {
 					}
 				}
 
-				g.drawRect((int)(player.x - 96), (int)(player.y - 48), sSword.length,
-						sSword.width);
+				g.drawRect((int)(player.x - 96), (int)(player.y - 48), weapon.length,
+						weapon.width);
 			}
 			
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect((int)(player.x - 160), (int)player.y, spear.length, spear.width);
+				g.drawRect((int)(player.x - 160), (int)player.y, weapon.length, weapon.width);
 			}
 		}
 
 	}
+
+public void weaponSwap(Graphics2D g, Input p1, Arena arena) {
+	
+	g.setColor(Color.MAGENTA);
+	
+	if(!groundWeapon.weaponPickedUp()) {
+		g.fillRect((int)(xCoor - groundWeapon.width/2 + arena.xOffset), 
+				(int)(yCoor - groundWeapon.length/2 + arena.yOffset), groundWeapon.width, groundWeapon.length);
+		System.out.println(xCoor + " " + yCoor);
+	}
+	if (p1.pressed(Button.B) && (
+			(player.x + player.size/2 >= xCoor - groundWeapon.width/2 + arena.xOffset) &&
+			(player.x - player.size/2 <= xCoor + groundWeapon.width/2 + arena.xOffset) &&
+			(player.y + player.size/2 >= yCoor - groundWeapon.length/2 + arena.yOffset) &&
+			(player.y - player.size/2 <= yCoor + groundWeapon.length/2 + arena.yOffset) 
+			)) {
+		player.weapon.setWeapon(groundWeapon.getWeapon());
+		groundWeapon.setPickedUp();
+		System.out.println("Picked up weapon!");
+	}
+}
 	
 	@Override
 	public void reset() {
