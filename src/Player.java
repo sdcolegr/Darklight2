@@ -18,7 +18,7 @@ public class Player extends Actor {
 	public Player(int id, int x, int y) {
 		super(id, x, y);
 		size = 64;
-		health = 20;
+		health = 100;
 		speed = 8;
 	}
 	

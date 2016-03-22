@@ -26,19 +26,19 @@ public class Enemy extends Actor {
 			size = 64;
 			health = 10;
 			speed = 4;
-			strength = 2;
+			strength = 20;
 		} else if (type < 85) {
 			// small
 			size = 32;
 			health = 5;
 			speed = 6;
-			strength = 1;
+			strength = 10;
 		} else {
 			// large
 			size = 128;
 			health = 20;
 			speed = 2;
-			strength = 8;
+			strength = 40;
 		}
 		
 		// player safety radius correction

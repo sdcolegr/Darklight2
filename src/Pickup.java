@@ -25,12 +25,12 @@ public class Pickup {
 			y + 8 + arena.yOffset > player.y - (player.size/2) &&
 			y - 8 + arena.yOffset < player.y + (player.size/2)) {
 			
-			if (type < 50) {
+			//if (type < 50) {
 				player.health += 10;
 				if (player.health > 120) {
 					player.health = 120;
 				}
-			}
+			//}
 			
 			return true;
 		}
