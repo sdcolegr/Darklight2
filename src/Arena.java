@@ -8,30 +8,32 @@ public class Arena {
 	
 		int x = 0;
 		int y = 0;
-		Color color = Color.BLACK;
+		double type;
 	
 		public Tile(int x, int y) {
 		
 			this.x = x;
 			this.y = y;
-			
-			double rand = Math.random()*5;
-			if (rand < 1) {
-				color = new Color(25, 25, 25);
-			} else if (rand < 2) {
-				color = new Color(20, 20, 20);
-			} else if (rand < 3) {
-				color = new Color(15, 15, 15);
-			} else if (rand < 4) {
-				color = new Color(10, 10, 10);
-			} else {
-				color = new Color(5, 5, 5);
-			}
+			type = Math.random()*100;
 		}
 	
 		public void draw(Graphics2D g, int xOffset, int yOffset) {
-			g.setColor(color);
-			g.fillRect(x + xOffset, y + yOffset, 64, 64);
+			
+			if (type < 93) {
+				g.drawImage(TextureLoader.stone, x + xOffset, y + yOffset, null);
+			} else if (type < 96) {
+				g.drawImage(TextureLoader.moss, x + xOffset, y + yOffset, null);
+			} else if (type < 98) {
+				g.drawImage(TextureLoader.mossRocks, x + xOffset, y + yOffset, null);
+			} else if (type < 98.5) {
+				g.drawImage(TextureLoader.mossRocks2, x + xOffset, y + yOffset, null);
+			} else if (type < 99) {
+				g.drawImage(TextureLoader.mossSkull, x + xOffset, y + yOffset, null);
+			} else if (type < 99.99) {
+				g.drawImage(TextureLoader.mossHelm, x + xOffset, y + yOffset, null);
+			} else {
+				g.drawImage(TextureLoader.guy, x + xOffset, y + yOffset, null);
+			}
 		}
 	}
 	

@@ -112,6 +112,7 @@ public class Darklight2 extends Game {
 			centerText("Wave " + wave.wave, g, WIDTH/2, 50);
 			g.setFont(new Font("Arial", Font.PLAIN, 15));
 			centerText("Remaining enemies: " + wave.enemies.size(), g, WIDTH/2, 65);
+			g.drawString("Health: " + player.health, 5, 570);
 
 			g.dispose();
 		}
@@ -362,12 +363,11 @@ public void weaponSwap(Graphics2D g, Input p1, Arena arena) {
 	if(!groundWeapon.weaponPickedUp()) {
 		g.fillRect((int)(xCoor - groundWeapon.width/2 + arena.xOffset), 
 				(int)(yCoor - groundWeapon.length/2 + arena.yOffset), groundWeapon.width, groundWeapon.length);
-		System.out.println(xCoor + " " + yCoor);
 	}
 	if (p1.pressed(Button.B) && (
 			(player.x + player.size/2 >= xCoor - groundWeapon.width/2 + arena.xOffset) &&
 			(player.x - player.size/2 <= xCoor + groundWeapon.width/2 + arena.xOffset) &&
-			(player.y + player.size/2 >= yCoor - groundWeapon.length/2 + arena.yOffset) &&
+			(player.y + player.size/2 >= yCoor - groundWeapon.length/2 + arena.yOffset)&&
 			(player.y - player.size/2 <= yCoor + groundWeapon.length/2 + arena.yOffset) 
 			)) {
 		player.weapon.setWeapon(groundWeapon.getWeapon());
