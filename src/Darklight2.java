@@ -21,9 +21,14 @@ public class Darklight2 extends Game {
 	Wave wave = new Wave();
 	
 	Weapon weapon = new Weapon("Short Sword");
+	Weapon wep1 = new Weapon("Short Sword");
+	Weapon wep2 = new Weapon("Greatsword");
+	Weapon wep3 = new Weapon("Spear");
 	Weapon groundWeapon = new Weapon("Greatsword");
+	Weapon[] inv = new Weapon[4];
 	
 	int wait = 0;
+	int slot = 0;
 	int xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH) + (int)arena.xOffset);
 	int yCoor = ((int)(Math.random() * HEIGHT * 3) - HEIGHT) + (int)arena.yOffset;
 
@@ -54,6 +59,7 @@ public class Darklight2 extends Game {
 				if (justPressed(p1, Button.A) ||
 					justPressed(p1, Button.B) ||
 					justPressed(p1, Button.C)) {
+					inv[0] = wep1;
 					gameState = 1;
 				}
 			} else {
@@ -98,9 +104,14 @@ public class Darklight2 extends Game {
 			player.movement(p1, arena);
 			player.weapon = weapon;
 			attack(g, p1);
-			weaponSwap(g, p1, arena);
-			if (player.health <= 0) {
-				gameState = 2;
+			weaponPickup(g, p1, arena);
+			weaponSwap(p1);
+			// if (player.health <= 0) {
+			// gameState = 2;
+			// }
+
+			if (p1.pressed(Button.C)) {
+				wave.enemies.clear();
 			}
 	
 			// wave
@@ -356,23 +367,55 @@ public void attack(Graphics2D g, Input p1) {
 
 	}
 
-public void weaponSwap(Graphics2D g, Input p1, Arena arena) {
-	
+public void weaponPickup(Graphics2D g, Input p1, Arena arena) {
+
 	g.setColor(Color.MAGENTA);
-	
-	if(!groundWeapon.weaponPickedUp()) {
-		g.fillRect((int)(xCoor - groundWeapon.width/2 + arena.xOffset), 
-				(int)(yCoor - groundWeapon.length/2 + arena.yOffset), groundWeapon.width, groundWeapon.length);
+
+	if(!wep2.weaponPickedUp() && wave.wave == 3) {
+		g.fillRect((int)(xCoor - wep2.width/2 + arena.xOffset), 
+				(int)(yCoor - wep2.length/2 + arena.yOffset), wep2.width, wep2.length);
+		System.out.println(xCoor + " " + yCoor);
 	}
-	if (p1.pressed(Button.B) && (
-			(player.x + player.size/2 >= xCoor - groundWeapon.width/2 + arena.xOffset) &&
-			(player.x - player.size/2 <= xCoor + groundWeapon.width/2 + arena.xOffset) &&
-			(player.y + player.size/2 >= yCoor - groundWeapon.length/2 + arena.yOffset)&&
-			(player.y - player.size/2 <= yCoor + groundWeapon.length/2 + arena.yOffset) 
-			)) {
-		player.weapon.setWeapon(groundWeapon.getWeapon());
-		groundWeapon.setPickedUp();
-		System.out.println("Picked up weapon!");
+	
+	if(!wep3.weaponPickedUp() && wave.wave == 5) {
+		g.fillRect((int)(xCoor - wep3.width/2 + arena.xOffset), 
+				(int)(yCoor - wep3.length/2 + arena.yOffset), wep3.width, wep3.length);
+		System.out.println(xCoor + " " + yCoor);
+	}
+	
+	if (wave.wave == 3 || wave.wave == 5) {
+		if ((player.x + player.size/2 >= xCoor - groundWeapon.width/2 + arena.xOffset) &&
+				(player.x - player.size/2 <= xCoor + groundWeapon.width/2 + arena.xOffset) &&
+				(player.y + player.size/2 >= yCoor - groundWeapon.length/2 + arena.yOffset) &&			
+			
+				(player.y - player.size/2 <= yCoor + groundWeapon.length/2 + arena.yOffset)) {
+			if(!wep2.weaponPickedUp()) {
+				wep2.setPickedUp();
+				inv[1] = wep2;
+				xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH) + (int)arena.xOffset);
+				yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT) + (int)arena.yOffset);
+				System.out.println("Picked up weapon!");
+			}
+			else if (!wep3.weaponPickedUp()){
+				wep3.setPickedUp();
+				inv[2] = wep3;
+				System.out.println("Picked up weapon!");
+			}
+		}
+	}
+}
+
+public void weaponSwap(Input p1) {
+	if (justPressed(p1, Button.B)) {
+		if (inv[slot+1] == null) {
+			weapon.setWeapon(inv[0].getName());
+			slot = 0;
+		}
+		else {
+			weapon.setWeapon(inv[slot + 1].getName());
+			slot++;
+		}
+		System.out.println(slot + " " + inv[slot].getName());
 	}
 }
 	
