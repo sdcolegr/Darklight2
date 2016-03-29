@@ -26,6 +26,7 @@ public class Darklight2 extends Game {
 	Weapon wep3 = new Weapon("Spear");
 	Weapon groundWeapon = new Weapon("Greatsword");
 	Weapon[] inv = new Weapon[4];
+	Sounds sound = new Sounds();
 	
 	int wait = 0;
 	int slot = 0;
@@ -37,6 +38,9 @@ public class Darklight2 extends Game {
 		
 		// Menu
 		if (gameState == 0) {
+			// Song
+			sound.loadSound("Resources/Menu.wav");
+			sound.runLoop();
 			
 			// background
 			g.setColor(Color.BLACK);
@@ -61,6 +65,8 @@ public class Darklight2 extends Game {
 					justPressed(p1, Button.C)) {
 					inv[0] = wep1;
 					gameState = 1;
+					sound.reset();
+					sound.stop();
 				}
 			} else {
 				
@@ -92,6 +98,10 @@ public class Darklight2 extends Game {
 		if (gameState == 1) {
 			arena.draw(g);
 			
+			// Sound
+			sound.loadSound("Resources/Game Song.wav");
+			sound.runLoop();
+			
 //			// offset borders
 //			g.setColor(Color.RED);
 //			g.drawRect(0, 0, arena.xOffsetBorder, HEIGHT);								// left
@@ -106,9 +116,12 @@ public class Darklight2 extends Game {
 			attack(g, p1);
 			weaponPickup(g, p1, arena);
 			weaponSwap(p1);
-			// if (player.health <= 0) {
-			// gameState = 2;
-			// }
+			
+			 if (player.health <= 0) {
+				 gameState = 2;
+				 sound.stop();
+				 sound.reset();
+			 }
 
 			if (p1.pressed(Button.C)) {
 				wave.enemies.clear();
@@ -130,11 +143,29 @@ public class Darklight2 extends Game {
 		
 		// Game Over
 		if (gameState == 2) {
+			
+			 //Sound
+			 sound.loadSound("Resources/Death.wav");
+			 sound.runOnce();
+	 
 			g.setColor(Color.RED);
 			g.setFont(new Font("Arial", Font.BOLD, 150));
 			centerText("GAME OVER", g, WIDTH/2, HEIGHT/2);
 			wait++;
-			if (wait == 60) {
+			
+			if(justPressed(p1, Button.A) || 
+			   justPressed(p1, Button.B) || 
+			   justPressed(p1, Button.C)){
+				
+				sound.stop();
+				sound.reset();
+				gameState=0;
+				reset();
+			}
+			
+			if (wait == 3000) {
+				sound.stop();
+				sound.reset();
 				gameState = 0;
 				reset();
 			}
@@ -425,6 +456,9 @@ public void weaponSwap(Input p1) {
 		player = new Player(0, WIDTH/2, HEIGHT/2);
 		wave = new Wave();
 		wait = 0;
+		weapon.setWeapon(inv[0].getName());
+		inv[1] = null;
+		inv[2] = null;
 	}
 
 	@Override
