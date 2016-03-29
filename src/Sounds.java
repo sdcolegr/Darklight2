@@ -72,6 +72,7 @@ public class Sounds {
 
 	public void reset() {
 		runOnce = false;
+		soundPlayed = false;
 	}
 	public void stop() {
 		clip.stop();
