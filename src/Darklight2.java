@@ -30,8 +30,8 @@ public class Darklight2 extends Game {
 	
 	int wait = 0;
 	int slot = 0;
-	int xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH) + (int)arena.xOffset);
-	int yCoor = ((int)(Math.random() * HEIGHT * 3) - HEIGHT) + (int)arena.yOffset;
+	int xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
+	int yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
 
 	@Override
 	public void tick(Graphics2D g, Input p1, Input p2, Sound s) {
@@ -423,13 +423,15 @@ public void weaponPickup(Graphics2D g, Input p1, Arena arena) {
 			if(!wep2.weaponPickedUp()) {
 				wep2.setPickedUp();
 				inv[1] = wep2;
-				xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH) + (int)arena.xOffset);
-				yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT) + (int)arena.yOffset);
+				xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
+				yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
 				System.out.println("Picked up weapon!");
 			}
 			else if (!wep3.weaponPickedUp()){
 				wep3.setPickedUp();
 				inv[2] = wep3;
+				xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
+				yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
 				System.out.println("Picked up weapon!");
 			}
 		}
@@ -456,9 +458,12 @@ public void weaponSwap(Input p1) {
 		player = new Player(0, WIDTH/2, HEIGHT/2);
 		wave = new Wave();
 		wait = 0;
+		slot = 0;
 		weapon.setWeapon(inv[0].getName());
 		inv[1] = null;
 		inv[2] = null;
+		wep2.pickedUp = false;
+		wep3.pickedUp = false;
 	}
 
 	@Override
