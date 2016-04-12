@@ -30,6 +30,7 @@ public class Darklight2 extends Game {
 	
 	int wait = 0;
 	int slot = 0;
+	int count = 0;
 	int xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
 	int yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
 
@@ -76,10 +77,10 @@ public class Darklight2 extends Game {
 					button = 0;
 				}
 				if (justPressed(p1, Button.A) ||
-						justPressed(p1, Button.B) ||
-						justPressed(p1, Button.C)) {
-						System.exit(0);
-					}
+					justPressed(p1, Button.B) ||
+					justPressed(p1, Button.C)) {
+					System.exit(0);
+				}
 			}
 			
 			// option boxes
@@ -92,6 +93,9 @@ public class Darklight2 extends Game {
 			g.setFont(new Font("Arial", Font.PLAIN, 30));
 			centerText("PLAY", g, WIDTH/2, 295);
 			centerText("EXIT", g, WIDTH/2, 395);
+			
+//			g.setColor(Color.YELLOW);
+//			g.fillRect(WIDTH/2 - 352, 20, 704, 192);
 		}
 		
 		// Game
@@ -108,7 +112,16 @@ public class Darklight2 extends Game {
 //			g.drawRect(WIDTH - arena.xOffsetBorder, 0, arena.xOffsetBorder, HEIGHT);	// right
 //			g.drawRect(0, 0, WIDTH, arena.yOffsetBorder);								// top
 //			g.drawRect(0, HEIGHT - arena.yOffsetBorder, WIDTH, arena.yOffsetBorder);	// bottom
-				
+			
+			if (wave.falling) {
+				count = 0;
+				gameState = 2;
+			}
+			
+			// wave
+			wave.newWave(g, arena, player);
+			wave.maintain(g, arena, player);
+			
 			// player
 			player.draw(g);
 			player.movement(p1, arena);
@@ -117,20 +130,17 @@ public class Darklight2 extends Game {
 			weaponPickup(g, p1, arena);
 			weaponSwap(p1);
 			
-			 if (player.health <= 0) {
-				 gameState = 2;
-				 sound.stop();
-				 sound.reset();
-			 }
+			if (player.health <= 0) {
+				gameState = 3;
+				sound.stop();
+				sound.reset();
+			}
 
-			if (p1.pressed(Button.C)) {
+			if (justPressed(p1, Button.C)) {
 				wave.enemies.clear();
 			}
-	
-			// wave
-			wave.newWave(player, arena);
-			wave.maintain(g, arena, player);
-			
+
+			// HUD
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Arial", Font.BOLD, 50));
 			centerText("Wave " + wave.wave, g, WIDTH/2, 50);
@@ -141,12 +151,27 @@ public class Darklight2 extends Game {
 			g.dispose();
 		}
 		
-		// Game Over
 		if (gameState == 2) {
+			g.setColor(new Color (0, 0, 0, 4 * count));
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			count++;
+			if (count == 60) {
+				arena = new Arena();
+				player.x = WIDTH/2;
+				player.y = HEIGHT/2;
+				wave.falling = false;
+				wave.hole = false;
+				wave.waveStart = true;
+				gameState = 1;
+			}
+		}
+		
+		// Game Over
+		if (gameState == 3) {
 			
-			 //Sound
-			 sound.loadSound("Resources/Death.wav");
-			 sound.runOnce();
+			//Sound
+			sound.loadSound("Resources/Death.wav");
+			sound.runOnce();
 	 
 			g.setColor(Color.RED);
 			g.setFont(new Font("Arial", Font.BOLD, 150));

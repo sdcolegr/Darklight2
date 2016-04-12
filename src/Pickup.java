@@ -3,11 +3,13 @@ import java.awt.Graphics2D;
 
 public class Pickup {
 
+	double id;
 	float x;
 	float y;
 	int type;
 	
-	public Pickup(float x, float y) {
+	public Pickup(double id, float x, float y) {
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		type = (int)(Math.random()*100);

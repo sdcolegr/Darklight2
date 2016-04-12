@@ -1,5 +1,5 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Wave {
@@ -7,16 +7,18 @@ public class Wave {
 	int wave = 0;
 	int enemyCount = 0;
 	boolean waveStart = true;
+	boolean hole = false;
+	boolean falling = false;
 	ConcurrentHashMap<Integer, Enemy> enemies = new ConcurrentHashMap<Integer, Enemy>();
-	HashSet<Pickup> pickups = new HashSet<Pickup>();
+	ConcurrentHashMap<Double, Pickup> pickups = new ConcurrentHashMap<Double, Pickup>();
 	int random;
 	
-	public void newWave(Player player, Arena arena) {
+	public void newWave(Graphics2D g, Arena arena, Player player) {
 		
 		if (waveStart) {
 			
-			wave += 1;
-			enemyCount = wave * 10;
+			wave++;
+			enemyCount = (wave % 10 == 0) ? 100 : (wave % 10) * 10;
 			
 			for (int i = 1; i <= enemyCount; i++) {
 				
@@ -26,14 +28,25 @@ public class Wave {
 			}
 			waveStart = false;
 		}
+		if (hole) {
+			g.setColor(Color.BLACK);
+			g.fillRect((int)((Darklight2.WIDTH/2) - 160 + arena.xOffset), (int)((Darklight2.HEIGHT/2) - 96 + arena.yOffset), 320, 192);
+			
+			if (player.x - player.size/2 >= (Darklight2.WIDTH/2) - 160 + arena.xOffset &&
+				player.x + player.size/2 <= (Darklight2.WIDTH/2) + 160 + arena.xOffset &&
+				player.y - player.size/2 >= (Darklight2.HEIGHT/2) - 96 + arena.yOffset &&
+				player.y + player.size/2 <= (Darklight2.HEIGHT/2) + 96 + arena.yOffset) {
+				falling = true;
+			}
+		}
 	}
 	
 	public void maintain(Graphics2D g, Arena arena, Player player) {
 		
-		for (Pickup pickup : pickups) {
+		for (Pickup pickup : pickups.values()) {
 			pickup.draw(g, arena);
 			if (pickup.playerPickup(player, arena)) {
-				pickups.remove(pickup);
+				pickups.remove(pickup.id);
 			}
 		}
 		for (Enemy enemy : enemies.values()) {
@@ -44,8 +57,8 @@ public class Wave {
 			if (enemy.health <= 0) {
 				random = (int)(Math.random()*100);
 				if (random < 30) {
-					Pickup p = new Pickup(enemy.x, enemy.y);
-					pickups.add(p);
+					Pickup p = new Pickup(Math.random(), enemy.x, enemy.y);
+					pickups.put(p.id, p);
 				}
 				enemies.remove(enemy.id);
 			}
@@ -53,7 +66,11 @@ public class Wave {
 		
 		// new wave
 		if (enemies.size() == 0) {
-			waveStart = true;
+			if (wave != 0 && wave % 10 == 0) {
+				hole = true;
+			} else {
+				waveStart = true;
+			}
 		}
 	}
 }
