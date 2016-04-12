@@ -142,15 +142,27 @@ public class Darklight2 extends Game {
 
 			// HUD
 			g.setColor(Color.WHITE);
-			g.setFont(new Font("Arial", Font.BOLD, 50));
-			centerText("Wave " + wave.wave, g, WIDTH/2, 50);
-			g.setFont(new Font("Arial", Font.PLAIN, 15));
-			centerText("Remaining enemies: " + wave.enemies.size(), g, WIDTH/2, 65);
-			g.drawString("Health: " + player.health, 5, 570);
-
+			g.setFont(new Font("Arial", Font.BOLD, 20));
+			int floor = (wave.wave % 10 == 0) ? (wave.wave + 9)/10 : (wave.wave + 10)/10; 
+			int currentWave = (wave.wave % 10 == 0) ? 10 : wave.wave % 10;
+			g.drawString("Floor " + floor + " | Wave " + currentWave, 5, 20);
+			g.setFont(new Font("Arial", Font.PLAIN, 10));
+			g.drawString("Remaining enemies: " + wave.enemies.size(), 5, 30);
+			g.setColor(Color.RED);
+			g.fillRect(5, 550, 150, 20);
+			g.setColor(Color.GREEN);
+			if (player.health <= 100) {
+				g.fillRect(5, 550, (int)(150 * (player.health/100)), 20);
+			} else {
+				g.fillRect(5, 550, 150, 20);
+				g.setColor(Color.ORANGE);
+				g.fillRect(155, 550, (int)(150 * ((player.health - 100)/100)), 20);
+			}
+			
 			g.dispose();
 		}
 		
+		// Floor switching
 		if (gameState == 2) {
 			g.setColor(new Color (0, 0, 0, 4 * count));
 			g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -162,6 +174,7 @@ public class Darklight2 extends Game {
 				wave.falling = false;
 				wave.hole = false;
 				wave.waveStart = true;
+				wave.difficulty *= 1.1;
 				gameState = 1;
 			}
 		}

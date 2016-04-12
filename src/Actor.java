@@ -4,7 +4,7 @@ public class Actor {
 	protected float x;
 	protected float y;
 	protected int size;
-	protected int health;
+	protected double health;
 	protected int speed;
 	
 	public Actor(int id, float x, float y) {

@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Wave {
 	
 	int wave = 0;
+	float difficulty = 1;
 	int enemyCount = 0;
 	boolean waveStart = true;
 	boolean hole = false;
@@ -23,7 +24,7 @@ public class Wave {
 			for (int i = 1; i <= enemyCount; i++) {
 				
 				Enemy enemy = new Enemy(i, (int)(Math.random() * Darklight2.WIDTH * 3) - Darklight2.WIDTH, 
-						(int)(Math.random() * Darklight2.HEIGHT * 3) - Darklight2.HEIGHT, player, arena);
+						(int)(Math.random() * Darklight2.HEIGHT * 3) - Darklight2.HEIGHT, player, arena, difficulty);
 				enemies.put(enemy.id, enemy);
 			}
 			waveStart = false;

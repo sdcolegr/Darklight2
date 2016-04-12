@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Enemy extends Actor {
 
 	int type = 0;
-	int strength = 0;
+	double strength = 0;
 	int moveCooldown = 0;
 	int attackCooldown = 0;
 	int randomX = 0;
@@ -17,28 +17,28 @@ public class Enemy extends Actor {
 	boolean up = true;
 	boolean down = true;
 
-	public Enemy(int id, int x, int y, Player player, Arena arena) {
+	public Enemy(int id, int x, int y, Player player, Arena arena, float difficulty) {
 		super(id, x, y);
 		
 		type = (int)(Math.random()*100);
 		if (type < 60) {
 			// regular
 			size = 64;
-			health = 10;
+			health = 10 * difficulty;
 			speed = 4;
-			strength = 20;
+			strength = 15 * difficulty;
 		} else if (type < 85) {
 			// small
 			size = 32;
-			health = 5;
+			health = 5 * difficulty;
 			speed = 6;
-			strength = 10;
+			strength = 8 * difficulty;
 		} else {
 			// large
 			size = 128;
-			health = 20;
+			health = 20 * difficulty;
 			speed = 2;
-			strength = 40;
+			strength = 25 * difficulty;
 		}
 		
 		// player safety radius correction
