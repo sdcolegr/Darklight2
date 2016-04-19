@@ -127,7 +127,6 @@ public class Enemy extends Actor {
 					up = false;
 				}
 
-
 				// Check for below collision
 				if (((x - size/2 + arena.xOffset < enemy.x + enemy.size/2 + arena.xOffset &&
 					x + size/2 + arena.xOffset > enemy.x - enemy.size/2 + arena.xOffset) ||

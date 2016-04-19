@@ -2,6 +2,7 @@ public class Weapon {
 	
 	String name;
 	int damage;
+	int spDamage;
 	int speed;
 	boolean pickedUp = false;
 	
@@ -35,6 +36,7 @@ public class Weapon {
 			width = 16;
 		} else if (name.equals("Greatsword")){
 			damage = 50;
+			spDamage = 100;
 			//speed = ;
 			atType = 2;
 			length = 96;

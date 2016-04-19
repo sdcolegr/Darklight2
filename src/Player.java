@@ -6,12 +6,13 @@ import arcadia.Input;
 
 public class Player extends Actor {
 	
+	double mana;
 	Weapon weapon;
 	
 	// 0 up
-	// 1 right
-	// 2 down
-	// 3 left
+	// 1 down
+	// 2 left
+	// 3 right
 	int direction;
 	float magnitude;
 
@@ -20,6 +21,7 @@ public class Player extends Actor {
 		size = 64;
 		health = 100;
 		speed = 8;
+		mana = 100;
 	}
 	
 	public void draw(Graphics2D g) {
@@ -46,24 +48,6 @@ public class Player extends Actor {
 		}
 		magnitude = speed / magnitude;
 		
-		// left
-		if (p1.pressed(Button.L) && x - (size/2) > arena.xBoundL + arena.xOffset) {
-			direction = 3;
-			if (x > arena.xOffsetBorder + (size/2)) {
-				x -= speed * magnitude;
-			} else {
-				arena.xOffset += speed * magnitude;
-			}
-		}
-		// right
-		if (p1.pressed(Button.R) && x + (size/2) < arena.xBoundR + arena.xOffset) {
-			direction = 1;
-			if (x < Darklight2.WIDTH - arena.xOffsetBorder - (size/2)) {
-				x += speed * magnitude;
-			} else {
-				arena.xOffset -= speed * magnitude;
-			}
-		}
 		// up
 		if (p1.pressed(Button.U) && y  - (size/2) > arena.yBoundU + arena.yOffset) {
 			direction = 0;
@@ -75,11 +59,29 @@ public class Player extends Actor {
 		}
 		// down
 		if (p1.pressed(Button.D) && y  + (size/2) < arena.yBoundD + arena.yOffset) {
-			direction = 2;
+			direction = 1;
 			if (y < Darklight2.HEIGHT - arena.yOffsetBorder - (size/2)) {
 				y += speed * magnitude;
 			} else {
 				arena.yOffset -= speed * magnitude;
+			}
+		}
+		// left
+		if (p1.pressed(Button.L) && x - (size/2) > arena.xBoundL + arena.xOffset) {
+			direction = 2;
+			if (x > arena.xOffsetBorder + (size/2)) {
+				x -= speed * magnitude;
+			} else {
+				arena.xOffset += speed * magnitude;
+			}
+		}
+		// right
+		if (p1.pressed(Button.R) && x + (size/2) < arena.xBoundR + arena.xOffset) {
+			direction = 3;
+			if (x < Darklight2.WIDTH - arena.xOffsetBorder - (size/2)) {
+				x += speed * magnitude;
+			} else {
+				arena.xOffset -= speed * magnitude;
 			}
 		}
 	}

@@ -126,7 +126,8 @@ public class Darklight2 extends Game {
 			player.draw(g);
 			player.movement(p1, arena);
 			player.weapon = weapon;
-			attack(g, p1);
+			basicAttack(g, p1);
+			specialAttack(g, p1);
 			weaponPickup(g, p1, arena);
 			weaponSwap(p1);
 			
@@ -140,24 +141,34 @@ public class Darklight2 extends Game {
 				wave.enemies.clear();
 			}
 
+			g.setColor(Color.BLUE);
+			g.drawOval((int)(player.x - 256), (int)(player.y - 256), 512, 512);
+			
 			// HUD
-			g.setColor(Color.WHITE);
-			g.setFont(new Font("Arial", Font.BOLD, 20));
 			int floor = (wave.wave % 10 == 0) ? (wave.wave + 9)/10 : (wave.wave + 10)/10; 
 			int currentWave = (wave.wave % 10 == 0) ? 10 : wave.wave % 10;
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Arial", Font.BOLD, 20));
 			g.drawString("Floor " + floor + " | Wave " + currentWave, 5, 20);
 			g.setFont(new Font("Arial", Font.PLAIN, 10));
 			g.drawString("Remaining enemies: " + wave.enemies.size(), 5, 30);
-			g.setColor(Color.RED);
-			g.fillRect(5, 550, 150, 20);
+			
+			g.setColor(Color.DARK_GRAY);
+			g.fillRect(347, 531, 330, 10);
+			g.fillRect(347, 541, 10, 20);
+			g.fillRect(507, 541, 10, 20);
+			g.fillRect(667, 541, 10, 20);
+			g.fillRect(347, 561, 330, 15);
 			g.setColor(Color.GREEN);
 			if (player.health <= 100) {
-				g.fillRect(5, 550, (int)(150 * (player.health/100)), 20);
+				g.fillRect(357, 541, (int)(150 * (player.health/100)), 20);
 			} else {
-				g.fillRect(5, 550, 150, 20);
+				g.fillRect(357, 541, 150, 20);
 				g.setColor(Color.ORANGE);
-				g.fillRect(155, 550, (int)(150 * ((player.health - 100)/100)), 20);
+				g.fillRect(357, 541, (int)(150 * ((player.health - 100)/100)), 20);
 			}
+			g.setColor(Color.BLUE);
+			g.fillRect(517 + (int)(150 - (150 * (player.mana/100))), 541, (int)(150 * (player.mana/100)), 20);
 			
 			g.dispose();
 		}
@@ -232,263 +243,212 @@ public class Darklight2 extends Game {
 		}
 	}
 
-	private boolean justPressed(Input p1, Button source) {
+	public boolean justPressed(Input p1, Button source) {
 		return p1.pressed(source) && !keyState.containsKey(source);
 	}
 	
-public void attack(Graphics2D g, Input p1) {
+	public void basicAttack(Graphics2D g, Input p1) {
 
-		// up attack
-		if (p1.pressed(Button.A) && player.direction == 0 && justPressed(p1, Button.A)) {
-			
-			g.setColor(Color.cyan);
-			
-			if (player.weapon.name.equals("Greatsword")) {
-				
-				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
-						enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
-						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96 &&
-						enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33) {
-						
-						//hitting goes here
-
-						g.setColor(Color.pink);
-						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
-						System.out.println("gSword is badass");
-						enemy.health -= player.weapon.damage;
-
-					}
-
+		if (justPressed(p1, Button.A)) {
+			if (player.mana < 100) {
+				player.mana += 8;
+				if (player.mana > 100) {
+					player.mana = 100;
 				}
-				
-				g.drawRect((int)(player.x - 96), (int)(player.y - 96), weapon.width,
-						weapon.length);
 			}
-			
 			if (player.weapon.name.equals("Short Sword")) {
-
-				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48 &&
-						enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48 &&
-						enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33 &&
-						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96) {
-
-						g.setColor(Color.pink);
-						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
-						System.out.println("YOU ALSO HIT " + enemy.id);
-						enemy.health -= player.weapon.damage;
+				// UP
+				if (player.direction == 0) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48 &&
+							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96) {
+							enemy.health -= player.weapon.damage;
+						}
 					}
+					g.drawRect((int)(player.x - 48), (int)(player.y - 96), weapon.width, weapon.length);
 				}
-
-				g.drawRect((int)(player.x - 48), (int)(player.y - 96), weapon.width,
-						weapon.length);
+				// DOWN
+				if (player.direction == 1) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48 &&
+							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y + 36 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96) {
+							enemy.health -= player.weapon.damage;
+						}
+					}
+					g.drawRect((int)(player.x - 48), (int)(player.y + 32), weapon.width, weapon.length);
+				}
+				// LEFT
+				if (player.direction == 2) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96 &&
+							enemy.x + arena.xOffset - enemy.size/2 <= player.x - 36 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
+							enemy.health -= player.weapon.damage;
+						}
+					}
+					g.drawRect((int)(player.x - 96), (int)(player.y - 48), weapon.length, weapon.width);
+				}
+				// RIGHT
+				if (player.direction == 3) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96 &&
+							enemy.x + arena.xOffset + enemy.size/2 >= player.x + 36 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
+							enemy.health -= player.weapon.damage;
+						}
+					}
+					g.drawRect((int)(player.x + 32), (int)(player.y - 48), weapon.length, weapon.width);
+				}
 			}
-			
+			if (player.weapon.name.equals("Greatsword")) {
+				// UP
+				if (player.direction == 0) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
+							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33) {
+							enemy.health -= player.weapon.damage;
+						}
+					}
+					g.drawRect((int)(player.x - 96), (int)(player.y - 96), weapon.width, weapon.length);
+				}
+				// DOWN
+				if (player.direction == 1) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
+							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y + 33) {
+							enemy.health -= player.weapon.damage;
+						}
+					}
+					g.drawRect((int)(player.x - 96), (int)player.y, weapon.width, weapon.length);
+				}
+				// LEFT
+				if (player.direction == 2) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset - enemy.size/2 <= player.x - 32 &&
+							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
+							enemy.health -= player.weapon.damage;
+						}
+					}
+					g.drawRect((int)(player.x - 96), (int)(player.y - 96), weapon.length, weapon.width);
+				}
+				// RIGHT
+				if (player.direction == 3) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + 32 &&
+							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
+							enemy.health -= player.weapon.damage;
+						}
+					}
+					g.drawRect((int)player.x, (int)(player.y - 96), weapon.length, weapon.width);
+				}
+			}
 			if (player.weapon.name.equals("Spear")) {
-				g.drawRect((int)player.x, (int)(player.y - 160), weapon.width, weapon.length);
+				// UP
+				if (player.direction == 0) {
+					g.drawRect((int)player.x, (int)(player.y - 160), weapon.width, weapon.length);
+				}
+				// DOWN
+				if (player.direction == 1) {
+					g.drawRect((int)player.x, (int)(player.y + 32), weapon.width, weapon.length);
+				}
+				// LEFT
+				if (player.direction == 2) {
+					g.drawRect((int)(player.x - 160), (int)player.y, weapon.length, weapon.width);
+				}
+				// RIGHT
+				if (player.direction == 3) {
+					g.drawRect((int)(player.x + 32), (int)player.y, weapon.length, weapon.width);
+				}
 			}
 		}
-
-		// right attack
-		if (p1.pressed(Button.A) && player.direction == 1 && justPressed(p1, Button.A)) {
-			
-			g.setColor(Color.cyan);
-			
-			if (player.weapon.name.equals("Greatsword")) {
-
-				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + 32 &&
-						enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96 &&
-						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32 &&
-						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
-
-						g.setColor(Color.GREEN);
-						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
-						System.out.println("gSword is badass 2");
-						enemy.health -= player.weapon.damage;
-					}
-				}
-
-				g.drawRect((int)player.x, (int)(player.y - 96), weapon.length, weapon.width);
-			}
-			
-			if (player.weapon.name.equals("Short Sword")) {
-
-				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96 &&
-						enemy.x + arena.xOffset + enemy.size/2 >= player.x + 36 &&
-						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32 &&
-						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
-
-						g.setColor(Color.BLUE);
-						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
-						System.out.println("YOU HIT " + enemy.id);
-						enemy.health -= player.weapon.damage;
-					}
-				}
-
-				g.drawRect((int)(player.x + 32), (int)(player.y - 48), weapon.length,
-						weapon.width);
-			}
-			
-			if (player.weapon.name.equals("Spear")) {
-				g.drawRect((int)(player.x + 32), (int)player.y, weapon.length, weapon.width);
-			}
-		}
-
-		// down attack
-		if (p1.pressed(Button.A) && player.direction == 2 && justPressed(p1, Button.A)) {
-			
-			g.setColor(Color.cyan);
-			
-			if (player.weapon.name.equals("Greatsword")) {
-				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
-						enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
-						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96 &&
-						enemy.y + arena.yOffset + enemy.size/2 >= player.y + 33) {
-
-						g.setColor(Color.YELLOW);
-						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
-						System.out.println("gSword is badass");
-						enemy.health -= player.weapon.damage;
-					}
-
-				}
-				
-				g.drawRect((int)(player.x - 96), (int)player.y, weapon.width, weapon.length);
-			}
-			
-			if (player.weapon.name.equals("Short Sword")) {
-
-				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48 &&
-						enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48 &&
-						enemy.y + arena.yOffset + enemy.size/2 >= player.y + 36 &&
-						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96) {
-
-						g.setColor(Color.YELLOW);
-						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
-						System.out.println("YOU ALSO HIT THE ONE OTHER DIRECTION BRO " + enemy.id);
-						enemy.health -= player.weapon.damage;
-					}
-				}
-
-				g.drawRect((int)(player.x - 48), (int)(player.y + 32), weapon.width,
-						weapon.length);
-			}
-			
-			if (player.weapon.name.equals("Spear")) {
-				g.drawRect((int)player.x, (int)(player.y + 32), weapon.width, weapon.length);
-			}
-			
-		}
-
-		// left attack
-		if (p1.pressed(Button.A) && player.direction == 3 && justPressed(p1, Button.A)) {
-			
-			g.setColor(Color.cyan);
-			
-			if (player.weapon.name.equals("Greatsword")) {
-
-				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x - 32 &&
-						enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96 &&
-						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32 &&
-						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
-
-						g.setColor(Color.MAGENTA);
-						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
-						System.out.println("gSword is badass 2");
-						enemy.health -= player.weapon.damage;
-					}
-
-				}
-				
-				g.drawRect((int)(player.x - 96), (int)(player.y - 96), weapon.length,
-						weapon.width);
-			}
-			
-			if (player.weapon.name.equals("Short Sword")) {
-
-				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96 &&
-						enemy.x + arena.xOffset - enemy.size/2 <= player.x - 36 &&
-						enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32 &&
-						enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
-
-						g.setColor(Color.GREEN);
-						g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
-						System.out.println("YOU HIT THE OTHER GUY " + enemy.id);
-						enemy.health -= player.weapon.damage;
-					}
-				}
-
-				g.drawRect((int)(player.x - 96), (int)(player.y - 48), weapon.length,
-						weapon.width);
-			}
-			
-			if (player.weapon.name.equals("Spear")) {
-				g.drawRect((int)(player.x - 160), (int)player.y, weapon.length, weapon.width);
-			}
-		}
-
 	}
 
-public void weaponPickup(Graphics2D g, Input p1, Arena arena) {
-
-	g.setColor(Color.MAGENTA);
-
-	if(!wep2.weaponPickedUp() && wave.wave == 3) {
-		g.fillRect((int)(xCoor - wep2.width/2 + arena.xOffset), 
-				(int)(yCoor - wep2.length/2 + arena.yOffset), wep2.width, wep2.length);
-		System.out.println(xCoor + " " + yCoor);
+	public void specialAttack(Graphics2D g, Input p1) {
+	
+		if (justPressed(p1, Button.B) && player.weapon.name.equals("Greatsword") && player.mana >= 40) {
+			player.mana -= 40;
+			for (Enemy enemy : wave.enemies.values()) {
+				if (enemy.x + enemy.size/2 + arena.xOffset >= player.x - 128 &&
+					enemy.x - enemy.size/2 + arena.xOffset <= player.x + 128 &&
+					enemy.y + enemy.size/2 + arena.yOffset >= player.y - 128 &&
+					enemy.y - enemy.size/2 + arena.yOffset <= player.y + 128) {
+					
+					g.setColor(Color.pink);
+					g.drawOval((int)(enemy.x + arena.xOffset), (int)(enemy.y + arena.yOffset), 10, 10);
+					enemy.health -= player.weapon.spDamage;
+				}
+			}
+			g.drawRect((int)(player.x - 128), (int)(player.y - 128), 256, 256);
+		}
 	}
 	
-	if(!wep3.weaponPickedUp() && wave.wave == 5) {
-		g.fillRect((int)(xCoor - wep3.width/2 + arena.xOffset), 
-				(int)(yCoor - wep3.length/2 + arena.yOffset), wep3.width, wep3.length);
-		System.out.println(xCoor + " " + yCoor);
+	public void weaponPickup(Graphics2D g, Input p1, Arena arena) {
+	
+		g.setColor(Color.MAGENTA);
+	
+		if(!wep2.weaponPickedUp() && wave.wave == 3) {
+			g.fillRect((int)(xCoor - wep2.width/2 + arena.xOffset), 
+					(int)(yCoor - wep2.length/2 + arena.yOffset), wep2.width, wep2.length);
+			System.out.println(xCoor + " " + yCoor);
+		}
+		
+		if(!wep3.weaponPickedUp() && wave.wave == 5) {
+			g.fillRect((int)(xCoor - wep3.width/2 + arena.xOffset), 
+					(int)(yCoor - wep3.length/2 + arena.yOffset), wep3.width, wep3.length);
+			System.out.println(xCoor + " " + yCoor);
+		}
+		
+		if (wave.wave == 3 || wave.wave == 5) {
+			if ((player.x + player.size/2 >= xCoor - groundWeapon.width/2 + arena.xOffset) &&
+					(player.x - player.size/2 <= xCoor + groundWeapon.width/2 + arena.xOffset) &&
+					(player.y + player.size/2 >= yCoor - groundWeapon.length/2 + arena.yOffset) &&			
+				
+					(player.y - player.size/2 <= yCoor + groundWeapon.length/2 + arena.yOffset)) {
+				if(!wep2.weaponPickedUp()) {
+					wep2.setPickedUp();
+					inv[1] = wep2;
+					xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
+					yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
+					System.out.println("Picked up weapon!");
+				}
+				else if (!wep3.weaponPickedUp()){
+					wep3.setPickedUp();
+					inv[2] = wep3;
+					xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
+					yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
+					System.out.println("Picked up weapon!");
+				}
+			}
+		}
 	}
 	
-	if (wave.wave == 3 || wave.wave == 5) {
-		if ((player.x + player.size/2 >= xCoor - groundWeapon.width/2 + arena.xOffset) &&
-				(player.x - player.size/2 <= xCoor + groundWeapon.width/2 + arena.xOffset) &&
-				(player.y + player.size/2 >= yCoor - groundWeapon.length/2 + arena.yOffset) &&			
-			
-				(player.y - player.size/2 <= yCoor + groundWeapon.length/2 + arena.yOffset)) {
-			if(!wep2.weaponPickedUp()) {
-				wep2.setPickedUp();
-				inv[1] = wep2;
-				xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
-				yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
-				System.out.println("Picked up weapon!");
+	public void weaponSwap(Input p1) {
+		if (justPressed(p1, Button.C)) {
+			if (inv[slot+1] == null) {
+				weapon.setWeapon(inv[0].getName());
+				slot = 0;
 			}
-			else if (!wep3.weaponPickedUp()){
-				wep3.setPickedUp();
-				inv[2] = wep3;
-				xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
-				yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
-				System.out.println("Picked up weapon!");
+			else {
+				weapon.setWeapon(inv[slot + 1].getName());
+				slot++;
 			}
+			System.out.println(slot + " " + inv[slot].getName());
 		}
 	}
-}
-
-public void weaponSwap(Input p1) {
-	if (justPressed(p1, Button.B)) {
-		if (inv[slot+1] == null) {
-			weapon.setWeapon(inv[0].getName());
-			slot = 0;
-		}
-		else {
-			weapon.setWeapon(inv[slot + 1].getName());
-			slot++;
-		}
-		System.out.println(slot + " " + inv[slot].getName());
-	}
-}
 	
 	@Override
 	public void reset() {
