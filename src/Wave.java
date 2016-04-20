@@ -42,7 +42,7 @@ public class Wave {
 		}
 	}
 	
-	public void maintain(Graphics2D g, Arena arena, Player player) {
+	public void maintain(Graphics2D g, Arena arena, Player player, boolean swordSpec) {
 		
 		for (Pickup pickup : pickups.values()) {
 			pickup.draw(g, arena);
@@ -53,11 +53,11 @@ public class Wave {
 		for (Enemy enemy : enemies.values()) {
 			enemy.draw(g, arena);
 			enemy.movement(arena, player, enemies);
-			enemy.attack(player, arena);
+			enemy.attack(player, arena, swordSpec);
 			// enemy death
 			if (enemy.health <= 0) {
 				random = (int)(Math.random()*100);
-				if (random < 30) {
+				if (random < 40) {
 					Pickup p = new Pickup(Math.random(), enemy.x, enemy.y);
 					pickups.put(p.id, p);
 				}

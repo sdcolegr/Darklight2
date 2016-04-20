@@ -16,7 +16,11 @@ public class Pickup {
 	}
 	
 	public void draw(Graphics2D g, Arena arena) {
-		g.setColor(Color.PINK);
+		if (type < 50) {
+			g.setColor(Color.PINK);
+		} else {
+			g.setColor(Color.BLUE);
+		}
 		g.fillRect((int)(x - 8 + arena.xOffset), (int)(y - 8 + arena.yOffset), 16, 16);
 	}
 	
@@ -27,12 +31,17 @@ public class Pickup {
 			y + 8 + arena.yOffset > player.y - (player.size/2) &&
 			y - 8 + arena.yOffset < player.y + (player.size/2)) {
 			
-			//if (type < 50) {
+			if (type < 50) {
 				player.health += 10;
 				if (player.health > 120) {
 					player.health = 120;
 				}
-			//}
+			} else {
+				player.mana += 30;
+				if (player.mana > 100) {
+					player.mana = 100;
+				}
+			}
 			
 			return true;
 		}

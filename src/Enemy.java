@@ -198,10 +198,15 @@ public class Enemy extends Actor {
 		down = true;
 	}
 	
-	public void attack(Player player, Arena arena) {
+	public void attack(Player player, Arena arena, boolean swordSpec) {
 		// enemy attacking
 		if (player.isColliding(this, arena) && attackCooldown == 0) {
-			player.health -= strength;
+			if (swordSpec) {
+				player.health -= (strength/2);
+				health -= 2;
+			} else {
+				player.health -= strength;
+			}
 			System.out.println("Enemy " + id + " hit the player. Player health is " + player.health);
 			if  (type < 60) {
 				attackCooldown = 30;
