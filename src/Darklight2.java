@@ -21,7 +21,7 @@ public class Darklight2 extends Game {
 	Wave wave = new Wave();
 	
 	Weapon weapon = new Weapon("Short Sword");
-	//Weapon weapon = new Weapon("Greatword");
+	//Weapon weapon = new Weapon("Greatsword");
 	//Weapon weapon = new Weapon("Spear");
 	Weapon wep1 = new Weapon("Short Sword");
 	boolean swordSpec = false;
@@ -30,6 +30,7 @@ public class Darklight2 extends Game {
 	Weapon groundWeapon = new Weapon("Greatsword");
 	Weapon[] inv = new Weapon[4];
 	Sounds sound = new Sounds();
+	int delay = 0;
 	
 	int wait = 0;
 	int slot = 0;
@@ -236,7 +237,8 @@ public class Darklight2 extends Game {
 	}
 	public void basicAttack(Graphics2D g, Input p1) {
 
-		if (justPressed(p1, Button.A)) {
+		if (justPressed(p1, Button.A) && delay == 0) {
+			delay = weapon.delay;
 			if (player.weapon.name.equals("Short Sword")) {
 				// UP
 				if (player.direction == 0) {
@@ -363,6 +365,9 @@ public class Darklight2 extends Game {
 					g.drawRect((int)(player.x + 32), (int)player.y, weapon.length, weapon.width);
 				}
 			}
+		}
+		if (delay > 0) {
+			delay--;
 		}
 	}
 	
@@ -520,6 +525,7 @@ public class Darklight2 extends Game {
 				}
 				weapon.setWeapon(inv[slot + 1].getName());
 				slot++;
+				delay = 0;
 			}
 			System.out.println(slot + " " + inv[slot].getName());
 		}
@@ -562,6 +568,7 @@ public class Darklight2 extends Game {
 		wep2.pickedUp = false;
 		wep3.pickedUp = false;
 		swordSpec = false;
+		delay = 0;
 	}
 
 	@Override

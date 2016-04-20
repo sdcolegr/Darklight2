@@ -3,7 +3,7 @@ public class Weapon {
 	String name;
 	int damage;
 	int spDamage;
-	int speed;
+	int delay;
 	boolean pickedUp = false;
 	
 	//type of attack:
@@ -23,21 +23,21 @@ public class Weapon {
 		this.name = name;
 		
 		if (name.equals("Short Sword")){
-			damage = 2;
-			//speed = ;
+			damage = 5;
+			delay = 0;
 			atType = 0;
 			length = 64;
 			width = 96;
 		} else if (name.equals("Spear")){
-			damage = 5;
-			//speed = ;
+			damage = 8;
+			delay = 15;
 			atType = 1;
 			length = 128;
 			width = 16;
 		} else if (name.equals("Greatsword")){
-			damage = 50;
-			spDamage = 100;
-			//speed = ;
+			damage = 15;
+			spDamage = 30;
+			delay = 30;
 			atType = 2;
 			length = 96;
 			width = 192;
