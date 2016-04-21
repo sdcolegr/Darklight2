@@ -30,6 +30,8 @@ public class Darklight2 extends Game {
 	Weapon groundWeapon = new Weapon("Greatsword");
 	Weapon[] inv = new Weapon[4];
 	Sounds sound = new Sounds();
+	Sounds weps = new Sounds();
+	Sounds battle = new Sounds();
 	int delay = 0;
 	int spDelay = 0;
 	
@@ -108,7 +110,7 @@ public class Darklight2 extends Game {
 			arena.draw(g);
 			
 			// Sound
-			sound.loadSound("Resources/Game Song.wav");
+			sound.loadSound("Resources/ambient.wav");
 			sound.runLoop();
 			
 //			// offset borders
@@ -127,6 +129,21 @@ public class Darklight2 extends Game {
 			wave.newWave(g, arena, player);
 			wave.maintain(g, arena, player, swordSpec);
 			
+			//If enemy spots, play battle sound
+			for (Enemy enemy : wave.enemies.values()) {
+				if (enemy.spottedPlayer) {
+					battle.loadSound("Resources/Game Song.wav");
+					battle.runLoop();
+					break;
+				}
+			}
+			
+			// Stop battle sound, new wave
+			if (wave.waveStart && wave.wave != 0) {
+				battle.stop();
+				battle.reset();
+			}
+			
 			// player
 			player.draw(g);
 			player.movement(p1, arena);
@@ -140,6 +157,8 @@ public class Darklight2 extends Game {
 				gameState = 3;
 				sound.stop();
 				sound.reset();
+				battle.stop();
+				battle.reset();
 			}
 
 			if (justPressed(p1, Button.C)) {
@@ -241,6 +260,10 @@ public class Darklight2 extends Game {
 		if (justPressed(p1, Button.A) && delay == 0) {
 			delay = weapon.delay;
 			if (player.weapon.name.equals("Short Sword")) {
+				
+				weps.loadSound("Resources/short.wav");
+				weps.run();
+				
 				// UP
 				if (player.direction == 0) {
 					for (Enemy enemy : wave.enemies.values()) {
@@ -311,6 +334,10 @@ public class Darklight2 extends Game {
 				}
 			}
 			if (player.weapon.name.equals("Greatsword")) {
+				
+				weps.loadSound("Resources/great.wav");
+				weps.run();
+				
 				// UP
 				if (player.direction == 0) {
 					for (Enemy enemy : wave.enemies.values()) {
@@ -319,6 +346,7 @@ public class Darklight2 extends Game {
 							enemy.y + arena.yOffset + enemy.size/2 > player.y - 96 &&
 							enemy.y + arena.yOffset - enemy.size/2 < player.y - 33) {
 							enemy.health -= player.weapon.damage;
+							enemy.y -= 32;
 							generateMana();
 						}
 					}
@@ -332,6 +360,7 @@ public class Darklight2 extends Game {
 							enemy.y + arena.yOffset - enemy.size/2 < player.y + 96 &&
 							enemy.y + arena.yOffset + enemy.size/2 > player.y + 33) {
 							enemy.health -= player.weapon.damage;
+							enemy.y += 32;
 							generateMana();
 						}
 					}
@@ -345,6 +374,7 @@ public class Darklight2 extends Game {
 							enemy.y + arena.yOffset - enemy.size/2 < player.y + 32 &&
 							enemy.y + arena.yOffset + enemy.size/2 > player.y - 32) {
 							enemy.health -= player.weapon.damage;
+							enemy.x -= 32;
 							generateMana();
 						}
 					}
@@ -358,6 +388,7 @@ public class Darklight2 extends Game {
 							enemy.y + arena.yOffset + enemy.size/2 > player.y - 32 &&
 							enemy.y + arena.yOffset - enemy.size/2 < player.y + 32) {
 							enemy.health -= player.weapon.damage;
+							enemy.x += 32;
 							generateMana();
 						}
 					}
@@ -365,6 +396,10 @@ public class Darklight2 extends Game {
 				}
 			}
 			if (player.weapon.name.equals("Spear")) {
+				
+				weps.loadSound("Resources/spear.wav");
+				weps.run();
+				
 				// UP
 				if (player.direction == 0) {
 					g.drawRect((int)player.x, (int)(player.y - 160), weapon.width, weapon.length);
@@ -423,6 +458,39 @@ public class Darklight2 extends Game {
 						enemy.y - enemy.size/2 + arena.yOffset < player.y + 128) {
 						enemy.health -= player.weapon.spDamage;
 					}
+					
+					//UP
+					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
+							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33) {
+						enemy.y -= 32;
+					}
+					
+					//DOWN
+					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
+							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y + 33) {
+							enemy.y += 32;
+					}
+					
+					//LEFT
+					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x - 32 &&
+							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
+							enemy.x -= 32;
+						}
+					
+					//RIGHT
+					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + 32 &&
+							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
+							enemy.x += 32;
+						}
+					
 				}
 				g.drawRect((int)(player.x - 128), (int)(player.y - 128), 256, 256);
 			}
