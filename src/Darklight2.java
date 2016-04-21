@@ -258,7 +258,7 @@ public class Darklight2 extends Game {
 	public void basicAttack(Graphics2D g, Input p1) {
 
 		if (justPressed(p1, Button.A) && delay == 0) {
-			delay = weapon.delay;
+			delay = player.weapon.delay;
 			if (player.weapon.name.equals("Short Sword")) {
 				
 				weps.loadSound("Resources/Sounds/short.wav");
@@ -634,14 +634,14 @@ public class Darklight2 extends Game {
 	public void weaponSwap(Input p1) {
 		if (justPressed(p1, Button.C)) {
 			if (inv[slot+1] == null) {
-				weapon.setWeapon(inv[0].getName());
+				player.weapon.setWeapon(inv[0].getName());
 				slot = 0;
 			}
 			else {
 				if (swordSpec) {
 					swordSpec = false;
 				}
-				weapon.setWeapon(inv[slot + 1].getName());
+				player.weapon.setWeapon(inv[slot + 1].getName());
 				slot++;
 				delay = 0;
 				spDelay = 0;

@@ -54,22 +54,24 @@ public class Weapon {
 	}
 	
 	public void setWeapon(String weaponName) {
-		name = weaponName;
+		this.name = weaponName;
 		if (name.equals("Short Sword")){
-			damage = 2;
-			//speed = ;
+			damage = 5;
+			delay = 0;
 			atType = 0;
 			length = 64;
 			width = 96;
 		} else if (name.equals("Spear")){
-			damage = 5;
-			//speed = ;
+			damage = 8;
+			spDamage = 12;
+			delay = 15;
 			atType = 1;
 			length = 128;
 			width = 16;
 		} else if (name.equals("Greatsword")){
-			damage = 50;
-			//speed = ;
+			damage = 10;
+			spDamage = 15;
+			delay = 30;
 			atType = 2;
 			length = 96;
 			width = 192;
