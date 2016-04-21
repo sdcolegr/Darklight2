@@ -16,12 +16,17 @@ public class Pickup {
 	}
 	
 	public void draw(Graphics2D g, Arena arena) {
+		AnimationLoader.potion.setAnimation(0);
 		if (type < 50) {
-			g.setColor(Color.PINK);
+			
+			//g.setColor(Color.PINK);
 		} else {
-			g.setColor(Color.BLUE);
+			
+			
+			//g.setColor(Color.BLUE);
 		}
-		g.fillRect((int)(x - 8 + arena.xOffset), (int)(y - 8 + arena.yOffset), 16, 16);
+		g.drawImage(AnimationLoader.potion.getFrame(), (int)(x - 8 + arena.xOffset),(int)(y - 8 + arena.yOffset), null);
+		//g.fillRect((int)(x - 8 + arena.xOffset), (int)(y - 8 + arena.yOffset), 16, 16);
 	}
 	
 	public boolean playerPickup(Player player, Arena arena) {

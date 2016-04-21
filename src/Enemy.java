@@ -68,8 +68,11 @@ public class Enemy extends Actor {
 		if (type < 60) {
 			// regular
 			// square
-			g.setColor(new Color(230, 149, 0));
-			g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
+			
+			g.drawImage(AnimationLoader.ghoul.getFrame(), (int)(x - 32 + arena.xOffset),(int)(y - 32 + arena.yOffset), null);
+			
+			//g.setColor(new Color(230, 149, 0));
+			//g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 			
 			// hitbox
 			g.setColor(Color.ORANGE);
@@ -77,8 +80,9 @@ public class Enemy extends Actor {
 		} else if (type < 85) {
 			// small
 			// square
-			g.setColor(new Color(227, 227, 0));
-			g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
+			g.drawImage(AnimationLoader.eye.getFrame(), (int)(x - 16 + arena.xOffset),(int)(y - 16 + arena.yOffset), null);
+			//g.setColor(new Color(227, 227, 0));
+			//g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 			
 			// hitbox
 			g.setColor(Color.YELLOW);
@@ -86,8 +90,11 @@ public class Enemy extends Actor {
 		} else {
 			// large
 			// square
-			g.setColor(new Color(180, 0, 0));
-			g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
+			//g.setColor(new Color(180, 0, 0));
+			
+			g.drawImage(AnimationLoader.golem.getFrame(), (int)(x - 64 + arena.xOffset),(int)(y - 64 + arena.yOffset), null);
+			
+			//g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 			
 			// hitbox
 			g.setColor(Color.RED);
@@ -154,15 +161,19 @@ public class Enemy extends Actor {
 			spottedPlayer = true;
 
 			if (x + arena.xOffset > player.x && left) {
+				//AnimationLoader.golem.setAnimation(10);
 				x -= speed * magnitude;
 			}
 			if (x + arena.xOffset < player.x && right) {
+				//AnimationLoader.golem.setAnimation(7);
 				x += speed * magnitude;
 			}
 			if (y + arena.yOffset > player.y && up) {
+				//AnimationLoader.golem.setAnimation(1);
 				y -= speed * magnitude;
 			}
 			if (y + arena.yOffset < player.y && down) {
+				//AnimationLoader.golem.setAnimation(1);
 				y += speed * magnitude;
 			}
 		} else if (moveCooldown < 30) {
@@ -173,15 +184,19 @@ public class Enemy extends Actor {
 			}
 
 			if (randomX == 2 && x - (size/2) > arena.xBoundL && left) {
+				//AnimationLoader.golem.setAnimation(10);
 				x -= speed;
 			}
 			if (randomX == 1 && x + (size/2) < arena.xBoundR && right) {
+				//AnimationLoader.golem.setAnimation(7);
 				x += speed;
 			} 
 			if (randomY == 2 && y - (size/2) > arena.yBoundU && up) {
+				//AnimationLoader.golem.setAnimation(1);
 				y -= speed;
 			}
 			if (randomY == 1 && y + (size/2) < arena.yBoundD && down) {
+				//AnimationLoader.golem.setAnimation(4);
 				y += speed;
 			} 
 			moveCooldown ++;
@@ -191,7 +206,9 @@ public class Enemy extends Actor {
 				moveCooldown = 0;
 			}
 		}
-
+		AnimationLoader.eye.setAnimation(0);
+		AnimationLoader.golem.setAnimation(0);
+		AnimationLoader.ghoul.setAnimation(0);
 		left = true;
 		right = true;
 		up = true;

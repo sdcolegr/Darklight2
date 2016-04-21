@@ -26,8 +26,11 @@ public class Player extends Actor {
 	
 	public void draw(Graphics2D g) {
 		// square
-		g.setColor(new Color(0, 180, 0));
-		g.fillRect((int)(x - size/2), (int)(y - size/2), size, size);
+		//g.setColor(new Color(0, 180, 0));
+		//g.fillRect((int)(x - size/2), (int)(y - size/2), size, size);
+		
+		
+		g.drawImage(AnimationLoader.wick.getFrame(), (int)(x - size/2), (int)(y - size/2),  null);
 		
 		// hitbox
 		g.setColor(Color.GREEN);
@@ -50,6 +53,8 @@ public class Player extends Actor {
 		
 		// up
 		if (p1.pressed(Button.U) && y  - (size/2) > arena.yBoundU + arena.yOffset) {
+			AnimationLoader.wick.setAnimation(1);
+			
 			direction = 0;
 			if(y > arena.yOffsetBorder + (size/2)) {
 				y -= speed * magnitude;
@@ -58,7 +63,9 @@ public class Player extends Actor {
 			}
 		}
 		// down
+		
 		if (p1.pressed(Button.D) && y  + (size/2) < arena.yBoundD + arena.yOffset) {
+			AnimationLoader.wick.setAnimation(0);
 			direction = 1;
 			if (y < Darklight2.HEIGHT - arena.yOffsetBorder - (size/2)) {
 				y += speed * magnitude;
@@ -68,6 +75,7 @@ public class Player extends Actor {
 		}
 		// left
 		if (p1.pressed(Button.L) && x - (size/2) > arena.xBoundL + arena.xOffset) {
+			AnimationLoader.wick.setAnimation(3);
 			direction = 2;
 			if (x > arena.xOffsetBorder + (size/2)) {
 				x -= speed * magnitude;
@@ -77,6 +85,8 @@ public class Player extends Actor {
 		}
 		// right
 		if (p1.pressed(Button.R) && x + (size/2) < arena.xBoundR + arena.xOffset) {
+			
+			AnimationLoader.wick.setAnimation(2);
 			direction = 3;
 			if (x < Darklight2.WIDTH - arena.xOffsetBorder - (size/2)) {
 				x += speed * magnitude;
