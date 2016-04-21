@@ -457,40 +457,35 @@ public class Darklight2 extends Game {
 						enemy.y + enemy.size/2 + arena.yOffset > player.y - 128 &&
 						enemy.y - enemy.size/2 + arena.yOffset < player.y + 128) {
 						enemy.health -= player.weapon.spDamage;
-					}
-					
-					//UP
-					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
+						//UP
+						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
 							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
 							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96 &&
 							enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33) {
-						enemy.y -= 32;
-					}
-					
-					//DOWN
-					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
+							enemy.y -= 32;
+						}
+						//DOWN
+						if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
 							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
 							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96 &&
 							enemy.y + arena.yOffset + enemy.size/2 >= player.y + 33) {
 							enemy.y += 32;
-					}
-					
-					//LEFT
-					if (enemy.x + arena.xOffset - enemy.size/2 <= player.x - 32 &&
+						}			
+						//LEFT
+						if (enemy.x + arena.xOffset - enemy.size/2 <= player.x - 32 &&
 							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96 &&
 							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32 &&
 							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
 							enemy.x -= 32;
 						}
-					
-					//RIGHT
-					if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + 32 &&
+						//RIGHT
+						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + 32 &&
 							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96 &&
 							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32 &&
 							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
 							enemy.x += 32;
 						}
-					
+					}
 				}
 				g.drawRect((int)(player.x - 128), (int)(player.y - 128), 256, 256);
 			}
