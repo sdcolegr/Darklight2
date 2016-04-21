@@ -36,12 +36,29 @@ public class Darklight2 extends Game {
 	Sounds monster = new Sounds();
 	int delay = 0;
 	int spDelay = 0;
+	String[] abcs = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+			"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W",
+			"X", "Y", "Z", };
+			
+	boolean active1 = true;
+	boolean active2 = false;
+	boolean active3 = false;
+	boolean pressedBefore = false;
+	boolean displayHighScores = false;
+	StoreScores storeScores = new StoreScores();
 	
 	int wait = 0;
 	int slot = 0;
 	int count = 0;
 	int xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
 	int yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	static int yourScore = 0;
+	static int waveNum = 0;
+	static int floorNum = 0;
+	static String name = null;
 
 	@Override
 	public void tick(Graphics2D g, Input p1, Input p2, Sound s) {
@@ -63,11 +80,30 @@ public class Darklight2 extends Game {
 			
 			// selection
 			g.setColor(Color.RED);
+			if (gameState == 0) {
+			// Song
+			sound.loadSound("Resources/Menu.wav");
+			sound.runLoop();
+			
+			// background
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			
+			// title
+			g.setColor(Color.GREEN);
+			g.setFont(new Font("Arial", Font.BOLD, 100));
+			centerText("DARKLIGHT 2", g, WIDTH/2, 180);
+			
+			// selection
+			g.setColor(Color.RED);
 			if (button == 0) {
 				
 				// PLAY
 				g.fillRect(WIDTH/2 - 160, 240, 320, 90);
-				if (justPressed(p1, Button.U) || justPressed(p1, Button.D)) {
+				if (justPressed(p1, Button.U)) {
+					button = 2;
+				}
+				if (justPressed(p1, Button.D)) {
 					button = 1;
 				}
 				if (justPressed(p1, Button.A) ||
@@ -78,30 +114,48 @@ public class Darklight2 extends Game {
 					sound.reset();
 					sound.stop();
 				}
-			} else {
+			} else if (button == 1){
 				
-				// EXIT
+				// LEADERBOARDS
 				g.fillRect(WIDTH/2 - 160, 340, 320, 90);
-				if (justPressed(p1, Button.U) || justPressed(p1, Button.D)) {
+				if (justPressed(p1, Button.U)) {
+					button = 0;
+				}
+				if (justPressed(p1, Button.D)) {
+					button = 2;
+				}
+				if (justPressed(p1, Button.A) ||
+						justPressed(p1, Button.B) ||
+						justPressed(p1, Button.C)) {
+						gameState = 5;
+					}
+			} else {
+				// EXIT
+				g.fillRect(WIDTH/2 - 160, 440, 320, 90);
+				if (justPressed(p1, Button.U) ) {
+					button = 1;
+				}
+				if (justPressed(p1, Button.D)) {
 					button = 0;
 				}
 				if (justPressed(p1, Button.A) ||
-					justPressed(p1, Button.B) ||
-					justPressed(p1, Button.C)) {
-					System.exit(0);
-				}
+						justPressed(p1, Button.B) ||
+						justPressed(p1, Button.C)) {
+						System.exit(0);
+					}
 			}
 			
 			// option boxes
 			g.setColor(Color.GREEN);
 			g.fillRect(WIDTH/2 - 150, 250, 300, 70);
 			g.fillRect(WIDTH/2 - 150, 350, 300, 70);
-			
+			g.fillRect(WIDTH/2 - 150, 450, 300, 70);
 			// option box text
 			g.setColor(Color.BLACK);
 			g.setFont(new Font("Arial", Font.PLAIN, 30));
 			centerText("PLAY", g, WIDTH/2, 295);
-			centerText("EXIT", g, WIDTH/2, 395);
+			centerText("LEADERBOARD", g, WIDTH/2, 395);
+			centerText("EXIT", g, WIDTH/2, 495);
 			
 //			g.setColor(Color.YELLOW);
 //			g.fillRect(WIDTH/2 - 352, 20, 704, 192);
@@ -246,7 +300,8 @@ public class Darklight2 extends Game {
 			g.setFont(new Font("Arial", Font.BOLD, 150));
 			centerText("GAME OVER", g, WIDTH/2, HEIGHT/2);
 			wait++;
-			
+			yourScore = wave.score;
+			waveNum = (wave.wave % 10 == 0) ? 10 : wave.wave % 10;
 			if(justPressed(p1, Button.A) || 
 			   justPressed(p1, Button.B) || 
 			   justPressed(p1, Button.C)){
@@ -262,6 +317,150 @@ public class Darklight2 extends Game {
 				sound.reset();
 				gameState = 0;
 				reset();
+			}
+		}
+		// Enter Your initials
+		if (gameState == 4) {
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			g.setColor(Color.RED);
+			g.setFont(new Font("Arial", Font.PLAIN, 45));
+			centerText("Enter Your Initials", g, (Game.WIDTH / 2) ,(Game.HEIGHT / 4));
+			centerText("Press C to enter", g, (Game.WIDTH / 2) ,(Game.HEIGHT / 2 + 100));
+			g.drawString(abcs[i],(Game.WIDTH / 2) - 55,(Game.HEIGHT / 2));
+			g.drawString(abcs[j],(Game.WIDTH / 2),(Game.HEIGHT / 2));
+			g.drawString(abcs[k],(Game.WIDTH / 2) + 55,(Game.HEIGHT / 2));
+			name = abcs[i] + abcs[j] + abcs[k];
+			
+			if (active1)
+				g.fillRect((Game.WIDTH / 2) - 55, (Game.HEIGHT / 2) + 5, 35, 5);
+			if (active2)
+				g.fillRect((Game.WIDTH / 2) + 5, (Game.HEIGHT / 2) + 5, 35, 5);
+			if (active3)
+				g.fillRect((Game.WIDTH / 2) + 55, (Game.HEIGHT / 2) + 5, 35, 5);
+			
+			if (!pressedBefore) {
+				if (p1.pressed(Button.U) || p1.pressed(Button.D)
+						|| p1.pressed(Button.L) || p1.pressed(Button.R)
+						|| p1.pressed(Button.A) || p1.pressed(Button.B)
+						|| p1.pressed(Button.C)) {
+					pressedBefore = true;
+				} else {
+					pressedBefore = false;
+				}
+			} else {
+				if (!p1.pressed(Button.U) && !p1.pressed(Button.D)
+						&& !p1.pressed(Button.L) && !p1.pressed(Button.R)
+						&& !p1.pressed(Button.A) && !p1.pressed(Button.B)
+						&& !p1.pressed(Button.C)) {
+					pressedBefore = false;
+				} else {
+					return;
+				}
+			}
+			if (p1.pressed(Button.C)) {
+				storeScores.main();
+				reset();
+				gameState = 5;
+			}
+			if (active1) {
+
+				if (p1.pressed(Button.U)) {
+					i += 1;
+					if (i > abcs.length - 1)
+						i = 0;
+				}
+				if (p1.pressed(Button.D)) {
+					i -= 1;
+					if (i < 0)
+						i = abcs.length - 1;
+				}
+				if (p1.pressed(Button.L)) {
+					active1 = false;
+					active3 = true;
+				}
+				if (p1.pressed(Button.R)) {
+					active1 = false;
+					active2 = true;
+				}
+				return;
+			}
+			if (active2) {
+
+				if (p1.pressed(Button.U)) {
+					j += 1;
+					if (j > abcs.length - 1)
+						j = 0;
+				}
+				if (p1.pressed(Button.D)) {
+					j -= 1;
+					if (j < 0)
+						j = abcs.length - 1;
+				}
+				if (p1.pressed(Button.L)) {
+					active2 = false;
+					active1 = true;
+				}
+				if (p1.pressed(Button.R)) {
+					active2 = false;
+					active3 = true;
+				}
+				return;
+			}
+			if (active3) {
+
+				if (p1.pressed(Button.U)) {
+					k += 1;
+					if (k > abcs.length - 1)
+						k = 0;
+				}
+				if (p1.pressed(Button.D)) {
+					k -= 1;
+					if (k < 0)
+						k = abcs.length - 1;
+				}
+				if (p1.pressed(Button.L)) {
+					active3 = false;
+					active2 = true;
+				}
+				if (p1.pressed(Button.R)) {
+					active3 = false;
+					active1 = true;
+				}
+				return;
+			}
+		}
+		
+		// high scores
+		if (gameState == 5) {
+			storeScores.Read();
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			g.setColor(Color.RED);
+			g.setFont(new Font("Arial", Font.PLAIN, 35));
+			centerText("High Scores", g, (Game.WIDTH / 2) ,(Game.HEIGHT / 16));
+			g.drawLine(0, Game.HEIGHT/16 + 8, 1200, Game.HEIGHT / 16 + 8);
+			g.drawString("Enemies killed", Game.WIDTH / 2 + 150, Game.HEIGHT / 16 + 60);
+			g.drawString("Wave", Game.WIDTH / 2 , Game.HEIGHT / 16 + 60 );
+			g.drawString("Floor", Game.WIDTH / 2 - 210, Game.HEIGHT / 16 + 60);
+			int height = - 80;
+			for (int l = 0; l < 10; l++) {
+				g.drawString(storeScores.nameList.get(l), Game.WIDTH / 2 - 400, Game.HEIGHT / 8 - height);
+				height = height - 40;
+			}
+			//g.drawString(storeScores, Game.WIDTH / 2, Game.HEIGHT / 2);
+			wait++;
+			if (wait == 1005) {
+				sound.stop();
+				sound.reset();
+				wait = 0;
+				yourScore = 0;
+				waveNum = 0;
+				i = 0;
+				j = 0;
+				k = 0;
+				floorNum = 0;
+				gameState = 0;
 			}
 		}
 		
