@@ -32,6 +32,8 @@ public class Darklight2 extends Game {
 	Sounds sound = new Sounds();
 	Sounds weps = new Sounds();
 	Sounds battle = new Sounds();
+	Sounds wepspec = new Sounds();
+	Sounds monster = new Sounds();
 	int delay = 0;
 	int spDelay = 0;
 	
@@ -132,6 +134,24 @@ public class Darklight2 extends Game {
 			//If enemy spots, play battle sound
 			for (Enemy enemy : wave.enemies.values()) {
 				if (enemy.spottedPlayer) {
+					
+					// Check to play noise
+					int temp = (int) (Math.random() * 150);
+					if (temp <= 1) {
+						// Check for Ghoul or Golem
+						if (enemy.type <= 60) {
+							// Play Ghoul sound
+							monster.loadSound("Resources/Sounds/ghoul.wav");
+							monster.run();
+						}
+						
+						if (enemy.type > 85) {
+							// Play golem sound
+							monster.loadSound("Resources/Sounds/golem.wav");
+							monster.run();
+						}
+					}
+					
 					battle.loadSound("Resources/Sounds/Game Song.wav");
 					battle.runLoop();
 					break;
@@ -153,13 +173,13 @@ public class Darklight2 extends Game {
 			weaponPickup(g, p1, arena);
 			weaponSwap(p1);
 			
-			if (player.health <= 0) {
-				gameState = 3;
-				sound.stop();
-				sound.reset();
-				battle.stop();
-				battle.reset();
-			}
+//			if (player.health <= 0) {
+//				gameState = 3;
+//				sound.stop();
+//				sound.reset();
+//				battle.stop();
+//				battle.reset();
+//			}
 
 			if (justPressed(p1, Button.C)) {
 				wave.enemies.clear();
@@ -208,6 +228,7 @@ public class Darklight2 extends Game {
 				player.y = HEIGHT/2;
 				wave.falling = false;
 				wave.hole = false;
+				wave.transition.reset();
 				wave.waveStart = true;
 				wave.difficulty *= 1.1;
 				gameState = 1;
@@ -469,9 +490,13 @@ public class Darklight2 extends Game {
 			player.mana -= 0.5;
 			g.setColor(Color.ORANGE);
 			g.drawRect((int)(player.x - player.size/2 - 2), (int)(player.y - player.size/2 - 2), 68, 68);
+			
 			if (player.mana <= 0) {
 				player.mana = 0;
 				swordSpec = false;
+				// Stop special noise
+				wepspec.stop();
+				wepspec.reset();
 			}
 		}
 	}
@@ -484,11 +509,27 @@ public class Darklight2 extends Game {
 			if (player.weapon.name.equals("Short Sword")) {
 				if (swordSpec) {
 					swordSpec = false;
+					
+					// Stop special noise
+					wepspec.stop();
+					wepspec.reset();
+					
 				} else if (!swordSpec && player.mana > 0) {
+					// Start special noise
+					weps.loadSound("Resources/Sounds/special.wav");
+					weps.run();
+					
+					wepspec.loadSound("Resources/Sounds/fire.wav");
+					wepspec.runLoop();
 					swordSpec = true;
 				}
 			}
 			if (player.weapon.name.equals("Greatsword") && player.mana >= 40 && spDelay == 0) {
+				
+				//Greatsword spec sound
+				weps.loadSound("Resources/Sounds/special.wav");
+				weps.run();
+				
 				player.mana -= 40;
 				spDelay = player.weapon.delay;
 				for (Enemy enemy : wave.enemies.values()) {
@@ -530,6 +571,10 @@ public class Darklight2 extends Game {
 				g.drawRect((int)(player.x - 128), (int)(player.y - 128), 256, 256);
 			}
 			if (player.weapon.name.equals("Spear") && player.mana >= 25 && spDelay == 0) {
+				
+				wepspec.loadSound("Resources/Sounds/special.wav");
+				wepspec.run();
+				
 				player.mana -= 25;
 				spDelay = player.weapon.delay;
 				// UP
@@ -613,7 +658,7 @@ public class Darklight2 extends Game {
 					(player.y + player.size/2 >= yCoor - groundWeapon.length/2 + arena.yOffset) &&			
 				
 					(player.y - player.size/2 <= yCoor + groundWeapon.length/2 + arena.yOffset)) {
-				if(!wep2.weaponPickedUp()) {
+				if(!wep2.weaponPickedUp() && wave.wave == 3) {
 					wep2.setPickedUp();
 					inv[1] = wep2;
 					xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
@@ -622,7 +667,12 @@ public class Darklight2 extends Game {
 				}
 				else if (!wep3.weaponPickedUp()){
 					wep3.setPickedUp();
-					inv[2] = wep3;
+					if(!wep2.weaponPickedUp()) {
+						inv[1] = wep3;
+					}
+					else {
+						inv[2] = wep3;
+					}
 					xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
 					yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
 					System.out.println("Picked up weapon!");
@@ -639,6 +689,8 @@ public class Darklight2 extends Game {
 			}
 			else {
 				if (swordSpec) {
+					wepspec.stop();
+					wepspec.reset();
 					swordSpec = false;
 				}
 				player.weapon.setWeapon(inv[slot + 1].getName());
@@ -686,9 +738,9 @@ public class Darklight2 extends Game {
 		inv[2] = null;
 		wep2.pickedUp = false;
 		wep3.pickedUp = false;
-		swordSpec = false;
 		delay = 0;
 		spDelay = 0;
+		swordSpec = false;
 	}
 
 	@Override
