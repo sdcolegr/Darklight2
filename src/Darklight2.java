@@ -30,6 +30,8 @@ public class Darklight2 extends Game {
 	Weapon groundWeapon = new Weapon("Greatsword");
 	Weapon[] inv = new Weapon[4];
 	Sounds sound = new Sounds();
+	Sounds weps = new Sounds();
+	Sounds battle = new Sounds();
 	int delay = 0;
 	
 	int wait = 0;
@@ -107,7 +109,7 @@ public class Darklight2 extends Game {
 			arena.draw(g);
 			
 			// Sound
-			sound.loadSound("Resources/Game Song.wav");
+			sound.loadSound("Resources/ambient.wav");
 			sound.runLoop();
 			
 //			// offset borders
@@ -126,6 +128,21 @@ public class Darklight2 extends Game {
 			wave.newWave(g, arena, player);
 			wave.maintain(g, arena, player, swordSpec);
 			
+			//If enemy spots, play battle sound
+			for (Enemy enemy : wave.enemies.values()) {
+				if (enemy.spottedPlayer) {
+					battle.loadSound("Resources/Game Song.wav");
+					battle.runLoop();
+					break;
+				}
+			}
+			
+			// Stop battle sound, new wave
+			if (wave.waveStart && wave.wave != 0) {
+				battle.stop();
+				battle.reset();
+			}
+			
 			// player
 			player.draw(g);
 			player.movement(p1, arena);
@@ -139,6 +156,8 @@ public class Darklight2 extends Game {
 				gameState = 3;
 				sound.stop();
 				sound.reset();
+				battle.stop();
+				battle.reset();
 			}
 
 			if (justPressed(p1, Button.C)) {
@@ -240,6 +259,10 @@ public class Darklight2 extends Game {
 		if (justPressed(p1, Button.A) && delay == 0) {
 			delay = weapon.delay;
 			if (player.weapon.name.equals("Short Sword")) {
+				
+				weps.loadSound("Resources/short.wav");
+				weps.run();
+				
 				// UP
 				if (player.direction == 0) {
 					for (Enemy enemy : wave.enemies.values()) {
@@ -294,6 +317,10 @@ public class Darklight2 extends Game {
 				}
 			}
 			if (player.weapon.name.equals("Greatsword")) {
+				
+				weps.loadSound("Resources/great.wav");
+				weps.run();
+				
 				// UP
 				if (player.direction == 0) {
 					for (Enemy enemy : wave.enemies.values()) {
@@ -348,6 +375,10 @@ public class Darklight2 extends Game {
 				}
 			}
 			if (player.weapon.name.equals("Spear")) {
+				
+				weps.loadSound("Resources/spear.wav");
+				weps.run();
+				
 				// UP
 				if (player.direction == 0) {
 					g.drawRect((int)player.x, (int)(player.y - 160), weapon.width, weapon.length);
