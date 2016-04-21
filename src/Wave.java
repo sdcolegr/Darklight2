@@ -14,6 +14,7 @@ public class Wave {
 	ConcurrentHashMap<Double, Pickup> pickups = new ConcurrentHashMap<Double, Pickup>();
 	int random;
 	Sounds transition = new Sounds();
+	int score = 0;
 	
 	public void newWave(Graphics2D g, Arena arena, Player player) {
 		
@@ -63,6 +64,7 @@ public class Wave {
 					Pickup p = new Pickup(Math.random(), enemy.x, enemy.y);
 					pickups.put(p.id, p);
 				}
+				score +=1;
 				enemies.remove(enemy.id);
 			}
 		}
@@ -75,5 +77,11 @@ public class Wave {
 				waveStart = true;
 			}
 		}
+	}
+	public int WaveNum() {
+		return wave;
+	}
+	public int Score() {
+		return score;
 	}
 }
