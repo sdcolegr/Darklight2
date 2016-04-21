@@ -160,7 +160,7 @@ public class Darklight2 extends Game {
 //			g.setColor(Color.YELLOW);
 //			g.fillRect(WIDTH/2 - 352, 20, 704, 192);
 		}
-		
+		}
 		// Game
 		if (gameState == 1) {
 			arena.draw(g);
