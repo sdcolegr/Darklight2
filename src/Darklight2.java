@@ -401,19 +401,59 @@ public class Darklight2 extends Game {
 				weps.run();
 				
 				// UP
-				if (player.direction == 0) {
+					if (player.direction == 0) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + weapon.width &&
+							enemy.x + arena.xOffset - enemy.size/2 <= player.x + weapon.width &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y - weapon.length -32 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y -32) {
+							enemy.health -= player.weapon.damage;
+							generateMana();
+
+						}
+					}
 					g.drawRect((int)player.x, (int)(player.y - 160), weapon.width, weapon.length);
 				}
 				// DOWN
 				if (player.direction == 1) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + weapon.width &&
+							enemy.x + arena.xOffset - enemy.size/2 <= player.x + weapon.width &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y  +32 &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + weapon.length +32) {
+							enemy.health -= player.weapon.damage;
+							generateMana();
+							
+						}
+					}
 					g.drawRect((int)player.x, (int)(player.y + 32), weapon.width, weapon.length);
 				}
 				// LEFT
 				if (player.direction == 2) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - weapon.length -32 &&
+							enemy.x + arena.xOffset - enemy.size/2 <= player.x - 32 &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y  + weapon.width &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + weapon.width) {
+							enemy.health -= player.weapon.damage;
+							generateMana();
+
+						}
+					}
 					g.drawRect((int)(player.x - 160), (int)player.y, weapon.length, weapon.width);
 				}
 				// RIGHT
 				if (player.direction == 3) {
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x  + 32  &&
+							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 +  weapon.length &&
+							enemy.y + arena.yOffset + enemy.size/2 >= player.y  +weapon.width &&
+							enemy.y + arena.yOffset - enemy.size/2 <= player.y + weapon.width) {
+							enemy.health -= player.weapon.damage;
+							generateMana();
+
+						}
+					}
 					g.drawRect((int)(player.x + 32), (int)player.y, weapon.length, weapon.width);
 				}
 			}
