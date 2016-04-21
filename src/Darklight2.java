@@ -239,8 +239,12 @@ public class Darklight2 extends Game {
 				wave.enemies.clear();
 			}
 
-			g.setColor(Color.BLUE);
-			g.drawOval((int)(player.x - 256), (int)(player.y - 256), 512, 512);
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, (int)(player.x - 256), HEIGHT);
+			g.fillRect((int)(player.x + 256), 0, (int)(WIDTH - player.x - 255), HEIGHT);
+			g.fillRect(0, 0, WIDTH, (int)(player.y - 256));
+			g.fillRect(0, (int)(player.y + 256), WIDTH, (int)(HEIGHT - player.y - 255));
+			g.drawImage(TextureLoader.light, (int)(player.x - 256), (int)(player.y - 256), null);
 			
 			// HUD
 			int floor = (wave.wave % 10 == 0) ? (wave.wave + 9)/10 : (wave.wave + 10)/10; 
