@@ -19,19 +19,17 @@ public class Arena {
 	
 		public void draw(Graphics2D g, int xOffset, int yOffset) {
 			
-			if (type < 93) {
-				g.drawImage(TextureLoader.stone, x + xOffset, y + yOffset, null);
-			} else if (type < 96) {
+			if (type < 3) {
 				g.drawImage(TextureLoader.moss, x + xOffset, y + yOffset, null);
-			} else if (type < 98) {
+			} else if (type < 5) {
 				g.drawImage(TextureLoader.mossRocks, x + xOffset, y + yOffset, null);
-			} else if (type < 98.5) {
+			} else if (type < 5.5) {
 				g.drawImage(TextureLoader.mossRocks2, x + xOffset, y + yOffset, null);
-			} else if (type < 99) {
+			} else if (type < 6) {
 				g.drawImage(TextureLoader.mossSkull, x + xOffset, y + yOffset, null);
-			} else if (type < 99.99) {
+			} else if (type < 7) {
 				g.drawImage(TextureLoader.mossHelm, x + xOffset, y + yOffset, null);
-			} else {
+			} else if (type < 7.01){
 				g.drawImage(TextureLoader.guy, x + xOffset, y + yOffset, null);
 			}
 		}
@@ -52,6 +50,12 @@ public class Arena {
 		// background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, Darklight2.WIDTH, Darklight2.HEIGHT);
+		
+		for (int i = 0; i < (Darklight2.HEIGHT*3)/64; i++) {
+			for (int j = 0; j < (Darklight2.WIDTH*3)/64; j++) {
+				g.drawImage(TextureLoader.stone, (int)(xBoundL + j * 64 + xOffset), (int)(yBoundU + i * 64 + yOffset), null);
+			}
+		}
 		
 		// floor grid
 		if (tiles.size() == 0) {

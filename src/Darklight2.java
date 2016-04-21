@@ -47,7 +47,7 @@ public class Darklight2 extends Game {
 		// Menu
 		if (gameState == 0) {
 			// Song
-			sound.loadSound("Resources/Menu.wav");
+			sound.loadSound("Resources/Sounds/Menu.wav");
 			sound.runLoop();
 			
 			// background
@@ -110,7 +110,7 @@ public class Darklight2 extends Game {
 			arena.draw(g);
 			
 			// Sound
-			sound.loadSound("Resources/ambient.wav");
+			sound.loadSound("Resources/Sounds/ambient.wav");
 			sound.runLoop();
 			
 //			// offset borders
@@ -132,7 +132,7 @@ public class Darklight2 extends Game {
 			//If enemy spots, play battle sound
 			for (Enemy enemy : wave.enemies.values()) {
 				if (enemy.spottedPlayer) {
-					battle.loadSound("Resources/Game Song.wav");
+					battle.loadSound("Resources/Sounds/Game Song.wav");
 					battle.runLoop();
 					break;
 				}
@@ -218,7 +218,7 @@ public class Darklight2 extends Game {
 		if (gameState == 3) {
 			
 			//Sound
-			sound.loadSound("Resources/Death.wav");
+			sound.loadSound("Resources/Sounds/Death.wav");
 			sound.runOnce();
 	 
 			g.setColor(Color.RED);
@@ -261,7 +261,7 @@ public class Darklight2 extends Game {
 			delay = weapon.delay;
 			if (player.weapon.name.equals("Short Sword")) {
 				
-				weps.loadSound("Resources/short.wav");
+				weps.loadSound("Resources/Sounds/short.wav");
 				weps.run();
 				
 				// UP
@@ -335,7 +335,7 @@ public class Darklight2 extends Game {
 			}
 			if (player.weapon.name.equals("Greatsword")) {
 				
-				weps.loadSound("Resources/great.wav");
+				weps.loadSound("Resources/Sounds/great.wav");
 				weps.run();
 				
 				// UP
@@ -397,7 +397,7 @@ public class Darklight2 extends Game {
 			}
 			if (player.weapon.name.equals("Spear")) {
 				
-				weps.loadSound("Resources/spear.wav");
+				weps.loadSound("Resources/Sounds/spear.wav");
 				weps.run();
 				
 				// UP

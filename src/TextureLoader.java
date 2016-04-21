@@ -16,13 +16,13 @@ public class TextureLoader {
 	public static void load() {
 
 		try {
-			stone = ImageIO.read(TextureLoader.class.getResource("Resources/stone.png"));
-			moss = ImageIO.read(TextureLoader.class.getResource("Resources/moss.png"));
-			mossRocks = ImageIO.read(TextureLoader.class.getResource("Resources/mossRocks.png"));
-			mossRocks2 = ImageIO.read(TextureLoader.class.getResource("Resources/mossRocks2.png"));
-			mossSkull = ImageIO.read(TextureLoader.class.getResource("Resources/mossSkull.png"));
-			mossHelm = ImageIO.read(TextureLoader.class.getResource("Resources/mossHelm.png"));
-			guy = ImageIO.read(TextureLoader.class.getResource("Resources/guy.png"));
+			stone = ImageIO.read(TextureLoader.class.getResource("Resources/Textures/Tiles/stone.png"));
+			moss = ImageIO.read(TextureLoader.class.getResource("Resources/Textures/Tiles/moss.png"));
+			mossRocks = ImageIO.read(TextureLoader.class.getResource("Resources/Textures/Tiles/mossRocks.png"));
+			mossRocks2 = ImageIO.read(TextureLoader.class.getResource("Resources/Textures/Tiles/mossRocks2.png"));
+			mossSkull = ImageIO.read(TextureLoader.class.getResource("Resources/Textures/Tiles/mossSkull.png"));
+			mossHelm = ImageIO.read(TextureLoader.class.getResource("Resources/Textures/Tiles/mossHelm.png"));
+			guy = ImageIO.read(TextureLoader.class.getResource("Resources/Textures/Tiles/guy.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
