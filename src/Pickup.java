@@ -33,8 +33,8 @@ public class Pickup {
 			
 			if (type < 50) {
 				player.health += 10;
-				if (player.health > 120) {
-					player.health = 120;
+				if (player.health > 150) {
+					player.health = 150;
 				}
 			} else {
 				player.mana += 30;

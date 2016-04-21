@@ -31,6 +31,7 @@ public class Darklight2 extends Game {
 	Weapon[] inv = new Weapon[4];
 	Sounds sound = new Sounds();
 	int delay = 0;
+	int spDelay = 0;
 	
 	int wait = 0;
 	int slot = 0;
@@ -247,7 +248,11 @@ public class Darklight2 extends Game {
 							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48 &&
 							enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33 &&
 							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96) {
-							enemy.health -= player.weapon.damage;
+							if (swordSpec) {
+								enemy.health -= (1.5 * player.weapon.damage); 
+							} else {
+								enemy.health -= player.weapon.damage;
+							}
 							generateMana();
 						}
 					}
@@ -260,7 +265,11 @@ public class Darklight2 extends Game {
 							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48 &&
 							enemy.y + arena.yOffset + enemy.size/2 >= player.y + 36 &&
 							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96) {
-							enemy.health -= player.weapon.damage;
+							if (swordSpec) {
+								enemy.health -= (1.5 * player.weapon.damage); 
+							} else {
+								enemy.health -= player.weapon.damage;
+							}
 							generateMana();
 						}
 					}
@@ -273,7 +282,11 @@ public class Darklight2 extends Game {
 							enemy.x + arena.xOffset - enemy.size/2 <= player.x - 36 &&
 							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32 &&
 							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
-							enemy.health -= player.weapon.damage;
+							if (swordSpec) {
+								enemy.health -= (1.5 * player.weapon.damage); 
+							} else {
+								enemy.health -= player.weapon.damage;
+							}
 							generateMana();
 						}
 					}
@@ -286,7 +299,11 @@ public class Darklight2 extends Game {
 							enemy.x + arena.xOffset + enemy.size/2 >= player.x + 36 &&
 							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32 &&
 							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
-							enemy.health -= player.weapon.damage;
+							if (swordSpec) {
+								enemy.health -= (1.5 * player.weapon.damage); 
+							} else {
+								enemy.health -= player.weapon.damage;
+							}
 							generateMana();
 						}
 					}
@@ -297,10 +314,10 @@ public class Darklight2 extends Game {
 				// UP
 				if (player.direction == 0) {
 					for (Enemy enemy : wave.enemies.values()) {
-						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
-							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
-							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 96 &&
-							enemy.y + arena.yOffset - enemy.size/2 <= player.y - 33) {
+						if (enemy.x + arena.xOffset + enemy.size/2 > player.x - 32 &&
+							enemy.x + arena.xOffset - enemy.size/2 < player.x + 32 &&
+							enemy.y + arena.yOffset + enemy.size/2 > player.y - 96 &&
+							enemy.y + arena.yOffset - enemy.size/2 < player.y - 33) {
 							enemy.health -= player.weapon.damage;
 							generateMana();
 						}
@@ -310,10 +327,10 @@ public class Darklight2 extends Game {
 				// DOWN
 				if (player.direction == 1) {
 					for (Enemy enemy : wave.enemies.values()) {
-						if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 &&
-							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 32 &&
-							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 96 &&
-							enemy.y + arena.yOffset + enemy.size/2 >= player.y + 33) {
+						if (enemy.x + arena.xOffset - enemy.size/2 < player.x + 32 &&
+							enemy.x + arena.xOffset + enemy.size/2 > player.x - 32 &&
+							enemy.y + arena.yOffset - enemy.size/2 < player.y + 96 &&
+							enemy.y + arena.yOffset + enemy.size/2 > player.y + 33) {
 							enemy.health -= player.weapon.damage;
 							generateMana();
 						}
@@ -323,10 +340,10 @@ public class Darklight2 extends Game {
 				// LEFT
 				if (player.direction == 2) {
 					for (Enemy enemy : wave.enemies.values()) {
-						if (enemy.x + arena.xOffset - enemy.size/2 <= player.x - 32 &&
-							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96 &&
-							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32 &&
-							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32) {
+						if (enemy.x + arena.xOffset - enemy.size/2 < player.x - 32 &&
+							enemy.x + arena.xOffset + enemy.size/2 > player.x - 96 &&
+							enemy.y + arena.yOffset - enemy.size/2 < player.y + 32 &&
+							enemy.y + arena.yOffset + enemy.size/2 > player.y - 32) {
 							enemy.health -= player.weapon.damage;
 							generateMana();
 						}
@@ -336,10 +353,10 @@ public class Darklight2 extends Game {
 				// RIGHT
 				if (player.direction == 3) {
 					for (Enemy enemy : wave.enemies.values()) {
-						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + 32 &&
-							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96 &&
-							enemy.y + arena.yOffset + enemy.size/2 >= player.y - 32 &&
-							enemy.y + arena.yOffset - enemy.size/2 <= player.y + 32) {
+						if (enemy.x + arena.xOffset + enemy.size/2 > player.x + 32 &&
+							enemy.x + arena.xOffset - enemy.size/2 < player.x + 96 &&
+							enemy.y + arena.yOffset + enemy.size/2 > player.y - 32 &&
+							enemy.y + arena.yOffset - enemy.size/2 < player.y + 32) {
 							enemy.health -= player.weapon.damage;
 							generateMana();
 						}
@@ -396,80 +413,78 @@ public class Darklight2 extends Game {
 					swordSpec = true;
 				}
 			}
-			if (player.weapon.name.equals("Greatsword") && player.mana >= 40) {
+			if (player.weapon.name.equals("Greatsword") && player.mana >= 40 && spDelay == 0) {
 				player.mana -= 40;
+				spDelay = player.weapon.delay;
 				for (Enemy enemy : wave.enemies.values()) {
-					if (enemy.x + enemy.size/2 + arena.xOffset >= player.x - 128 &&
-						enemy.x - enemy.size/2 + arena.xOffset <= player.x + 128 &&
-						enemy.y + enemy.size/2 + arena.yOffset >= player.y - 128 &&
-						enemy.y - enemy.size/2 + arena.yOffset <= player.y + 128) {
+					if (enemy.x + enemy.size/2 + arena.xOffset > player.x - 128 &&
+						enemy.x - enemy.size/2 + arena.xOffset < player.x + 128 &&
+						enemy.y + enemy.size/2 + arena.yOffset > player.y - 128 &&
+						enemy.y - enemy.size/2 + arena.yOffset < player.y + 128) {
 						enemy.health -= player.weapon.spDamage;
 					}
 				}
 				g.drawRect((int)(player.x - 128), (int)(player.y - 128), 256, 256);
 			}
-			if (player.weapon.name.equals("Spear") && player.mana >= 25) {
-				float pos;
-				float off;
-				
+			if (player.weapon.name.equals("Spear") && player.mana >= 25 && spDelay == 0) {
 				player.mana -= 25;
+				spDelay = player.weapon.delay;
 				// UP
 				if (player.direction == 0) {
-					g.drawRect((int)(player.x - player.size/2 - 32), (int)(player.y - player.size/2 - 256), 128, 256);
-					if(player.y - player.size/2 - 256 > arena.yOffsetBorder) {
-						pos = 256;
-					} else if (player.y - player.size/2 == arena.yOffsetBorder){
-						pos = 0;
-					} else {
-						pos = player.y - player.size/2 - arena.yOffsetBorder;
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + enemy.size/2 + arena.xOffset > player.x - player.size/2 - 16 &&
+							enemy.x - enemy.size/2 + arena.xOffset < player.x + player.size/2 + 16 &&
+							enemy.y + enemy.size/2 + arena.yOffset > player.y - player.size/2 - 192 &&
+							enemy.y - enemy.size/2 + arena.yOffset < player.y - player.size/2) {
+							enemy.health -= player.weapon.spDamage;
+							enemy.y -= 32;
+						}
 					}
-					off = 256 - pos;
-					player.y -= pos;
-					arena.yOffset += off;
+					g.drawRect((int)(player.x - player.size/2 - 16), (int)(player.y - player.size/2 - 192), 96, 192);
 				}
 				// DOWN
 				if (player.direction == 1) {
-					g.drawRect((int)(player.x - player.size/2 - 32), (int)(player.y + player.size/2), 128, 256);
-					if(player.y + player.size/2 + 256 < HEIGHT - arena.yOffsetBorder) {
-						pos = 256;
-					} else if (player.y + player.size/2 == HEIGHT - arena.yOffsetBorder){
-						pos = 0;
-					} else {
-						pos = (HEIGHT - arena.yOffsetBorder) - (player.y + player.size/2);
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + enemy.size/2 + arena.xOffset > player.x - player.size/2 - 16 &&
+							enemy.x - enemy.size/2 + arena.xOffset < player.x + player.size/2 + 16 &&
+							enemy.y + enemy.size/2 + arena.yOffset > player.y + player.size/2 &&
+							enemy.y - enemy.size/2 + arena.yOffset < player.y + player.size/2 + 192) {
+							enemy.health -= player.weapon.spDamage;
+							enemy.y += 32;
+						}
 					}
-					off = 256 - pos;
-					player.y += pos;
-					arena.yOffset -= off;
+					g.drawRect((int)(player.x - player.size/2 - 16), (int)(player.y + player.size/2), 96, 192);
 				}
 				// LEFT
 				if (player.direction == 2) {
-					g.drawRect((int)(player.x - player.size/2 - 256), (int)(player.y - player.size/2 - 32), 256, 128);
-					if(player.x - player.size/2 - 256 > arena.xOffsetBorder) {
-						pos = 256;
-					} else if (player.x - player.size/2 == arena.xOffsetBorder){
-						pos = 0;
-					} else {
-						pos = player.x - player.size/2 - arena.xOffsetBorder;
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + enemy.size/2 + arena.xOffset > player.x - player.size/2 - 192 &&
+							enemy.x - enemy.size/2 + arena.xOffset < player.x - player.size/2 &&
+							enemy.y + enemy.size/2 + arena.yOffset > player.y - player.size/2 - 16 &&
+							enemy.y - enemy.size/2 + arena.yOffset < player.y + player.size/2 + 16) {
+							enemy.health -= player.weapon.spDamage;
+							enemy.x -= 32;
+						}
 					}
-					off = 256 - pos;
-					player.x -= pos;
-					arena.xOffset += off;
+					g.drawRect((int)(player.x - player.size/2 - 192), (int)(player.y - player.size/2 - 16), 192, 96);
 				}
 				// RIGHT
 				if (player.direction == 3) {
-					g.drawRect((int)(player.x + player.size/2), (int)(player.y - player.size/2 - 32), 256, 128);
-					if(player.x + player.size/2 + 256 < WIDTH - arena.xOffsetBorder) {
-						pos = 256;
-					} else if (player.x + player.size/2 == WIDTH - arena.xOffsetBorder){
-						pos = 0;
-					} else {
-						pos = (WIDTH - arena.xOffsetBorder) - (player.x + player.size/2);
+					for (Enemy enemy : wave.enemies.values()) {
+						if (enemy.x + enemy.size/2 + arena.xOffset > player.x + player.size/2 &&
+							enemy.x - enemy.size/2 + arena.xOffset < player.x + player.size/2 + 192 &&
+							enemy.y + enemy.size/2 + arena.yOffset > player.y - player.size/2 - 16 &&
+							enemy.y - enemy.size/2 + arena.yOffset < player.y + player.size/2 + 16) {
+							enemy.health -= player.weapon.spDamage;
+							enemy.x += 32;
+						}
 					}
-					off = 256 - pos;
-					player.x += pos;
-					arena.xOffset -= off;
+					g.drawRect((int)(player.x + player.size/2), (int)(player.y - player.size/2 - 16), 192, 96);
 				}
 			}
+		}
+		if (spDelay > 0) {
+			spDelay--;
 		}
 	}
 	
@@ -526,6 +541,7 @@ public class Darklight2 extends Game {
 				weapon.setWeapon(inv[slot + 1].getName());
 				slot++;
 				delay = 0;
+				spDelay = 0;
 			}
 			System.out.println(slot + " " + inv[slot].getName());
 		}
@@ -569,6 +585,7 @@ public class Darklight2 extends Game {
 		wep3.pickedUp = false;
 		swordSpec = false;
 		delay = 0;
+		spDelay = 0;
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 public class Weapon {
 	
 	String name;
-	int damage;
+	double damage;
 	int spDamage;
 	int delay;
 	boolean pickedUp = false;
@@ -30,13 +30,14 @@ public class Weapon {
 			width = 96;
 		} else if (name.equals("Spear")){
 			damage = 8;
+			spDamage = 12;
 			delay = 15;
 			atType = 1;
 			length = 128;
 			width = 16;
 		} else if (name.equals("Greatsword")){
-			damage = 15;
-			spDamage = 30;
+			damage = 10;
+			spDamage = 15;
 			delay = 30;
 			atType = 2;
 			length = 96;

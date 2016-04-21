@@ -57,7 +57,7 @@ public class Wave {
 			// enemy death
 			if (enemy.health <= 0) {
 				random = (int)(Math.random()*100);
-				if (random < 40) {
+				if (random < 30) {
 					Pickup p = new Pickup(Math.random(), enemy.x, enemy.y);
 					pickups.put(p.id, p);
 				}
