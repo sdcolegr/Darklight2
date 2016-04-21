@@ -957,4 +957,7 @@ public class Darklight2 extends Game {
 		AnimationLoader.load();
 		Arcadia.display(new Arcadia(new Darklight2()));
 	}
+	public static String Name() {
+		return name;
+	}
 }
