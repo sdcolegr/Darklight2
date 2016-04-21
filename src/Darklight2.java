@@ -82,7 +82,7 @@ public class Darklight2 extends Game {
 			g.setColor(Color.RED);
 			if (gameState == 0) {
 			// Song
-			sound.loadSound("Resources/Menu.wav");
+			sound.loadSound("Resources/Sound/Menu.wav");
 			sound.runLoop();
 			
 			// background
