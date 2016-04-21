@@ -32,14 +32,33 @@ public class Darklight2 extends Game {
 	Sounds sound = new Sounds();
 	Sounds weps = new Sounds();
 	Sounds battle = new Sounds();
+	Sounds wepspec = new Sounds();
+	Sounds monster = new Sounds();
 	int delay = 0;
 	int spDelay = 0;
+	String[] abcs = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+			"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W",
+			"X", "Y", "Z", };
+			
+	boolean active1 = true;
+	boolean active2 = false;
+	boolean active3 = false;
+	boolean pressedBefore = false;
+	boolean displayHighScores = false;
+	StoreScores storeScores = new StoreScores();
 	
 	int wait = 0;
 	int slot = 0;
 	int count = 0;
 	int xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
 	int yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	static int yourScore = 0;
+	static int waveNum = 0;
+	static int floorNum = 0;
+	static String name = null;
 
 	@Override
 	public void tick(Graphics2D g, Input p1, Input p2, Sound s) {
@@ -61,11 +80,30 @@ public class Darklight2 extends Game {
 			
 			// selection
 			g.setColor(Color.RED);
+			if (gameState == 0) {
+			// Song
+			sound.loadSound("Resources/Menu.wav");
+			sound.runLoop();
+			
+			// background
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			
+			// title
+			g.setColor(Color.GREEN);
+			g.setFont(new Font("Arial", Font.BOLD, 100));
+			centerText("DARKLIGHT 2", g, WIDTH/2, 180);
+			
+			// selection
+			g.setColor(Color.RED);
 			if (button == 0) {
 				
 				// PLAY
 				g.fillRect(WIDTH/2 - 160, 240, 320, 90);
-				if (justPressed(p1, Button.U) || justPressed(p1, Button.D)) {
+				if (justPressed(p1, Button.U)) {
+					button = 2;
+				}
+				if (justPressed(p1, Button.D)) {
 					button = 1;
 				}
 				if (justPressed(p1, Button.A) ||
@@ -76,30 +114,48 @@ public class Darklight2 extends Game {
 					sound.reset();
 					sound.stop();
 				}
-			} else {
+			} else if (button == 1){
 				
-				// EXIT
+				// LEADERBOARDS
 				g.fillRect(WIDTH/2 - 160, 340, 320, 90);
-				if (justPressed(p1, Button.U) || justPressed(p1, Button.D)) {
+				if (justPressed(p1, Button.U)) {
+					button = 0;
+				}
+				if (justPressed(p1, Button.D)) {
+					button = 2;
+				}
+				if (justPressed(p1, Button.A) ||
+						justPressed(p1, Button.B) ||
+						justPressed(p1, Button.C)) {
+						gameState = 5;
+					}
+			} else {
+				// EXIT
+				g.fillRect(WIDTH/2 - 160, 440, 320, 90);
+				if (justPressed(p1, Button.U) ) {
+					button = 1;
+				}
+				if (justPressed(p1, Button.D)) {
 					button = 0;
 				}
 				if (justPressed(p1, Button.A) ||
-					justPressed(p1, Button.B) ||
-					justPressed(p1, Button.C)) {
-					System.exit(0);
-				}
+						justPressed(p1, Button.B) ||
+						justPressed(p1, Button.C)) {
+						System.exit(0);
+					}
 			}
 			
 			// option boxes
 			g.setColor(Color.GREEN);
 			g.fillRect(WIDTH/2 - 150, 250, 300, 70);
 			g.fillRect(WIDTH/2 - 150, 350, 300, 70);
-			
+			g.fillRect(WIDTH/2 - 150, 450, 300, 70);
 			// option box text
 			g.setColor(Color.BLACK);
 			g.setFont(new Font("Arial", Font.PLAIN, 30));
 			centerText("PLAY", g, WIDTH/2, 295);
-			centerText("EXIT", g, WIDTH/2, 395);
+			centerText("LEADERBOARD", g, WIDTH/2, 395);
+			centerText("EXIT", g, WIDTH/2, 495);
 			
 //			g.setColor(Color.YELLOW);
 //			g.fillRect(WIDTH/2 - 352, 20, 704, 192);
@@ -132,6 +188,24 @@ public class Darklight2 extends Game {
 			//If enemy spots, play battle sound
 			for (Enemy enemy : wave.enemies.values()) {
 				if (enemy.spottedPlayer) {
+					
+					// Check to play noise
+					int temp = (int) (Math.random() * 150);
+					if (temp <= 1) {
+						// Check for Ghoul or Golem
+						if (enemy.type <= 60) {
+							// Play Ghoul sound
+							monster.loadSound("Resources/Sounds/ghoul.wav");
+							monster.run();
+						}
+						
+						if (enemy.type > 85) {
+							// Play golem sound
+							monster.loadSound("Resources/Sounds/golem.wav");
+							monster.run();
+						}
+					}
+					
 					battle.loadSound("Resources/Sounds/Game Song.wav");
 					battle.runLoop();
 					break;
@@ -153,20 +227,24 @@ public class Darklight2 extends Game {
 			weaponPickup(g, p1, arena);
 			weaponSwap(p1);
 			
-			if (player.health <= 0) {
-				gameState = 3;
-				sound.stop();
-				sound.reset();
-				battle.stop();
-				battle.reset();
-			}
+//			if (player.health <= 0) {
+//				gameState = 3;
+//				sound.stop();
+//				sound.reset();
+//				battle.stop();
+//				battle.reset();
+//			}
 
 			if (justPressed(p1, Button.C)) {
 				wave.enemies.clear();
 			}
 
-			g.setColor(Color.BLUE);
-			g.drawOval((int)(player.x - 256), (int)(player.y - 256), 512, 512);
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, (int)(player.x - 256), HEIGHT);
+			g.fillRect((int)(player.x + 256), 0, (int)(WIDTH - player.x - 255), HEIGHT);
+			g.fillRect(0, 0, WIDTH, (int)(player.y - 256));
+			g.fillRect(0, (int)(player.y + 256), WIDTH, (int)(HEIGHT - player.y - 255));
+			g.drawImage(TextureLoader.light, (int)(player.x - 256), (int)(player.y - 256), null);
 			
 			// HUD
 			int floor = (wave.wave % 10 == 0) ? (wave.wave + 9)/10 : (wave.wave + 10)/10; 
@@ -208,6 +286,7 @@ public class Darklight2 extends Game {
 				player.y = HEIGHT/2;
 				wave.falling = false;
 				wave.hole = false;
+				wave.transition.reset();
 				wave.waveStart = true;
 				wave.difficulty *= 1.1;
 				gameState = 1;
@@ -225,7 +304,8 @@ public class Darklight2 extends Game {
 			g.setFont(new Font("Arial", Font.BOLD, 150));
 			centerText("GAME OVER", g, WIDTH/2, HEIGHT/2);
 			wait++;
-			
+			yourScore = wave.score;
+			waveNum = (wave.wave % 10 == 0) ? 10 : wave.wave % 10;
 			if(justPressed(p1, Button.A) || 
 			   justPressed(p1, Button.B) || 
 			   justPressed(p1, Button.C)){
@@ -241,6 +321,150 @@ public class Darklight2 extends Game {
 				sound.reset();
 				gameState = 0;
 				reset();
+			}
+		}
+		// Enter Your initials
+		if (gameState == 4) {
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			g.setColor(Color.RED);
+			g.setFont(new Font("Arial", Font.PLAIN, 45));
+			centerText("Enter Your Initials", g, (Game.WIDTH / 2) ,(Game.HEIGHT / 4));
+			centerText("Press C to enter", g, (Game.WIDTH / 2) ,(Game.HEIGHT / 2 + 100));
+			g.drawString(abcs[i],(Game.WIDTH / 2) - 55,(Game.HEIGHT / 2));
+			g.drawString(abcs[j],(Game.WIDTH / 2),(Game.HEIGHT / 2));
+			g.drawString(abcs[k],(Game.WIDTH / 2) + 55,(Game.HEIGHT / 2));
+			name = abcs[i] + abcs[j] + abcs[k];
+			
+			if (active1)
+				g.fillRect((Game.WIDTH / 2) - 55, (Game.HEIGHT / 2) + 5, 35, 5);
+			if (active2)
+				g.fillRect((Game.WIDTH / 2) + 5, (Game.HEIGHT / 2) + 5, 35, 5);
+			if (active3)
+				g.fillRect((Game.WIDTH / 2) + 55, (Game.HEIGHT / 2) + 5, 35, 5);
+			
+			if (!pressedBefore) {
+				if (p1.pressed(Button.U) || p1.pressed(Button.D)
+						|| p1.pressed(Button.L) || p1.pressed(Button.R)
+						|| p1.pressed(Button.A) || p1.pressed(Button.B)
+						|| p1.pressed(Button.C)) {
+					pressedBefore = true;
+				} else {
+					pressedBefore = false;
+				}
+			} else {
+				if (!p1.pressed(Button.U) && !p1.pressed(Button.D)
+						&& !p1.pressed(Button.L) && !p1.pressed(Button.R)
+						&& !p1.pressed(Button.A) && !p1.pressed(Button.B)
+						&& !p1.pressed(Button.C)) {
+					pressedBefore = false;
+				} else {
+					return;
+				}
+			}
+			if (p1.pressed(Button.C)) {
+				storeScores.main();
+				reset();
+				gameState = 5;
+			}
+			if (active1) {
+
+				if (p1.pressed(Button.U)) {
+					i += 1;
+					if (i > abcs.length - 1)
+						i = 0;
+				}
+				if (p1.pressed(Button.D)) {
+					i -= 1;
+					if (i < 0)
+						i = abcs.length - 1;
+				}
+				if (p1.pressed(Button.L)) {
+					active1 = false;
+					active3 = true;
+				}
+				if (p1.pressed(Button.R)) {
+					active1 = false;
+					active2 = true;
+				}
+				return;
+			}
+			if (active2) {
+
+				if (p1.pressed(Button.U)) {
+					j += 1;
+					if (j > abcs.length - 1)
+						j = 0;
+				}
+				if (p1.pressed(Button.D)) {
+					j -= 1;
+					if (j < 0)
+						j = abcs.length - 1;
+				}
+				if (p1.pressed(Button.L)) {
+					active2 = false;
+					active1 = true;
+				}
+				if (p1.pressed(Button.R)) {
+					active2 = false;
+					active3 = true;
+				}
+				return;
+			}
+			if (active3) {
+
+				if (p1.pressed(Button.U)) {
+					k += 1;
+					if (k > abcs.length - 1)
+						k = 0;
+				}
+				if (p1.pressed(Button.D)) {
+					k -= 1;
+					if (k < 0)
+						k = abcs.length - 1;
+				}
+				if (p1.pressed(Button.L)) {
+					active3 = false;
+					active2 = true;
+				}
+				if (p1.pressed(Button.R)) {
+					active3 = false;
+					active1 = true;
+				}
+				return;
+			}
+		}
+		
+		// high scores
+		if (gameState == 5) {
+			storeScores.Read();
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			g.setColor(Color.RED);
+			g.setFont(new Font("Arial", Font.PLAIN, 35));
+			centerText("High Scores", g, (Game.WIDTH / 2) ,(Game.HEIGHT / 16));
+			g.drawLine(0, Game.HEIGHT/16 + 8, 1200, Game.HEIGHT / 16 + 8);
+			g.drawString("Enemies killed", Game.WIDTH / 2 + 150, Game.HEIGHT / 16 + 60);
+			g.drawString("Wave", Game.WIDTH / 2 , Game.HEIGHT / 16 + 60 );
+			g.drawString("Floor", Game.WIDTH / 2 - 210, Game.HEIGHT / 16 + 60);
+			int height = - 80;
+			for (int l = 0; l < 10; l++) {
+				g.drawString(storeScores.nameList.get(l), Game.WIDTH / 2 - 400, Game.HEIGHT / 8 - height);
+				height = height - 40;
+			}
+			//g.drawString(storeScores, Game.WIDTH / 2, Game.HEIGHT / 2);
+			wait++;
+			if (wait == 1005) {
+				sound.stop();
+				sound.reset();
+				wait = 0;
+				yourScore = 0;
+				waveNum = 0;
+				i = 0;
+				j = 0;
+				k = 0;
+				floorNum = 0;
+				gameState = 0;
 			}
 		}
 		
@@ -469,9 +693,13 @@ public class Darklight2 extends Game {
 			player.mana -= 0.5;
 			g.setColor(Color.ORANGE);
 			g.drawRect((int)(player.x - player.size/2 - 2), (int)(player.y - player.size/2 - 2), 68, 68);
+			
 			if (player.mana <= 0) {
 				player.mana = 0;
 				swordSpec = false;
+				// Stop special noise
+				wepspec.stop();
+				wepspec.reset();
 			}
 		}
 	}
@@ -484,11 +712,27 @@ public class Darklight2 extends Game {
 			if (player.weapon.name.equals("Short Sword")) {
 				if (swordSpec) {
 					swordSpec = false;
+					
+					// Stop special noise
+					wepspec.stop();
+					wepspec.reset();
+					
 				} else if (!swordSpec && player.mana > 0) {
+					// Start special noise
+					weps.loadSound("Resources/Sounds/special.wav");
+					weps.run();
+					
+					wepspec.loadSound("Resources/Sounds/fire.wav");
+					wepspec.runLoop();
 					swordSpec = true;
 				}
 			}
 			if (player.weapon.name.equals("Greatsword") && player.mana >= 40 && spDelay == 0) {
+				
+				//Greatsword spec sound
+				weps.loadSound("Resources/Sounds/special.wav");
+				weps.run();
+				
 				player.mana -= 40;
 				spDelay = player.weapon.delay;
 				for (Enemy enemy : wave.enemies.values()) {
@@ -530,6 +774,10 @@ public class Darklight2 extends Game {
 				g.drawRect((int)(player.x - 128), (int)(player.y - 128), 256, 256);
 			}
 			if (player.weapon.name.equals("Spear") && player.mana >= 25 && spDelay == 0) {
+				
+				wepspec.loadSound("Resources/Sounds/special.wav");
+				wepspec.run();
+				
 				player.mana -= 25;
 				spDelay = player.weapon.delay;
 				// UP
@@ -613,7 +861,7 @@ public class Darklight2 extends Game {
 					(player.y + player.size/2 >= yCoor - groundWeapon.length/2 + arena.yOffset) &&			
 				
 					(player.y - player.size/2 <= yCoor + groundWeapon.length/2 + arena.yOffset)) {
-				if(!wep2.weaponPickedUp()) {
+				if(!wep2.weaponPickedUp() && wave.wave == 3) {
 					wep2.setPickedUp();
 					inv[1] = wep2;
 					xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
@@ -622,7 +870,12 @@ public class Darklight2 extends Game {
 				}
 				else if (!wep3.weaponPickedUp()){
 					wep3.setPickedUp();
-					inv[2] = wep3;
+					if(!wep2.weaponPickedUp()) {
+						inv[1] = wep3;
+					}
+					else {
+						inv[2] = wep3;
+					}
 					xCoor = ((int)((Math.random() * WIDTH * 3) - WIDTH));
 					yCoor = ((int)((Math.random() * HEIGHT * 3) - HEIGHT));
 					System.out.println("Picked up weapon!");
@@ -639,6 +892,8 @@ public class Darklight2 extends Game {
 			}
 			else {
 				if (swordSpec) {
+					wepspec.stop();
+					wepspec.reset();
 					swordSpec = false;
 				}
 				player.weapon.setWeapon(inv[slot + 1].getName());
@@ -686,9 +941,9 @@ public class Darklight2 extends Game {
 		inv[2] = null;
 		wep2.pickedUp = false;
 		wep3.pickedUp = false;
-		swordSpec = false;
 		delay = 0;
 		spDelay = 0;
+		swordSpec = false;
 	}
 
 	@Override

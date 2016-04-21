@@ -13,6 +13,8 @@ public class Wave {
 	ConcurrentHashMap<Integer, Enemy> enemies = new ConcurrentHashMap<Integer, Enemy>();
 	ConcurrentHashMap<Double, Pickup> pickups = new ConcurrentHashMap<Double, Pickup>();
 	int random;
+	Sounds transition = new Sounds();
+	int score = 0;
 	
 	public void newWave(Graphics2D g, Arena arena, Player player) {
 		
@@ -32,7 +34,8 @@ public class Wave {
 		if (hole) {
 			g.setColor(Color.BLACK);
 			g.fillRect((int)((Darklight2.WIDTH/2) - 160 + arena.xOffset), (int)((Darklight2.HEIGHT/2) - 96 + arena.yOffset), 320, 192);
-			
+			transition.loadSound("Resources/Sounds/transition.wav");
+			transition.runOnce();
 			if (player.x - player.size/2 >= (Darklight2.WIDTH/2) - 160 + arena.xOffset &&
 				player.x + player.size/2 <= (Darklight2.WIDTH/2) + 160 + arena.xOffset &&
 				player.y - player.size/2 >= (Darklight2.HEIGHT/2) - 96 + arena.yOffset &&
@@ -61,6 +64,7 @@ public class Wave {
 					Pickup p = new Pickup(Math.random(), enemy.x, enemy.y);
 					pickups.put(p.id, p);
 				}
+				score +=1;
 				enemies.remove(enemy.id);
 			}
 		}
@@ -73,5 +77,11 @@ public class Wave {
 				waveStart = true;
 			}
 		}
+	}
+	public int WaveNum() {
+		return wave;
+	}
+	public int Score() {
+		return score;
 	}
 }

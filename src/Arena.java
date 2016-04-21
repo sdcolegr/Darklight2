@@ -51,6 +51,29 @@ public class Arena {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, Darklight2.WIDTH, Darklight2.HEIGHT);
 		
+		g.drawImage(TextureLoader.topLeftWall, (int)(xBoundL - 64 + xOffset), (int)(yBoundU - 64 + yOffset), null);
+		g.drawImage(TextureLoader.topRightWall, (int)(xBoundR + xOffset), (int)(yBoundU - 64 + yOffset), null);
+		g.drawImage(TextureLoader.bottomLeftWall, (int)(xBoundL - 64 + xOffset), (int)(yBoundD + yOffset), null);
+		g.drawImage(TextureLoader.bottomRightWall, (int)(xBoundR + xOffset), (int)(yBoundD + yOffset), null);
+		for (int i = 0; i < (Darklight2.WIDTH*3)/64; i++) {
+			g.drawImage(TextureLoader.topWall, (int)(xBoundL + i * 64 + xOffset), (int)(yBoundU - 64 + yOffset), null);
+		}
+		for (int i = 0; i < (Darklight2.WIDTH*3)/64; i++) {
+			g.drawImage(TextureLoader.bottomWall, (int)(xBoundL + i * 64 + xOffset), (int)(yBoundD + yOffset), null);
+		}
+		for (int i = 0; i < (Darklight2.HEIGHT*3)/64; i++) {
+			g.drawImage(TextureLoader.leftWall, (int)(xBoundL - 64 + xOffset), (int)(yBoundU + i * 64 + yOffset), null);
+		}
+		for (int i = 0; i < (Darklight2.HEIGHT*3)/64; i++) {
+			g.drawImage(TextureLoader.rightWall, (int)(xBoundR + xOffset), (int)(yBoundU + i * 64 + yOffset), null);
+		}
+		
+		for (int i = 0; i < (Darklight2.HEIGHT*3)/64; i++) {
+			for (int j = 0; j < (Darklight2.WIDTH*3)/64; j++) {
+				g.drawImage(TextureLoader.stone, (int)(xBoundL + j * 64 + xOffset), (int)(yBoundU + i * 64 + yOffset), null);
+			}
+		}
+		
 		for (int i = 0; i < (Darklight2.HEIGHT*3)/64; i++) {
 			for (int j = 0; j < (Darklight2.WIDTH*3)/64; j++) {
 				g.drawImage(TextureLoader.stone, (int)(xBoundL + j * 64 + xOffset), (int)(yBoundU + i * 64 + yOffset), null);
