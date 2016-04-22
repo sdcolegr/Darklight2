@@ -1,4 +1,5 @@
 Darklight II
+inport into eclipse
 a lets you attack enemies, there are 3 weapons to use, the sword, spear and great sword, 
 	you must find the spear and great sword in later waves.
 b is to use special attacks each weapon has its own special attack, the sword gives you 
