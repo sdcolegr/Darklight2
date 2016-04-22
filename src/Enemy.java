@@ -10,12 +10,19 @@ public class Enemy extends Actor {
 	int attackCooldown = 0;
 	int randomX = 0;
 	int randomY = 0;
+	int direction = 0;
 	float magnitude;
 	boolean spottedPlayer = false;
 	boolean left = true;
 	boolean right = true;
 	boolean up = true;
 	boolean down = true;
+	int walk = 0;
+	int wait = 0;
+	
+	SpriteAtlas golem = new SpriteAtlas("Animations/golem.png","Animations/golem.atlas");
+	SpriteAtlas	eye = new SpriteAtlas("Animations/eye.png","Animations/eye.atlas");
+	SpriteAtlas ghoul = new SpriteAtlas("Animations/ghoul.png","Animations/ghoul.atlas.txt");
 
 	public Enemy(int id, int x, int y, Player player, Arena arena, float difficulty) {
 		super(id, x, y);
@@ -69,7 +76,7 @@ public class Enemy extends Actor {
 			// regular
 			// square
 			
-			g.drawImage(AnimationLoader.ghoul.getFrame(), (int)(x - 32 + arena.xOffset),(int)(y - 32 + arena.yOffset), null);
+			g.drawImage(ghoul.getFrame(), (int)(x - 32 + arena.xOffset),(int)(y - 32 + arena.yOffset), null);
 			
 			//g.setColor(new Color(230, 149, 0));
 			//g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
@@ -80,7 +87,7 @@ public class Enemy extends Actor {
 		} else if (type < 85) {
 			// small
 			// square
-			g.drawImage(AnimationLoader.eye.getFrame(), (int)(x - 16 + arena.xOffset),(int)(y - 16 + arena.yOffset), null);
+			g.drawImage(eye.getFrame(), (int)(x - 16 + arena.xOffset),(int)(y - 16 + arena.yOffset), null);
 			//g.setColor(new Color(227, 227, 0));
 			//g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 			
@@ -92,7 +99,7 @@ public class Enemy extends Actor {
 			// square
 			//g.setColor(new Color(180, 0, 0));
 			
-			g.drawImage(AnimationLoader.golem.getFrame(), (int)(x - 64 + arena.xOffset),(int)(y - 64 + arena.yOffset), null);
+			g.drawImage(golem.getFrame(), (int)(x - 64 + arena.xOffset),(int)(y - 64 + arena.yOffset), null);
 			
 			//g.fillRect((int)(x - size/2 + arena.xOffset), (int)(y - size/2 + arena.yOffset), size, size);
 			
@@ -103,7 +110,7 @@ public class Enemy extends Actor {
 	}
 
 	public void movement(Arena arena, Player player, ConcurrentHashMap<Integer, Enemy> enemies) {
-
+		
 		// Enemy Collision
 		for(Enemy enemy : enemies.values()) {
 			if (id != enemy.id) {
@@ -159,44 +166,34 @@ public class Enemy extends Actor {
 			y + arena.yOffset - (size / 2) - 256 < player.y) || spottedPlayer) {
 
 			spottedPlayer = true;
-
 			if (x + arena.xOffset > player.x && left) {
-				//AnimationLoader.golem.setAnimation(10);
 				x -= speed * magnitude;
 			}
 			if (x + arena.xOffset < player.x && right) {
-				//AnimationLoader.golem.setAnimation(7);
 				x += speed * magnitude;
 			}
 			if (y + arena.yOffset > player.y && up) {
-				//AnimationLoader.golem.setAnimation(1);
 				y -= speed * magnitude;
 			}
 			if (y + arena.yOffset < player.y && down) {
-				//AnimationLoader.golem.setAnimation(1);
 				y += speed * magnitude;
 			}
 		} else if (moveCooldown < 30) {
-
 			if (moveCooldown == 0) {
 				randomX = (int)(Math.random() * 3);
 				randomY = (int)(Math.random() * 3);
 			}
 
 			if (randomX == 2 && x - (size/2) > arena.xBoundL && left) {
-				//AnimationLoader.golem.setAnimation(10);
 				x -= speed;
 			}
 			if (randomX == 1 && x + (size/2) < arena.xBoundR && right) {
-				//AnimationLoader.golem.setAnimation(7);
 				x += speed;
 			} 
 			if (randomY == 2 && y - (size/2) > arena.yBoundU && up) {
-				//AnimationLoader.golem.setAnimation(1);
 				y -= speed;
 			}
 			if (randomY == 1 && y + (size/2) < arena.yBoundD && down) {
-				//AnimationLoader.golem.setAnimation(4);
 				y += speed;
 			} 
 			moveCooldown ++;
@@ -206,9 +203,35 @@ public class Enemy extends Actor {
 				moveCooldown = 0;
 			}
 		}
-		AnimationLoader.eye.setAnimation(0);
-		AnimationLoader.golem.setAnimation(0);
-		AnimationLoader.ghoul.setAnimation(0);
+
+		direction(player, arena);
+		
+		//UP
+		if (direction == 0) {
+			direction = 0;
+			eye.setAnimation(1);
+			golem.setAnimation(4);
+			ghoul.setAnimation(0);
+		}
+		//DOWN
+		else if (direction == 1) {
+			eye.setAnimation(3);
+			golem.setAnimation(1);
+			ghoul.setAnimation(1);
+		}
+		//LEFT
+		else if (direction == 2) {
+			eye.setAnimation(0);
+			golem.setAnimation(10);
+			ghoul.setAnimation(2);
+		}
+		//RIGHT
+		else {
+			eye.setAnimation(2);
+			golem.setAnimation(7);
+			ghoul.setAnimation(3);
+		}
+		
 		left = true;
 		right = true;
 		up = true;
@@ -248,6 +271,36 @@ public class Enemy extends Actor {
 			return true;
 		}
 		return false;
+	}
+	
+	public void direction(Player player, Arena arena) {
+		
+		
+		float temp1;
+		float temp2;
+		
+		temp1 = (player.x - arena.xOffset) - x;
+		temp2 = (player.y - arena.yOffset) - y;
+		
+			if(Math.abs(temp1) >= Math.abs(temp2)) {
+			
+				if (temp1 >= 0) {
+					direction = 3;
+				}
+			
+				else {
+					direction = 2;
+				}
+			}
+			else {
+				if (temp2 >= 0) {
+					direction = 1;
+				}
+			
+				else {
+					direction = 0;
+				}
+			}
 	}
 }
 
