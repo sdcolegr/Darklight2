@@ -479,7 +479,7 @@ public class Darklight2 extends Game {
 			}
 		}
 	}
-	public void basicAttack(Graphics2D g, Input p1) {
+public void basicAttack(Graphics2D g, Input p1) {
 
 		if (justPressed(p1, Button.A) && delay == 0) {
 			delay = player.weapon.delay;
@@ -490,6 +490,7 @@ public class Darklight2 extends Game {
 				
 				// UP
 				if (player.direction == 0) {
+					AnimationLoader.wick.setAnimation(14);
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48 &&
 							enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48 &&
@@ -507,6 +508,7 @@ public class Darklight2 extends Game {
 				}
 				// DOWN
 				if (player.direction == 1) {
+				AnimationLoader.wick.setAnimation(4);
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 48 &&
 							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 48 &&
@@ -524,6 +526,7 @@ public class Darklight2 extends Game {
 				}
 				// LEFT
 				if (player.direction == 2) {
+					AnimationLoader.wick.setAnimation(6);
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - 96 &&
 							enemy.x + arena.xOffset - enemy.size/2 <= player.x - 36 &&
@@ -541,6 +544,7 @@ public class Darklight2 extends Game {
 				}
 				// RIGHT
 				if (player.direction == 3) {
+					AnimationLoader.wick.setAnimation(5);
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset - enemy.size/2 <= player.x + 96 &&
 							enemy.x + arena.xOffset + enemy.size/2 >= player.x + 36 &&
@@ -564,6 +568,9 @@ public class Darklight2 extends Game {
 				
 				// UP
 				if (player.direction == 0) {
+					
+					AnimationLoader.wick.setAnimation(15);
+
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset + enemy.size/2 > player.x - 32 &&
 							enemy.x + arena.xOffset - enemy.size/2 < player.x + 32 &&
@@ -578,6 +585,8 @@ public class Darklight2 extends Game {
 				}
 				// DOWN
 				if (player.direction == 1) {
+					AnimationLoader.wick.setAnimation(7);
+
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset - enemy.size/2 < player.x + 32 &&
 							enemy.x + arena.xOffset + enemy.size/2 > player.x - 32 &&
@@ -592,6 +601,8 @@ public class Darklight2 extends Game {
 				}
 				// LEFT
 				if (player.direction == 2) {
+					AnimationLoader.wick.setAnimation(9);
+
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset - enemy.size/2 < player.x - 32 &&
 							enemy.x + arena.xOffset + enemy.size/2 > player.x - 96 &&
@@ -606,6 +617,8 @@ public class Darklight2 extends Game {
 				}
 				// RIGHT
 				if (player.direction == 3) {
+					AnimationLoader.wick.setAnimation(8);
+
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset + enemy.size/2 > player.x + 32 &&
 							enemy.x + arena.xOffset - enemy.size/2 < player.x + 96 &&
@@ -626,6 +639,8 @@ public class Darklight2 extends Game {
 				
 				// UP
 					if (player.direction == 0) {
+						AnimationLoader.wick.setAnimation(12);
+
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + weapon.width &&
 							enemy.x + arena.xOffset - enemy.size/2 <= player.x + weapon.width &&
@@ -640,6 +655,8 @@ public class Darklight2 extends Game {
 				}
 				// DOWN
 				if (player.direction == 1) {
+					AnimationLoader.wick.setAnimation(13);
+
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x + weapon.width &&
 							enemy.x + arena.xOffset - enemy.size/2 <= player.x + weapon.width &&
@@ -654,6 +671,8 @@ public class Darklight2 extends Game {
 				}
 				// LEFT
 				if (player.direction == 2) {
+					AnimationLoader.wick.setAnimation(11);
+
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x - weapon.length -32 &&
 							enemy.x + arena.xOffset - enemy.size/2 <= player.x - 32 &&
@@ -668,6 +687,8 @@ public class Darklight2 extends Game {
 				}
 				// RIGHT
 				if (player.direction == 3) {
+					AnimationLoader.wick.setAnimation(10);
+
 					for (Enemy enemy : wave.enemies.values()) {
 						if (enemy.x + arena.xOffset + enemy.size/2 >= player.x  + 32  &&
 							enemy.x + arena.xOffset - enemy.size/2 <= player.x + 32 +  weapon.length &&
@@ -686,6 +707,7 @@ public class Darklight2 extends Game {
 			delay--;
 		}
 	}
+	
 	
 	void swordSpecHelper(Graphics2D g) {
 		
