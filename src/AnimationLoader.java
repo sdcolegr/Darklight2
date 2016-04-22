@@ -20,7 +20,7 @@ public class AnimationLoader {
 		potionmana = new SpriteAtlas("Animations/manapot.png","Animations/pot.atlas.txt");
 		golem = new SpriteAtlas("Animations/golem.png","Animations/golem.atlas");
 		eye = new SpriteAtlas("Animations/eye.png","Animations/eye.atlas");
-		ghoul = new SpriteAtlas("Animations/ghoul.png","Animations/ghoul.atlas");
+		ghoul = new SpriteAtlas("Animations/ghoul.png","Animations/ghoul.atlas.txt");
 		
 		//character2 = new SpriteAtlas("Resources/girl.png","Resources/animated.atlas");
 
