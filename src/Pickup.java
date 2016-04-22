@@ -17,15 +17,16 @@ public class Pickup {
 	
 	public void draw(Graphics2D g, Arena arena) {
 		AnimationLoader.potion.setAnimation(0);
+		AnimationLoader.potionmana.setAnimation(0);
 		if (type < 50) {
 			
+			g.drawImage(AnimationLoader.potion.getFrame(), (int)(x - 8 + arena.xOffset),(int)(y - 8 + arena.yOffset), null);
 			//g.setColor(Color.PINK);
 		} else {
 			
-			
+			g.drawImage(AnimationLoader.potionmana.getFrame(), (int)(x - 8 + arena.xOffset),(int)(y - 8 + arena.yOffset), null);
 			//g.setColor(Color.BLUE);
 		}
-		g.drawImage(AnimationLoader.potion.getFrame(), (int)(x - 8 + arena.xOffset),(int)(y - 8 + arena.yOffset), null);
 		//g.fillRect((int)(x - 8 + arena.xOffset), (int)(y - 8 + arena.yOffset), 16, 16);
 	}
 	

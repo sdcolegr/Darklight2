@@ -95,8 +95,8 @@ public class Arena {
 			}
 		}
 		
-		// map boundaries
-		g.setColor(Color.YELLOW);
-		g.drawRect((int)(xBoundL + xOffset), (int)(yBoundU + yOffset), Darklight2.WIDTH*3, Darklight2.HEIGHT*3);
+//		// map boundaries
+//		g.setColor(Color.YELLOW);
+//		g.drawRect((int)(xBoundL + xOffset), (int)(yBoundU + yOffset), Darklight2.WIDTH*3, Darklight2.HEIGHT*3);
 	}
 }

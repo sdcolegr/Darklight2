@@ -82,7 +82,7 @@ public class Darklight2 extends Game {
 			g.setColor(Color.RED);
 			if (gameState == 0) {
 			// Song
-			sound.loadSound("Resources/Sound/Menu.wav");
+			sound.loadSound("Resources/Sounds/Menu.wav");
 			sound.runLoop();
 			
 			// background
@@ -125,10 +125,10 @@ public class Darklight2 extends Game {
 					button = 2;
 				}
 				if (justPressed(p1, Button.A) ||
-						justPressed(p1, Button.B) ||
-						justPressed(p1, Button.C)) {
-						gameState = 5;
-					}
+					justPressed(p1, Button.B) ||
+					justPressed(p1, Button.C)) {
+					gameState = 5;
+				}
 			} else {
 				// EXIT
 				g.fillRect(WIDTH/2 - 160, 440, 320, 90);
@@ -139,10 +139,10 @@ public class Darklight2 extends Game {
 					button = 0;
 				}
 				if (justPressed(p1, Button.A) ||
-						justPressed(p1, Button.B) ||
-						justPressed(p1, Button.C)) {
-						System.exit(0);
-					}
+					justPressed(p1, Button.B) ||
+					justPressed(p1, Button.C)) {
+					System.exit(0);
+				}
 			}
 			
 			// option boxes
@@ -227,13 +227,13 @@ public class Darklight2 extends Game {
 			weaponPickup(g, p1, arena);
 			weaponSwap(p1);
 			
-//			if (player.health <= 0) {
-//				gameState = 3;
-//				sound.stop();
-//				sound.reset();
-//				battle.stop();
-//				battle.reset();
-//			}
+			if (player.health <= 0) {
+				gameState = 3;
+				sound.stop();
+				sound.reset();
+				battle.stop();
+				battle.reset();
+			}
 
 			if (justPressed(p1, Button.C)) {
 				wave.enemies.clear();

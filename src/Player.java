@@ -53,9 +53,10 @@ public class Player extends Actor {
 		
 		// up
 		if (p1.pressed(Button.U) && y  - (size/2) > arena.yBoundU + arena.yOffset) {
-			AnimationLoader.wick.setAnimation(1);
-			
-			direction = 0;
+			if (!p1.pressed(Button.L) && !p1.pressed(Button.R)) {
+				AnimationLoader.wick.setAnimation(1);
+				direction = 0;
+			}
 			if(y > arena.yOffsetBorder + (size/2)) {
 				y -= speed * magnitude;
 			} else {
@@ -63,10 +64,11 @@ public class Player extends Actor {
 			}
 		}
 		// down
-		
 		if (p1.pressed(Button.D) && y  + (size/2) < arena.yBoundD + arena.yOffset) {
-			AnimationLoader.wick.setAnimation(0);
-			direction = 1;
+			if (!p1.pressed(Button.L) && !p1.pressed(Button.R)) {
+				AnimationLoader.wick.setAnimation(0);
+				direction = 1;
+			}
 			if (y < Darklight2.HEIGHT - arena.yOffsetBorder - (size/2)) {
 				y += speed * magnitude;
 			} else {
