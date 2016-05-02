@@ -6,8 +6,8 @@ b is to use special attacks each weapon has its own special attack, the sword gi
 	a shield to protect yourself, and the great sword does one attack around you
 c to swap weapons between your currently obtained weaponds.
 Team lead: Stephen Colegrove
-team members : Evan Ronnie
+team members : Evan Ronnei
 		Max Faust
 		Codey Walker
-		Zachariah Phillis
+		Zachariah Phillips
 	Sound:	Devin Deal
